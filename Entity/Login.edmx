@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SistemaBibliotecaPerfilesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tb_modulo">
+          <Key>
+            <PropertyRef Name="idModulo" />
+          </Key>
+          <Property Name="idModulo" Type="int" Nullable="false" />
+          <Property Name="descrip" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_operaciones">
+          <Key>
+            <PropertyRef Name="idOperacion" />
+          </Key>
+          <Property Name="idOperacion" Type="int" Nullable="false" />
+          <Property Name="acceso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idModulo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="descrip" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_rol_operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="idOperacion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="fecha" Type="date" Nullable="false" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_moduloOperacion">
+          <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="1" />
+          <End Role="tb_operaciones" Type="Self.tb_operaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_modulo">
+              <PropertyRef Name="idModulo" />
+            </Principal>
+            <Dependent Role="tb_operaciones">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_operacionFinal">
+          <End Role="tb_operaciones" Type="Self.tb_operaciones" Multiplicity="1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_operaciones">
+              <PropertyRef Name="idOperacion" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolFinal">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolUser">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SistemaBibliotecaPerfilesModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_moduloOperacion" Association="Self.fk_moduloOperacion">
+            <End Role="tb_modulo" EntitySet="tb_modulo" />
+            <End Role="tb_operaciones" EntitySet="tb_operaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_operacionFinal" Association="Self.fk_operacionFinal">
+            <End Role="tb_operaciones" EntitySet="tb_operaciones" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolFinal" Association="Self.fk_rolFinal">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolUser" Association="Self.fk_rolUser">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SistemaBibliotecaPerfilesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tb_modulo">
+          <Key>
+            <PropertyRef Name="idModulo" />
+          </Key>
+          <Property Name="idModulo" Type="Int32" Nullable="false" />
+          <Property Name="descrip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_operaciones" Relationship="Self.fk_moduloOperacion" FromRole="tb_modulo" ToRole="tb_operaciones" />
+        </EntityType>
+        <EntityType Name="tb_operaciones">
+          <Key>
+            <PropertyRef Name="idOperacion" />
+          </Key>
+          <Property Name="idOperacion" Type="Int32" Nullable="false" />
+          <Property Name="acceso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idModulo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_modulo" Relationship="Self.fk_moduloOperacion" FromRole="tb_operaciones" ToRole="tb_modulo" />
+          <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_operacionFinal" FromRole="tb_operaciones" ToRole="tb_rol_operacion" />
+        </EntityType>
+        <EntityType Name="tb_rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="descrip" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_rolFinal" FromRole="tb_rol" ToRole="tb_rol_operacion" />
+          <NavigationProperty Name="tb_usuario" Relationship="Self.fk_rolUser" FromRole="tb_rol" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_rol_operacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="idOperacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_operaciones" Relationship="Self.fk_operacionFinal" FromRole="tb_rol_operacion" ToRole="tb_operaciones" />
+          <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolFinal" FromRole="tb_rol_operacion" ToRole="tb_rol" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolUser" FromRole="tb_usuario" ToRole="tb_rol" />
+        </EntityType>
+        <Association Name="fk_moduloOperacion">
+          <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="1" />
+          <End Role="tb_operaciones" Type="Self.tb_operaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_modulo">
+              <PropertyRef Name="idModulo" />
+            </Principal>
+            <Dependent Role="tb_operaciones">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_operacionFinal">
+          <End Role="tb_operaciones" Type="Self.tb_operaciones" Multiplicity="1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_operaciones">
+              <PropertyRef Name="idOperacion" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolFinal">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolUser">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SistemaBibliotecaPerfilesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" />
+          <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" />
+          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" />
+          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" />
+          <AssociationSet Name="fk_moduloOperacion" Association="Self.fk_moduloOperacion">
+            <End Role="tb_modulo" EntitySet="tb_modulo" />
+            <End Role="tb_operaciones" EntitySet="tb_operaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_operacionFinal" Association="Self.fk_operacionFinal">
+            <End Role="tb_operaciones" EntitySet="tb_operaciones" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolFinal" Association="Self.fk_rolFinal">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolUser" Association="Self.fk_rolUser">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SistemaBibliotecaPerfilesModelStoreContainer" CdmEntityContainer="SistemaBibliotecaPerfilesEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_modulo">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.tb_modulo">
+              <MappingFragment StoreEntitySet="tb_modulo">
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_operaciones">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.tb_operaciones">
+              <MappingFragment StoreEntitySet="tb_operaciones">
+                <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
+                <ScalarProperty Name="acceso" ColumnName="acceso" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_rol">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.tb_rol">
+              <MappingFragment StoreEntitySet="tb_rol">
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_rol_operacion">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.tb_rol_operacion">
+              <MappingFragment StoreEntitySet="tb_rol_operacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_usuario">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesModel.tb_usuario">
+              <MappingFragment StoreEntitySet="tb_usuario">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

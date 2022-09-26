@@ -1,0 +1,100 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    @Styles.Render("~/Vendor/bootstrap/css/bootstrap.min.css")
+    @Styles.Render("~/Assets/webfonts/font-awesome-4.7.0/css/font-awesome.min.css")
+    @Styles.Render("~/Vendor/animate/animate.css")
+    @Styles.Render("~/Vendor/css-hamburgers/hamburgers.min.css")
+    @Styles.Render("~/Vendor/select2/select2.min.css")
+    <!--===============================================================================================-->
+    @Styles.Render("~/Assets/css/util.css")
+    @Styles.Render("~/Assets/css/login.css")
+    <!--===============================================================================================-->
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="~/Assets/images/login.svg" alt="IMG">
+                </div>
+                <!-- Cambiar Action -->
+                @using (Html.BeginForm("Login", "Acceso", FormMethod.Post, new { @class = "login100-form validate-form" }))
+                {
+                    <span class="login100-form-title">
+                        Iniciar Sesion
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                        <input class="input100" type="text" name="email" placeholder="Email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <input class="input100" type="password" name="pass" placeholder="Contraseña">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-12">
+                        <span class="txt1">
+                            Olvidaste tu
+                        </span>
+                        <a class="txt2" href="#">
+                            Usuario / Contraseña?
+                        </a>
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        <a class="txt2" href="register.html">
+                            Crear una nueva cuenta
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                 }
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Vendor/jquery/jquery-3.2.1.min.js")
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Vendor/bootstrap/js/popper.js")
+    @Scripts.Render("~/Vendor/bootstrap/js/bootstrap.min.js")
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Vendor/select2/select2.min.js")
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Vendor/tilt/tilt.jquery.min.js")
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Assets/js/login/main.js")
+</body>
+
+</html>

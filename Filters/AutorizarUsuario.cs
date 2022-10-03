@@ -12,7 +12,7 @@ namespace ShopBook.Filters
     public class AutorizarUsuario : AuthorizeAttribute
     {
         private tb_usuario oEmail;
-        private SistemaBibliotecaPerfilesEntities db = new SistemaBibliotecaPerfilesEntities();
+        private LoginEntities db = new LoginEntities();
         private int idOperacion;
         private int idModulo;
 

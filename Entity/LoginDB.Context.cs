@@ -13,10 +13,10 @@ namespace ShopBook.Entity
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SistemaBibliotecaPerfilesEntities : DbContext
+    public partial class LoginEntities : DbContext
     {
-        public SistemaBibliotecaPerfilesEntities()
-            : base("name=SistemaBibliotecaPerfilesEntities")
+        public LoginEntities()
+            : base("name=LoginEntities")
         {
         }
     
@@ -25,7 +25,6 @@ namespace ShopBook.Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tb_modulo> tb_modulo { get; set; }
         public virtual DbSet<tb_operaciones> tb_operaciones { get; set; }
         public virtual DbSet<tb_rol> tb_rol { get; set; }

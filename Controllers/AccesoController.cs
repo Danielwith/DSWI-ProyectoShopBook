@@ -19,7 +19,7 @@ namespace ShopBook.Controllers
         {
             try
             {
-                using (Entity.SistemaBibliotecaPerfilesEntities db = new Entity.SistemaBibliotecaPerfilesEntities())
+                using (Entity.LoginEntities db = new Entity.LoginEntities())
                 {
                     var oEmail = (from d in db.tb_usuario
                                   where d.email == email.Trim() && d.password == pass.Trim()

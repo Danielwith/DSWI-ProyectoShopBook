@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'D:\CIBERTEC\CICLO 5\DESARROLLO DE SERVICIOS WEB I\SistemaBiblioteca\ShopBook\Entity\Login.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\The\Source\Repos\DSWI-ProyectoShopBook\Entity\LoginDB.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

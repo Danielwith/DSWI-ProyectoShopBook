@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LoginModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SistemaBibliotecaPerfilesTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tb_modulo">
           <Key>
             <PropertyRef Name="idModulo" />
@@ -94,12 +94,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LoginModelStoreContainer">
-          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="SistemaBibliotecaPerfiles" store:Type="Tables" />
-          <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" Schema="SistemaBibliotecaPerfiles" store:Type="Tables" />
-          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="SistemaBibliotecaPerfiles" store:Type="Tables" />
-          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="SistemaBibliotecaPerfiles" store:Type="Tables" />
-          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="SistemaBibliotecaPerfiles" store:Type="Tables" />
+        <EntityContainer Name="SistemaBibliotecaPerfilesTestModelStoreContainer">
+          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_moduloOperacion" Association="Self.fk_moduloOperacion">
             <End Role="tb_modulo" EntitySet="tb_modulo" />
             <End Role="tb_operaciones" EntitySet="tb_operaciones" />
@@ -121,7 +121,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="LoginModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SistemaBibliotecaPerfilesTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="tb_modulo">
           <Key>
             <PropertyRef Name="idModulo" />
@@ -167,7 +167,7 @@
           <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="idRol" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolUser" FromRole="tb_usuario" ToRole="tb_rol" />
         </EntityType>
@@ -247,9 +247,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LoginModelStoreContainer" CdmEntityContainer="LoginEntities">
+        <EntityContainerMapping StorageEntityContainer="SistemaBibliotecaPerfilesTestModelStoreContainer" CdmEntityContainer="LoginEntities">
           <EntitySetMapping Name="tb_modulo">
-            <EntityTypeMapping TypeName="LoginModel.tb_modulo">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_modulo">
               <MappingFragment StoreEntitySet="tb_modulo">
                 <ScalarProperty Name="idModulo" ColumnName="idModulo" />
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
@@ -257,7 +257,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_operaciones">
-            <EntityTypeMapping TypeName="LoginModel.tb_operaciones">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_operaciones">
               <MappingFragment StoreEntitySet="tb_operaciones">
                 <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
                 <ScalarProperty Name="acceso" ColumnName="acceso" />
@@ -266,7 +266,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_rol">
-            <EntityTypeMapping TypeName="LoginModel.tb_rol">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_rol">
               <MappingFragment StoreEntitySet="tb_rol">
                 <ScalarProperty Name="idRol" ColumnName="idRol" />
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
@@ -274,7 +274,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_rol_operacion">
-            <EntityTypeMapping TypeName="LoginModel.tb_rol_operacion">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_rol_operacion">
               <MappingFragment StoreEntitySet="tb_rol_operacion">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idRol" ColumnName="idRol" />
@@ -283,7 +283,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_usuario">
-            <EntityTypeMapping TypeName="LoginModel.tb_usuario">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_usuario">
               <MappingFragment StoreEntitySet="tb_usuario">
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

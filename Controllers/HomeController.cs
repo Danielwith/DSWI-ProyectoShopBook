@@ -20,6 +20,8 @@ namespace ShopBook.Controllers
         [AutorizarUsuario(idOperacion: 1,idModulo:1)]
         public ActionResult About()
         {
+            ViewBag.idOperacion = 1;
+            ViewBag.idModulo = 1;
             ViewBag.Message = "Your application description page.";
 
             return View();
@@ -28,6 +30,8 @@ namespace ShopBook.Controllers
         [AutorizarUsuario(idOperacion: 1, idModulo: 1)]
         public ActionResult Contact()
         {
+            ViewBag.idOperacion = 1;
+            ViewBag.idModulo = 1;
             ViewBag.Message = "Your contact page.";
 
             return View();

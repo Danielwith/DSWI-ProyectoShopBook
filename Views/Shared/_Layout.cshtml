@@ -11,7 +11,12 @@
     <!-- Wrapper - CONTENEDOR PRINCIPAL DE LA PAGINA -->
     <div id="wrapper">
         <!-- CUERPO DE LA PAGINA -->
-        @RenderBody()
+        <div id="main">
+            <div class="inner">
+                @RenderBody()
+            </div>
+        </div>
+        
 
         <!-- BARRA DE NAVEGACION -->
         <div id="sidebar">
@@ -27,18 +32,20 @@
                 <!-- Menu -->
                 <nav id="menu">
                     <header class="major">
-                        <h2>Menu</h2>
+                        <h2>Testing</h2>
                     </header>
                     <!-- ELEMENTOS DEL MENU -->
                     <ul>
                         @{ /* if(ViewBag.idOperacion==? && ViewBag.idModulo==?)*/
                         }
-                        @{ if (ViewBag.idOperacion ==1 && ViewBag.idModulo == 1) {
-                                <li><a href="index.html">Homepage</a></li>
+                        @{ if (ViewBag.idOperacion == 1 && ViewBag.idModulo == 1)
+                            {
+                                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
                             }
                         }
-                        <li><a href="generic.html">Generic</a></li>
-                        <li><a href="elements.html">Elements</a></li>
+                        <!--
                         <li>
                             <span class="opener">Submenu</span>
                             <ul>
@@ -64,6 +71,7 @@
                         <li><a href="#">Maximus Erat</a></li>
                         <li><a href="#">Sapien Mauris</a></li>
                         <li><a href="#">Amet Lacinia</a></li>
+                            -->
                     </ul>
                     <!-- FIN -->
                 </nav>

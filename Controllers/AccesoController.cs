@@ -8,7 +8,7 @@ namespace ShopBook.Controllers
 {
     public class AccesoController : Controller
     {
-        // GET: Acceso
+        // GET: Login
         public ActionResult Login()
         {
             return View();
@@ -17,6 +17,7 @@ namespace ShopBook.Controllers
         [HttpPost]
         public ActionResult Login(string email, string pass)
         {
+            var descripRol=String.Empty;
             try
             {
                 using (Entity.LoginEntities db = new Entity.LoginEntities())
@@ -29,17 +30,68 @@ namespace ShopBook.Controllers
                         ViewBag.Error = "Usuario o Contraseña invalida";
                         return View();
                     }
+                    // LA DESCRIPCION DEL ROL, ES EL ActionResult
+                    var rol = from d in db.tb_rol
+                          where d.idRol == oEmail.idRol
+                          select d.descrip;
 
+                    descripRol = rol.FirstOrDefault().ToString();
+
+                    Session["DescriRol"] = descripRol;
                     Session["email"] = oEmail;
 
                 }
                 /* LOGIN REALIZADO CON EXITO */
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(descripRol, "Home");
             }
             catch(Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View();
+                return RedirectToAction("OperacionNoAutorizada", "Error");
+            }
+        }
+
+        public ActionResult Desconectar()
+        {
+            Session["email"] = null;
+            return RedirectToAction("Login", "Acceso");
+        }
+
+        // GET: Registrar
+        public ActionResult Registrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Registrar(string nombre,string email, string pass, string repPass)
+        {
+            if (pass != repPass)
+            {
+                return RedirectToAction("Registrar","Acceso");
+            }
+            try
+            {
+                using(var db = new Entity.LoginEntities())
+                {
+                    var checkEmail = (from e in db.tb_usuario
+                                     where email == e.email
+                                     select e).FirstOrDefault();
+
+                    if (checkEmail == null) {
+                        db.usp_regUser(nombre, email, pass);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Registrar", "Acceso");
+                    }
+                };
+
+                return RedirectToAction("Login","Acceso");
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("OperacionNoAutorizada", "Error");
             }
         }
     }

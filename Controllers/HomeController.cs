@@ -1,4 +1,5 @@
-﻿using ShopBook.Filters;
+﻿using ShopBook.Entity;
+using ShopBook.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,41 @@ namespace ShopBook.Controllers
 {
     public class HomeController : Controller
     {
-        [AutorizarUsuario(idOperacion:1,idModulo:1)]
+        // PAGINA PRINCIPAL
         public ActionResult Index()
         {
-            ViewBag.idOperacion = 1;
-            ViewBag.idModulo = 1;
             return View();
         }
 
-        [AutorizarUsuario(idOperacion: 1,idModulo:1)]
+        // DEPENDE DEL ROL
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult Proveedor()
+        {
+            return View();
+        }
+
+        // VISTA COMUN USER
+        [AutorizarUsuario(idOperacion: 4)]
+        public ActionResult Inicio()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
+        // OPERACIONES
+        [AutorizarUsuario(idOperacion: 1)]
         public ActionResult About()
         {
             ViewBag.idOperacion = 1;
@@ -27,14 +54,15 @@ namespace ShopBook.Controllers
             return View();
         }
 
-        [AutorizarUsuario(idOperacion: 1, idModulo: 1)]
+        [AutorizarUsuario(idOperacion: 1)]
         public ActionResult Contact()
         {
             ViewBag.idOperacion = 1;
             ViewBag.idModulo = 1;
             ViewBag.Message = "Your contact page.";
-
+            
             return View();
         }
     }
+
 }

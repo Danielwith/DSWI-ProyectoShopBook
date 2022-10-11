@@ -94,6 +94,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_regUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_nom" Type="varchar" Mode="In" />
+          <Parameter Name="p_email" Type="varchar" Mode="In" />
+          <Parameter Name="p_pass" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="SistemaBibliotecaPerfilesTestModelStoreContainer">
           <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" Schema="dbo" store:Type="Tables" />
@@ -240,6 +245,11 @@
             <End Role="tb_rol" EntitySet="tb_rol" />
             <End Role="tb_usuario" EntitySet="tb_usuario" />
           </AssociationSet>
+          <FunctionImport Name="usp_regUser">
+            <Parameter Name="p_nom" Mode="In" Type="String" />
+            <Parameter Name="p_email" Mode="In" Type="String" />
+            <Parameter Name="p_pass" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -293,6 +303,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_regUser" FunctionName="SistemaBibliotecaPerfilesTestModel.Store.usp_regUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

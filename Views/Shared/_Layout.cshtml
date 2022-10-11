@@ -32,46 +32,87 @@
                 <!-- Menu -->
                 <nav id="menu">
                     <header class="major">
-                        <h2>Testing</h2>
+                        <h2>Acciones</h2>
                     </header>
                     <!-- ELEMENTOS DEL MENU -->
                     <ul>
-                        @{ /* if(ViewBag.idOperacion==? && ViewBag.idModulo==?)*/
-                        }
-                        @{ if (ViewBag.idOperacion == 1 && ViewBag.idModulo == 1)
+                        <!-- ELEMENTOS GLOBALES -->
+                        <!-- ELEMENTOS AL LOGEAR -->
+                        <!-- AHORA SE MANEJA DESDE ID ROL -->
+                        @{
+                            if (System.Web.HttpContext.Current.Session["email"] != null)
                             {
-                                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                                <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
-                                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                                /* ADMINISTRADOR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 1)
+                                {
+                                    <li>
+                                        <span class="opener">Acciones de SuperUsuario</span>
+                                        <ul>
+                                            <li id="aa">@Html.ActionLink("Inicio", "Admin", "Home")</li>
+                                            <li>@Html.ActionLink("Moderar", "About", "Home")</li>
+                                            <li>@Html.ActionLink("Generar", "Contact", "Home")</li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                /* PROVEEDOR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 2)
+                                {
+                                    <li>@Html.ActionLink("Inicio", "Proveedor", "Home")</li>
+                                    <li>@Html.ActionLink("Agregar Libro", "Proveedor", "Home")</li>
+                                    <li>@Html.ActionLink("Eliminar Libro", "Proveedor", "Home")</li>
+                                }
+
+                                /* USUARIO DEFAULT - INICIO AL LOGEAR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 4)
+                                {
+                                    <li>@Html.ActionLink("Inicio", "Inicio", "Home")</li>
+                                    <li>@Html.ActionLink("Ver Favoritos", "Inicio", "Home")</li>
+                                    <li>@Html.ActionLink("Mis Compras", "Inicio", "Home")</li>
+                                }
                             }
                         }
                         <!--
-                        <li>
-                            <span class="opener">Submenu</span>
-                            <ul>
-                                <li><a href="#">Lorem Dolor</a></li>
-                                <li><a href="#">Ipsum Adipiscing</a></li>
-                                <li><a href="#">Tempus Magna</a></li>
-                                <li><a href="#">Feugiat Veroeros</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Etiam Dolore</a></li>
-                        <li><a href="#">Adipiscing</a></li>
-                        <li>
-                            <span class="opener">Another Submenu</span>
+    <li>
+        <span class="opener">Submenu</span>
+        <ul>
+            <li><a href="#">Lorem Dolor</a></li>
+            <li><a href="#">Ipsum Adipiscing</a></li>
+            <li><a href="#">Tempus Magna</a></li>
+            <li><a href="#">Feugiat Veroeros</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Etiam Dolore</a></li>
+    <li><a href="#">Adipiscing</a></li>
+    <li>
+        <span class="opener">Another Submenu</span>
 
 
+        <ul>
+            <li><a href="#">Lorem Dolor</a></li>
+            <li><a href="#">Ipsum Adipiscing</a></li>
+            <li><a href="#">Tempus Magna</a></li>
+            <li><a href="#">Feugiat Veroeros</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Maximus Erat</a></li>
+    <li><a href="#">Sapien Mauris</a></li>
+    <li><a href="#">Amet Lacinia</a></li>
+        -->
+                        <li>
+                            <span class="opener">Cuenta</span>
                             <ul>
-                                <li><a href="#">Lorem Dolor</a></li>
-                                <li><a href="#">Ipsum Adipiscing</a></li>
-                                <li><a href="#">Tempus Magna</a></li>
-                                <li><a href="#">Feugiat Veroeros</a></li>
+                                @{ if (System.Web.HttpContext.Current.Session["email"] != null)
+                                    {
+                                        <li>@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso")</li>
+                                    }
+                                    else
+                                    {
+                                        <li>@Html.ActionLink("Iniciar Sesión", "Login", "Acceso")</li>
+                                    }
+                                }
                             </ul>
                         </li>
-                        <li><a href="#">Maximus Erat</a></li>
-                        <li><a href="#">Sapien Mauris</a></li>
-                        <li><a href="#">Amet Lacinia</a></li>
-                            -->
                     </ul>
                     <!-- FIN -->
                 </nav>
@@ -130,12 +171,12 @@
 
         </div>
     </div>
-
     @Scripts.Render("~/Assets/js/jquery.min.js")
     @Scripts.Render("~/Assets/js/browser.min.js")
     @Scripts.Render("~/Assets/js/breakpoints.min.js")
     @Scripts.Render("~/Assets/js/util.js")
     @Scripts.Render("~/Assets/js/main.js")
+    @Scripts.Render("~/Assets/js/sweetalert2all.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

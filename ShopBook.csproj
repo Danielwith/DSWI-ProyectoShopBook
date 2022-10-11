@@ -174,6 +174,7 @@
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\main.css" />
     <Content Include="Assets\css\util.css" />
+    <Content Include="Assets\images\error404.jpg" />
     <Content Include="Assets\images\icons\favicon.ico" />
     <Content Include="Assets\images\img-01.png" />
     <Content Include="Assets\images\login.svg" />
@@ -193,6 +194,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\login\main.js" />
     <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\sweetalert2.all.min.js" />
     <Content Include="Assets\js\util.js" />
     <Content Include="Assets\webfonts\fa-brands-400.svg" />
     <Content Include="Assets\webfonts\fa-regular-400.svg" />
@@ -397,10 +399,15 @@
     <Content Include="Vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Views\Error\OperacionNoAutorizada.cshtml" />
+    <Content Include="Views\Home\Proveedor.cshtml" />
+    <Content Include="Views\Home\Inicio.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Acceso\Registrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Sesion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

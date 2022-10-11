@@ -10,11 +10,8 @@ namespace ShopBook.Controllers
     {
         // GET: Error
         [HttpGet]
-        public ActionResult OperacionNoAutorizada(String operacion, String modulo, String msgErrorExcepcion)
+        public ActionResult OperacionNoAutorizada()
         {
-            ViewBag.operacion = operacion;
-            ViewBag.modulo = modulo;
-            ViewBag.msgErrorExcepcion = msgErrorExcepcion;
             return View();
         }
     }

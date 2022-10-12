@@ -9,6 +9,9 @@ namespace ShopBook.Controllers
     public class AccesoController : Controller
     {
         // GET: Login
+        // Este comentario es de Dwight
+
+        //Comentario clemente Romero Sting
         public ActionResult Login()
         {
             return View();

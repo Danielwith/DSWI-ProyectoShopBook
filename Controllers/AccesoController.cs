@@ -10,6 +10,8 @@ namespace ShopBook.Controllers
     {
         // GET: Login
         // Este comentario es de Dwight
+
+        //Comentario clemente
         public ActionResult Login()
         {
             return View();

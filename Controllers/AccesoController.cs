@@ -11,7 +11,7 @@ namespace ShopBook.Controllers
         // GET: Login
         // Este comentario es de Dwight
 
-        //Comentario clemente
+        //Comentario clemente Romero Sting
         public ActionResult Login()
         {
             return View();

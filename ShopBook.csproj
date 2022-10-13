@@ -189,6 +189,7 @@
     <Content Include="Assets\images\pic09.jpg" />
     <Content Include="Assets\images\pic10.jpg" />
     <Content Include="Assets\images\pic11.jpg" />
+    <Content Include="Assets\js\alert.js" />
     <Content Include="Assets\js\breakpoints.min.js" />
     <Content Include="Assets\js\browser.min.js" />
     <Content Include="Assets\js\jquery.min.js" />

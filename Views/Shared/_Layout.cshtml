@@ -16,7 +16,7 @@
                 @RenderBody()
             </div>
         </div>
-        
+
 
         <!-- BARRA DE NAVEGACION -->
         <div id="sidebar">
@@ -37,6 +37,10 @@
                     <!-- ELEMENTOS DEL MENU -->
                     <ul>
                         <!-- ELEMENTOS GLOBALES -->
+                        <li><a onclick="Alert('Test','info','success')" href="#">Alerta</a></li>
+                        <li><a onclick="Notification('Esta es una prueba')" href="#">Notificación</a></li>
+                        <li><a onclick="Delete()" href="#">Delete</a></li>
+
                         <!-- ELEMENTOS AL LOGEAR -->
                         <!-- AHORA SE MANEJA DESDE ID ROL -->
                         @{
@@ -48,7 +52,7 @@
                                     <li>
                                         <span class="opener">Acciones de SuperUsuario</span>
                                         <ul>
-                                            <li id="aa">@Html.ActionLink("Inicio", "Admin", "Home")</li>
+                                            <li>@Html.ActionLink("Inicio", "Admin", "Home")</li>
                                             <li>@Html.ActionLink("Moderar", "About", "Home")</li>
                                             <li>@Html.ActionLink("Generar", "Contact", "Home")</li>
                                         </ul>
@@ -168,7 +172,6 @@
                 </footer>
 
             </div>
-
         </div>
     </div>
     @Scripts.Render("~/Assets/js/jquery.min.js")
@@ -176,7 +179,8 @@
     @Scripts.Render("~/Assets/js/breakpoints.min.js")
     @Scripts.Render("~/Assets/js/util.js")
     @Scripts.Render("~/Assets/js/main.js")
-    @Scripts.Render("~/Assets/js/sweetalert2all.min.js")
+    @Scripts.Render("~/Assets/js/sweetalert2.all.min.js")
+    @Scripts.Render("~/Assets/js/alert.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

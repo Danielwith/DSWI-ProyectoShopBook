@@ -1,0 +1,129 @@
+﻿
+/* Pagination EDITADO */
+div.dataTables_paginate {
+    cursor: default;
+    list-style: none;
+    padding-left: 0;
+    text-align: center;
+}
+
+    div.dataTables_paginate span {
+        display: inline-block;
+        padding: 0.5em;
+        vertical-align: middle;
+    }
+
+        div.dataTables_paginate span > .paginate_button {
+            -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            border-bottom: 0;
+            border-radius: 0.375em;
+            display: inline-block;
+            font-size: 0.8em;
+            font-weight: 600;
+            height: 2em;
+            line-height: 2em;
+            margin: 0 0.125em;
+            min-width: 2em;
+            padding: 0 0.5em;
+            text-align: center;
+        }
+
+            div.dataTables_paginate span > .paginate_button.current {
+                background-color: #f56a6a;
+                color: #ffffff !important;
+            }
+
+                div.dataTables_paginate span > .paginate_button.current:hover {
+                    background-color: #f67878;
+                }
+
+                div.dataTables_paginate span > .paginate_button.current:active {
+                    background-color: #f45c5c;
+                }
+
+    div.dataTables_paginate > .paginate_button {
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        background-color: transparent;
+        border-radius: 0.375em;
+        border: 0;
+        box-shadow: inset 0 0 0 2px #f56a6a;
+        color: #f56a6a !important;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Roboto Slab", serif;
+        font-size: 0.8em;
+        font-weight: 700;
+        height: 3.5em;
+        letter-spacing: 0.075em;
+        line-height: 3.5em;
+        padding: 0 2.25em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+        div.dataTables_paginate > .paginate_button.disabled {
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            background-color: transparent;
+            border-radius: 0.375em;
+            border: 0;
+            box-shadow: inset 0 0 0 2px #f56a6a;
+            color: #f56a6a !important;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Roboto Slab", serif;
+            font-size: 0.8em;
+            font-weight: 700;
+            height: 3.5em;
+            letter-spacing: 0.075em;
+            line-height: 3.5em;
+            padding: 0 2.25em;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+/*No se aplicaron cambios*/
+@media screen and (max-width: 480px) {
+    div.dataTables_paginate li:nth-child(n + 2):nth-last-child(n + 2) {
+        display: none;
+    }
+
+    div.dataTables_paginate li:first-child {
+        padding-right: 0;
+    }
+}
+
+/*Data*/
+
+div.dataTables_length {
+    width: 100px;
+    height: 40px;
+}
+    
+    div.dataTables_filter {
+        margin-top: -2.74em;
+        width: 200px;
+        height: 40px;
+        float:right
+    }
+
+table {
+    margin-top: 60px !important;
+    width: 100% !important;
+}
+
+header a{
+    font-size: 35px !important;
+    text-align:center;
+}
+
+section{
+    margin-top:-35px !important;
+}

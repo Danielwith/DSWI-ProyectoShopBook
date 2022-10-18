@@ -147,6 +147,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LoginDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\proveedor_data_temp.cs">
+      <DependentUpon>LoginDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tb_modulo.cs">
       <DependentUpon>LoginDB.tt</DependentUpon>
     </Compile>
@@ -173,6 +176,7 @@
     <Content Include="Assets\css\fontawesome-all.min.css" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\main.css" />
+    <Content Include="Assets\css\modifiedstyles.css" />
     <Content Include="Assets\css\util.css" />
     <Content Include="Assets\images\error404.jpg" />
     <Content Include="Assets\images\icons\favicon.ico" />
@@ -404,6 +408,7 @@
     <Content Include="Views\Home\Inicio.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
+    <Content Include="Views\Home\Mantenimiento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

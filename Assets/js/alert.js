@@ -88,3 +88,28 @@ function Delete() {
 
     element[0].setAttribute("style","height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
 }
+
+function AlertForm(titulo, texto, icono) {
+    Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icono, /* ICON: warning, error, success, info, question*/
+        buttons: true,
+        showCancelButton: true,
+        dangerMode: true
+    });
+
+    /* Alert Fix Styles */
+    for (let i = 0; i < element.length; i++) {
+        if (element[i].getAttribute("style") == "display: none;") {
+        }
+        else {
+            element[i].setAttribute("style",
+                "height:2.5em !important; line-height: 0em !important; color: white !important")
+        }
+    }
+
+    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important");
+    element[0].setAttribute("type","submit")
+
+};

@@ -14,6 +14,12 @@ namespace ShopBook.Entity
     
     public partial class tb_usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_usuario()
+        {
+            this.proveedor_data_temp = new HashSet<proveedor_data_temp>();
+        }
+    
         public int idUser { get; set; }
         public string nombre { get; set; }
         public string email { get; set; }
@@ -22,5 +28,7 @@ namespace ShopBook.Entity
         public int idRol { get; set; }
     
         public virtual tb_rol tb_rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proveedor_data_temp> proveedor_data_temp { get; set; }
     }
 }

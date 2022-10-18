@@ -32,6 +32,7 @@ namespace ShopBook.Entity
         public virtual DbSet<tb_rol> tb_rol { get; set; }
         public virtual DbSet<tb_rol_operacion> tb_rol_operacion { get; set; }
         public virtual DbSet<tb_usuario> tb_usuario { get; set; }
+        public virtual DbSet<proveedor_data_temp> proveedor_data_temp { get; set; }
     
         public virtual int usp_regUser(string p_nom, string p_email, string p_pass)
         {

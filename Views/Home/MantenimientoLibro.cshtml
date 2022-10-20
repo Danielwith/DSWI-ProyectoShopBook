@@ -1,0 +1,462 @@
+﻿
+@{
+    ViewBag.Title = "MantenimientoLibro";
+}
+
+@Styles.Render("~/Assets/css/modifiedstyles.css")
+
+<header id="header">
+    <a href="#" class="logo"><strong>Mantenimiento de Libros</strong></a>
+</header>
+<section>
+    <ul class="actions">
+        <li><a href="#" onclick="getAgregarModal()" class="button">Registrar</a></li>
+    </ul>
+    <div class="table-wrapper">
+        <table id="tableId">
+            <thead>
+                <tr>
+                    <th>Libro</th>
+                    <th>Titulo</th>
+                    <th>Año</th>
+                    <th>Autor</th>
+                    <th>Precio</th>
+                    <th>Fec. Publicación</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tableId").DataTable({
+                "ajax": {
+                    "url": "/Home/listarProveedor",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "idUser", "autowidth": true },
+                    { "data": "nombre", "autowidth": true },
+                    { "data": "numVentas", "autowidth": true },
+                    {
+                        "data": "idData", "width": "50px", "render": function (data) {
+                            return '<button onclick="getEditarModal('+data+',this)">Editar</button>'
+                        }
+                    },
+                    {
+                        "data": "idData", "width": "50px", "render": function (data) {
+                            return '<button onclick="getEliminarModal('+data+')">Eliminar</button>'
+                        }
+                    }
+                ],
+                "language": espaniol
+            });
+        });
+        if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+
+        function getAgregarModal() {
+            Swal.fire({
+                title: 'Agregar',
+                html: `
+                            <div class="row gtr-uniform">
+                                <div class="col-6 col-12-xsmall">
+                                    <input type="text" id="iduser" placeholder="ID Usuario" />
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <input type="text" id="numventa" placeholder="Num. Ventas" />
+                                </div>
+                            </div>`,
+                confirmButtonText: 'Registrar',
+                showCancelButton: true,
+                preConfirm: () => {
+                    let idUser = parseInt($("#iduser").val(), 10);
+                    let numVentas = parseInt($("#numventa").val(), 10);
+                    if (Number.isInteger(idUser) == false || Number.isInteger(numVentas) == false) {
+                        Swal.showValidationMessage(`Complete los campos con solo numeros.`)
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idUser = $("#iduser").val();
+                    let numVentas = $("#numventa").val();
+                    let message = "Se agrego correctamente";
+                    Swal.fire(
+                        'Agregado!',
+                        'Usuario: ' + idUser + ' | Numero de Ventas: ' + numVentas,
+                        'success'
+                    )
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Home/GuardarProveedor?idUser=" + idUser + "&&numVentas=" + numVentas,
+                            success: function (r) {
+                                window.location = "/Home/Mantenimiento?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        function getEditarModal(idData, elem) {
+            // Valor de la fila segun indice
+            let id = elem.parentElement.parentElement.getElementsByTagName("td")[0].textContent;
+
+            Swal.fire({
+                title: 'Editar',
+                html: `
+                            <div class="row gtr-uniform">
+                                <div class="col-6 col-12-xsmall">
+                                    <input disabled="disabled" type="text" id="iduser" value=${id} placeholder="ID Usuario" />
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <input type="text" id="numventa" placeholder="Num. Ventas" />
+                                </div>
+                            </div>`,
+                confirmButtonText: 'Actualizar',
+                showCancelButton: true,
+                preConfirm: () => {
+                    let numVentas = parseInt($("#numventa").val(), 10);
+                    if (Number.isInteger(numVentas) == false) {
+                        Swal.showValidationMessage(`Complete los campos con solo numeros.`)
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let numVentas = $("#numventa").val();
+                    let message = "Actualizado correctamente";
+                    Swal.fire(
+                        'Actualizado!',
+                        'Numero de Ventas: ' + numVentas,
+                        'success'
+                    )
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+
+                    // Mediante Ajax envia la data al Controlador Home
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Home/EditarProveedor?idData=" + idData + "&&numVentas=" + numVentas,
+                            success: function (r) {
+                                window.location = "/Home/Mantenimiento?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        function getEliminarModal(idData) {
+            Swal.fire({
+                title: 'Eliminar',
+                text: 'Deseas eliminar este proveedor?',
+                confirmButtonText: 'Eliminar',
+                showCancelButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let message = "Se elimino correctamente";
+                    Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                    )
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Home/EliminarProveedor?idData=" + idData,
+                            success: function (r) {
+                                window.location = "/Home/Mantenimiento?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+
+        // Plug-in traductor a español
+        var espaniol = {
+            "processing": "Procesando...",
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "search": "Buscar:",
+            "infoThousands": ",",
+            "loadingRecords": "Cargando...",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad",
+                "collection": "Colección",
+                "colvisRestore": "Restaurar visibilidad",
+                "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                "copySuccess": {
+                    "1": "Copiada 1 fila al portapapeles",
+                    "_": "Copiadas %ds fila al portapapeles"
+                },
+                "copyTitle": "Copiar al portapapeles",
+                "csv": "CSV",
+                "excel": "Excel",
+                "pageLength": {
+                    "-1": "Mostrar todas las filas",
+                    "_": "Mostrar %d filas"
+                },
+                "pdf": "PDF",
+                "print": "Imprimir",
+                "renameState": "Cambiar nombre",
+                "updateState": "Actualizar",
+                "createState": "Crear Estado",
+                "removeAllStates": "Remover Estados",
+                "removeState": "Remover",
+                "savedStates": "Estados Guardados",
+                "stateRestore": "Estado %d"
+            },
+            "autoFill": {
+                "cancel": "Cancelar",
+                "fill": "Rellene todas las celdas con <i>%d<\/i>",
+                "fillHorizontal": "Rellenar celdas horizontalmente",
+                "fillVertical": "Rellenar celdas verticalmentemente"
+            },
+            "decimal": ",",
+            "searchBuilder": {
+                "add": "Añadir condición",
+                "button": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "clearAll": "Borrar todo",
+                "condition": "Condición",
+                "conditions": {
+                    "date": {
+                        "after": "Despues",
+                        "before": "Antes",
+                        "between": "Entre",
+                        "empty": "Vacío",
+                        "equals": "Igual a",
+                        "notBetween": "No entre",
+                        "notEmpty": "No Vacio",
+                        "not": "Diferente de"
+                    },
+                    "number": {
+                        "between": "Entre",
+                        "empty": "Vacio",
+                        "equals": "Igual a",
+                        "gt": "Mayor a",
+                        "gte": "Mayor o igual a",
+                        "lt": "Menor que",
+                        "lte": "Menor o igual que",
+                        "notBetween": "No entre",
+                        "notEmpty": "No vacío",
+                        "not": "Diferente de"
+                    },
+                    "string": {
+                        "contains": "Contiene",
+                        "empty": "Vacío",
+                        "endsWith": "Termina en",
+                        "equals": "Igual a",
+                        "notEmpty": "No Vacio",
+                        "startsWith": "Empieza con",
+                        "not": "Diferente de",
+                        "notContains": "No Contiene",
+                        "notStartsWith": "No empieza con",
+                        "notEndsWith": "No termina con"
+                    },
+                    "array": {
+                        "not": "Diferente de",
+                        "equals": "Igual",
+                        "empty": "Vacío",
+                        "contains": "Contiene",
+                        "notEmpty": "No Vacío",
+                        "without": "Sin"
+                    }
+                },
+                "data": "Data",
+                "deleteTitle": "Eliminar regla de filtrado",
+                "leftTitle": "Criterios anulados",
+                "logicAnd": "Y",
+                "logicOr": "O",
+                "rightTitle": "Criterios de sangría",
+                "title": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "value": "Valor"
+            },
+            "searchPanes": {
+                "clearMessage": "Borrar todo",
+                "collapse": {
+                    "0": "Paneles de búsqueda",
+                    "_": "Paneles de búsqueda (%d)"
+                },
+                "count": "{total}",
+                "countFiltered": "{shown} ({total})",
+                "emptyPanes": "Sin paneles de búsqueda",
+                "loadMessage": "Cargando paneles de búsqueda",
+                "title": "Filtros Activos - %d",
+                "showMessage": "Mostrar Todo",
+                "collapseMessage": "Colapsar Todo"
+            },
+            "select": {
+                "cells": {
+                    "1": "1 celda seleccionada",
+                    "_": "%d celdas seleccionadas"
+                },
+                "columns": {
+                    "1": "1 columna seleccionada",
+                    "_": "%d columnas seleccionadas"
+                },
+                "rows": {
+                    "1": "1 fila seleccionada",
+                    "_": "%d filas seleccionadas"
+                }
+            },
+            "thousands": ".",
+            "datetime": {
+                "previous": "Anterior",
+                "next": "Proximo",
+                "hours": "Horas",
+                "minutes": "Minutos",
+                "seconds": "Segundos",
+                "unknown": "-",
+                "amPm": [
+                    "AM",
+                    "PM"
+                ],
+                "months": {
+                    "0": "Enero",
+                    "1": "Febrero",
+                    "10": "Noviembre",
+                    "11": "Diciembre",
+                    "2": "Marzo",
+                    "3": "Abril",
+                    "4": "Mayo",
+                    "5": "Junio",
+                    "6": "Julio",
+                    "7": "Agosto",
+                    "8": "Septiembre",
+                    "9": "Octubre"
+                },
+                "weekdays": [
+                    "Dom",
+                    "Lun",
+                    "Mar",
+                    "Mie",
+                    "Jue",
+                    "Vie",
+                    "Sab"
+                ]
+            },
+            "editor": {
+                "close": "Cerrar",
+                "create": {
+                    "button": "Nuevo",
+                    "title": "Crear Nuevo Registro",
+                    "submit": "Crear"
+                },
+                "edit": {
+                    "button": "Editar",
+                    "title": "Editar Registro",
+                    "submit": "Actualizar"
+                },
+                "remove": {
+                    "button": "Eliminar",
+                    "title": "Eliminar Registro",
+                    "submit": "Eliminar",
+                    "confirm": {
+                        "_": "¿Está seguro que desea eliminar %d filas?",
+                        "1": "¿Está seguro que desea eliminar 1 fila?"
+                    }
+                },
+                "error": {
+                    "system": "Ha ocurrido un error en el sistema (<a target=\"\\\" rel=\"\\ nofollow\" href=\"\\\">Más información&lt;\\\/a&gt;).<\/a>"
+                },
+                "multi": {
+                    "title": "Múltiples Valores",
+                    "info": "Los elementos seleccionados contienen diferentes valores para este registro. Para editar y establecer todos los elementos de este registro con el mismo valor, hacer click o tap aquí, de lo contrario conservarán sus valores individuales.",
+                    "restore": "Deshacer Cambios",
+                    "noMulti": "Este registro puede ser editado individualmente, pero no como parte de un grupo."
+                }
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "stateRestore": {
+                "creationModal": {
+                    "button": "Crear",
+                    "name": "Nombre:",
+                    "order": "Clasificación",
+                    "paging": "Paginación",
+                    "search": "Busqueda",
+                    "select": "Seleccionar",
+                    "columns": {
+                        "search": "Búsqueda de Columna",
+                        "visible": "Visibilidad de Columna"
+                    },
+                    "title": "Crear Nuevo Estado",
+                    "toggleLabel": "Incluir:"
+                },
+                "emptyError": "El nombre no puede estar vacio",
+                "removeConfirm": "¿Seguro que quiere eliminar este %s?",
+                "removeError": "Error al eliminar el registro",
+                "removeJoiner": "y",
+                "removeSubmit": "Eliminar",
+                "renameButton": "Cambiar Nombre",
+                "renameLabel": "Nuevo nombre para %s",
+                "duplicateError": "Ya existe un Estado con este nombre.",
+                "emptyStates": "No hay Estados guardados",
+                "removeTitle": "Remover Estado",
+                "renameTitle": "Cambiar Nombre Estado"
+            }
+        }
+    </script>
+}

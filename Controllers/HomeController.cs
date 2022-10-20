@@ -39,6 +39,14 @@ namespace ShopBook.Controllers
             return View();
         }
 
+        //
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult MantenimientoLibro(string notification)
+        {
+            ViewBag.notification = notification;
+            return View();
+        }
+
         //Funciones
         [AutorizarUsuario(idOperacion: 2)]
         public ActionResult listarProveedor()

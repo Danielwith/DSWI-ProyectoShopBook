@@ -409,6 +409,7 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
+    <Content Include="Views\Home\MantenimientoLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

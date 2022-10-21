@@ -150,6 +150,12 @@
     <Compile Include="Entity\proveedor_data_temp.cs">
       <DependentUpon>LoginDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tb_editoriales.cs">
+      <DependentUpon>LoginDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_libros.cs">
+      <DependentUpon>LoginDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tb_modulo.cs">
       <DependentUpon>LoginDB.tt</DependentUpon>
     </Compile>
@@ -409,6 +415,7 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
+    <Content Include="Views\Home\MantenimientoLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

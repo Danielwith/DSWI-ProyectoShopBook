@@ -76,19 +76,67 @@ namespace ShopBook.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult MantenimientoLibro(string notification)
+        {
+            ViewBag.notification = notification;
+            return View();
+        }
+
+        //Funciones del mantenimiento Libros
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult listarLibros()
+        {
+            var libros = (from l in db.tb_libros
+                          join e in db.tb_editoriales on l.idEdito equals e.idEdito
+                          where l.estado == 1
+                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, e.nomEdito }).ToList();
+            return Json(new { data = libros }, JsonRequestBehavior.AllowGet);
+        }
+        /*
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult GuardarLibros(string tituLibro, string sinopsis, string nomAutor, decimal precUni, int idEdito, DateTime fechPub)
+        {
+            var data = new tb_libros() { tituLibro = tituLibro, sinopsis = sinopsis, nomAutor = nomAutor, precUni = precUni, idEdito = idEdito, fechPub = fechPub, estado = 1 };
+            db.tb_libros.Add(data);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult EditarLibro(int idLibro, string tituLibro, string sinopsis, int anio, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, int estado)
+        {
+            var data = db.tb_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
+            data.tituLibro = tituLibro;
+            data.sinopsis = sinopsis;
+            data.anio = anio;
+            data.nomAutor = nomAutor;
+            data.precUni = precUni;
+            data.idEdito = idEdito;
+            data.fechPub = fechPub;
+            data.estado = estado;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult EliminarLibro(int idLibro)
+        {
+            var data = db.tb_libros.Find(idLibro);
+            data.estado = 0;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        */
+
+
         // VISTA COMUN USER
         [AutorizarUsuario(idOperacion: 4)]
         public ActionResult Inicio()
         {
             return View();
         }
-
-
-
-
-
-
-
 
         // OPERACIONES
         [AutorizarUsuario(idOperacion: 1)]

@@ -13,6 +13,26 @@
           <Property Name="numVentas" Type="int" Nullable="false" />
           <Property Name="idUser" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="tb_editoriales">
+          <Key>
+            <PropertyRef Name="idEdito" />
+          </Key>
+          <Property Name="idEdito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomEdito" Type="varchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="tb_libros">
+          <Key>
+            <PropertyRef Name="idLibro" />
+          </Key>
+          <Property Name="idLibro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tituLibro" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="nomAutor" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="precUni" Type="smallmoney" />
+          <Property Name="fechPub" Type="datetime" />
+          <Property Name="idEdito" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="idcate" Type="int" />
+        </EntityType>
         <EntityType Name="tb_modulo">
           <Key>
             <PropertyRef Name="idModulo" />
@@ -54,7 +74,7 @@
           <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="idRol" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__proveedor__idUse__4222D4EF">
+        <Association Name="FK__proveedor__idUse__32E0915F">
           <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
           <End Role="proveedor_data_temp" Type="Self.proveedor_data_temp" Multiplicity="*" />
           <ReferentialConstraint>
@@ -63,6 +83,18 @@
             </Principal>
             <Dependent Role="proveedor_data_temp">
               <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idEdito_editoriales">
+          <End Role="tb_editoriales" Type="Self.tb_editoriales" Multiplicity="0..1" />
+          <End Role="tb_libros" Type="Self.tb_libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_editoriales">
+              <PropertyRef Name="idEdito" />
+            </Principal>
+            <Dependent Role="tb_libros">
+              <PropertyRef Name="idEdito" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -121,14 +153,20 @@
         </Function>
         <EntityContainer Name="SistemaBibliotecaPerfilesTestModelStoreContainer">
           <EntitySet Name="proveedor_data_temp" EntityType="Self.proveedor_data_temp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_editoriales" EntityType="Self.tb_editoriales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_libros" EntityType="Self.tb_libros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_operaciones" EntityType="Self.tb_operaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__proveedor__idUse__4222D4EF" Association="Self.FK__proveedor__idUse__4222D4EF">
+          <AssociationSet Name="FK__proveedor__idUse__32E0915F" Association="Self.FK__proveedor__idUse__32E0915F">
             <End Role="tb_usuario" EntitySet="tb_usuario" />
             <End Role="proveedor_data_temp" EntitySet="proveedor_data_temp" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idEdito_editoriales" Association="Self.fk_idEdito_editoriales">
+            <End Role="tb_editoriales" EntitySet="tb_editoriales" />
+            <End Role="tb_libros" EntitySet="tb_libros" />
           </AssociationSet>
           <AssociationSet Name="fk_moduloOperacion" Association="Self.fk_moduloOperacion">
             <End Role="tb_modulo" EntitySet="tb_modulo" />
@@ -281,6 +319,12 @@
             <End Role="tb_usuario" EntitySet="tb_usuario" />
             <End Role="proveedor_data_temp" EntitySet="proveedor_data_temp" />
           </AssociationSet>
+          <EntitySet Name="tb_editoriales" EntityType="SistemaBibliotecaPerfilesTestModel.tb_editoriales" />
+          <EntitySet Name="tb_libros" EntityType="SistemaBibliotecaPerfilesTestModel.tb_libros" />
+          <AssociationSet Name="fk_idEdito_editoriales" Association="SistemaBibliotecaPerfilesTestModel.fk_idEdito_editoriales">
+            <End Role="tb_editoriales" EntitySet="tb_editoriales" />
+            <End Role="tb_libros" EntitySet="tb_libros" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="proveedor_data_temp">
           <Key>
@@ -300,6 +344,40 @@
             </Principal>
             <Dependent Role="proveedor_data_temp">
               <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tb_editoriales">
+          <Key>
+            <PropertyRef Name="idEdito" />
+          </Key>
+          <Property Name="idEdito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomEdito" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_libros" Relationship="SistemaBibliotecaPerfilesTestModel.fk_idEdito_editoriales" FromRole="tb_editoriales" ToRole="tb_libros" />
+        </EntityType>
+        <EntityType Name="tb_libros">
+          <Key>
+            <PropertyRef Name="idLibro" />
+          </Key>
+          <Property Name="idLibro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tituLibro" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="nomAutor" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="precUni" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="fechPub" Type="DateTime" Precision="3" />
+          <Property Name="idEdito" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="idcate" Type="Int32" />
+          <NavigationProperty Name="tb_editoriales" Relationship="SistemaBibliotecaPerfilesTestModel.fk_idEdito_editoriales" FromRole="tb_libros" ToRole="tb_editoriales" />
+        </EntityType>
+        <Association Name="fk_idEdito_editoriales">
+          <End Type="SistemaBibliotecaPerfilesTestModel.tb_editoriales" Role="tb_editoriales" Multiplicity="0..1" />
+          <End Type="SistemaBibliotecaPerfilesTestModel.tb_libros" Role="tb_libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_editoriales">
+              <PropertyRef Name="idEdito" />
+            </Principal>
+            <Dependent Role="tb_libros">
+              <PropertyRef Name="idEdito" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -362,6 +440,28 @@
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="numVentas" ColumnName="numVentas" />
                 <ScalarProperty Name="idData" ColumnName="idData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_editoriales">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_editoriales">
+              <MappingFragment StoreEntitySet="tb_editoriales">
+                <ScalarProperty Name="nomEdito" ColumnName="nomEdito" />
+                <ScalarProperty Name="idEdito" ColumnName="idEdito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_libros">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_libros">
+              <MappingFragment StoreEntitySet="tb_libros">
+                <ScalarProperty Name="idcate" ColumnName="idcate" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idEdito" ColumnName="idEdito" />
+                <ScalarProperty Name="fechPub" ColumnName="fechPub" />
+                <ScalarProperty Name="precUni" ColumnName="precUni" />
+                <ScalarProperty Name="nomAutor" ColumnName="nomAutor" />
+                <ScalarProperty Name="tituLibro" ColumnName="tituLibro" />
+                <ScalarProperty Name="idLibro" ColumnName="idLibro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

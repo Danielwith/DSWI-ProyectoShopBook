@@ -16,6 +16,9 @@
         <AssociationConnector Association="SistemaBibliotecaPerfilesTestModel.fk_rolUser" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp" Width="1.5" PointX="5.25" PointY="6.625" />
         <AssociationConnector Association="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__4222D4EF" />
+        <EntityTypeShape EntityType="SistemaBibliotecaPerfilesTestModel.tb_editoriales" Width="1.5" PointX="5.375" PointY="1.5" />
+        <EntityTypeShape EntityType="SistemaBibliotecaPerfilesTestModel.tb_libros" Width="1.5" PointX="7.625" PointY="1" />
+        <AssociationConnector Association="SistemaBibliotecaPerfilesTestModel.fk_idEdito_editoriales" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

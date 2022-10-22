@@ -41,18 +41,26 @@ namespace ShopBook.Controllers
 
         //Funciones
         [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult listarProveedor()
+        public ActionResult listarProveedor(int edit)
         {
-            var proveedores = (from m in db.tb_usuario
-                               join p in db.proveedor_data_temp on m.idUser equals p.idUser
-                               select new { p.idData,m.idUser, m.nombre, p.numVentas }).ToList();
+            var proveedores= (from m in db.tb_usuario
+                              join p in db.proveedor_data_temp on m.idUser equals p.idUser
+                              where p.activo != 0
+                              select new { p.idData, m.idUser, m.nombre, p.numVentas }).ToList(); 
+            if (edit == 1)
+            {
+                proveedores = (from m in db.tb_usuario
+                                   join p in db.proveedor_data_temp on m.idUser equals p.idUser
+                                   select new { p.idData, m.idUser, m.nombre, p.numVentas }).ToList();
+            }
+            
             return Json(new { data = proveedores}, JsonRequestBehavior.AllowGet);
         }
 
         [AutorizarUsuario(idOperacion: 2)]
         public ActionResult GuardarProveedor(int idUser, int numVentas)
         {
-            var data = new proveedor_data_temp() { idUser=idUser,numVentas=numVentas};
+            var data = new proveedor_data_temp() { idUser=idUser,numVentas=numVentas, activo=1};
             db.proveedor_data_temp.Add(data);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -71,7 +79,7 @@ namespace ShopBook.Controllers
         public ActionResult EliminarProveedor(int idData)
         {
             var data = db.proveedor_data_temp.Find(idData);
-            db.proveedor_data_temp.Remove(data);
+            data.activo = 0;
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }

@@ -31,7 +31,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Home/listarProveedor",
+                    "url": "/Home/listarProveedor?edit="+0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -41,7 +41,7 @@
                     { "data": "numVentas", "autowidth": true },
                     {
                         "data": "idData", "width": "50px", "render": function (data) {
-                            return '<button onclick="getEditarModal('+data+',this)">Editar</button>'
+                            return '<button onclick="promise(' + data +')">Editar</button>'
                         }
                     },
                     {
@@ -113,19 +113,31 @@
             element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
         }
 
-        function getEditarModal(idData, elem) {
-            // Valor de la fila segun indice
-            let id = elem.parentElement.parentElement.getElementsByTagName("td")[0].textContent;
+        function getEditarModal(idData) {
+            let json = fetch("/Home/listarProveedor?edit="+1, {
+                "headers": {
+                    "accept": "*/*",
+                    "content-type": "application/JSON",
+                },
+                "body": null,
+                "method": "GET",
+                "mode": "cors"
+            }).then(resp => resp.json()).then(js => {
+                response = js
+                promiseEditar(response, idData)
+            })
+        }
 
+        function promiseEditar(response, idData) {
             Swal.fire({
                 title: 'Editar',
                 html: `
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="iduser" value=${id} placeholder="ID Usuario" />
+                                    <input disabled="disabled" type="text" id="iduser" value=${response.data[idData-1].idData} placeholder="ID Usuario" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="numventa" placeholder="Num. Ventas" />
+                                    <input type="text" id="numventa" placeholder="Num. Ventas" value=${response.data[idData-1].numVentas} />
                                 </div>
                             </div>`,
                 confirmButtonText: 'Actualizar',

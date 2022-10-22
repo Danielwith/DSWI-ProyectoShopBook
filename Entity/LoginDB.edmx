@@ -11,6 +11,7 @@
           </Key>
           <Property Name="idData" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numVentas" Type="int" Nullable="false" />
+          <Property Name="activo" Type="int" Nullable="false" />
           <Property Name="idUser" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_editoriales">
@@ -74,7 +75,7 @@
           <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="idRol" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__proveedor__idUse__32E0915F">
+        <Association Name="FK__proveedor__idUse__412EB0B6">
           <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
           <End Role="proveedor_data_temp" Type="Self.proveedor_data_temp" Multiplicity="*" />
           <ReferentialConstraint>
@@ -160,7 +161,7 @@
           <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__proveedor__idUse__32E0915F" Association="Self.FK__proveedor__idUse__32E0915F">
+          <AssociationSet Name="FK__proveedor__idUse__412EB0B6" Association="Self.FK__proveedor__idUse__412EB0B6">
             <End Role="tb_usuario" EntitySet="tb_usuario" />
             <End Role="proveedor_data_temp" EntitySet="proveedor_data_temp" />
           </AssociationSet>
@@ -237,7 +238,7 @@
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="idRol" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolUser" FromRole="tb_usuario" ToRole="tb_rol" />
-          <NavigationProperty Name="proveedor_data_temp" Relationship="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__4222D4EF" FromRole="tb_usuario" ToRole="proveedor_data_temp" />
+          <NavigationProperty Name="proveedor_data_temp" Relationship="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__412EB0B6" FromRole="tb_usuario" ToRole="proveedor_data_temp" />
         </EntityType>
         <Association Name="fk_moduloOperacion">
           <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="1" />
@@ -314,39 +315,18 @@
             <Parameter Name="p_email" Mode="In" Type="String" />
             <Parameter Name="p_pass" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="proveedor_data_temp" EntityType="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp" />
-          <AssociationSet Name="FK__proveedor__idUse__4222D4EF" Association="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__4222D4EF">
-            <End Role="tb_usuario" EntitySet="tb_usuario" />
-            <End Role="proveedor_data_temp" EntitySet="proveedor_data_temp" />
-          </AssociationSet>
           <EntitySet Name="tb_editoriales" EntityType="SistemaBibliotecaPerfilesTestModel.tb_editoriales" />
           <EntitySet Name="tb_libros" EntityType="SistemaBibliotecaPerfilesTestModel.tb_libros" />
           <AssociationSet Name="fk_idEdito_editoriales" Association="SistemaBibliotecaPerfilesTestModel.fk_idEdito_editoriales">
             <End Role="tb_editoriales" EntitySet="tb_editoriales" />
             <End Role="tb_libros" EntitySet="tb_libros" />
           </AssociationSet>
+          <EntitySet Name="proveedor_data_temp" EntityType="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp" />
+          <AssociationSet Name="FK__proveedor__idUse__412EB0B6" Association="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__412EB0B6">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="proveedor_data_temp" EntitySet="proveedor_data_temp" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="proveedor_data_temp">
-          <Key>
-            <PropertyRef Name="idData" />
-          </Key>
-          <Property Name="idData" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numVentas" Type="Int32" Nullable="false" />
-          <Property Name="idUser" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tb_usuario" Relationship="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__4222D4EF" FromRole="proveedor_data_temp" ToRole="tb_usuario" />
-        </EntityType>
-        <Association Name="FK__proveedor__idUse__4222D4EF">
-          <End Type="SistemaBibliotecaPerfilesTestModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
-          <End Type="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp" Role="proveedor_data_temp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_usuario">
-              <PropertyRef Name="idUser" />
-            </Principal>
-            <Dependent Role="proveedor_data_temp">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tb_editoriales">
           <Key>
             <PropertyRef Name="idEdito" />
@@ -378,6 +358,28 @@
             </Principal>
             <Dependent Role="tb_libros">
               <PropertyRef Name="idEdito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="proveedor_data_temp">
+          <Key>
+            <PropertyRef Name="idData" />
+          </Key>
+          <Property Name="idData" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numVentas" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Int32" Nullable="false" />
+          <Property Name="idUser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_usuario" Relationship="SistemaBibliotecaPerfilesTestModel.FK__proveedor__idUse__412EB0B6" FromRole="proveedor_data_temp" ToRole="tb_usuario" />
+        </EntityType>
+        <Association Name="FK__proveedor__idUse__412EB0B6">
+          <End Type="SistemaBibliotecaPerfilesTestModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp" Role="proveedor_data_temp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="proveedor_data_temp">
+              <PropertyRef Name="idUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -434,15 +436,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_regUser" FunctionName="SistemaBibliotecaPerfilesTestModel.Store.usp_regUser" />
-          <EntitySetMapping Name="proveedor_data_temp">
-            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp">
-              <MappingFragment StoreEntitySet="proveedor_data_temp">
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="numVentas" ColumnName="numVentas" />
-                <ScalarProperty Name="idData" ColumnName="idData" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_editoriales">
             <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.tb_editoriales">
               <MappingFragment StoreEntitySet="tb_editoriales">
@@ -462,6 +455,16 @@
                 <ScalarProperty Name="nomAutor" ColumnName="nomAutor" />
                 <ScalarProperty Name="tituLibro" ColumnName="tituLibro" />
                 <ScalarProperty Name="idLibro" ColumnName="idLibro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proveedor_data_temp">
+            <EntityTypeMapping TypeName="SistemaBibliotecaPerfilesTestModel.proveedor_data_temp">
+              <MappingFragment StoreEntitySet="proveedor_data_temp">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="numVentas" ColumnName="numVentas" />
+                <ScalarProperty Name="idData" ColumnName="idData" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

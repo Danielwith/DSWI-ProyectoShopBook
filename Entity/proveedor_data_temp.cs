@@ -16,6 +16,7 @@ namespace ShopBook.Entity
     {
         public int idData { get; set; }
         public int numVentas { get; set; }
+        public int activo { get; set; }
         public int idUser { get; set; }
     
         public virtual tb_usuario tb_usuario { get; set; }

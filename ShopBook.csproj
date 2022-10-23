@@ -132,44 +132,44 @@
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Entity\LoginDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LoginDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\LoginDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LoginDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\LoginDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LoginDB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Entity\proveedor_data_temp.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\shoopbook.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>shoopbook.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\shoopbook.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>shoopbook.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\shoopbook.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>shoopbook.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_editoriales.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_libros.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_modulo.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_operaciones.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol_operacion.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_usuario.cs">
-      <DependentUpon>LoginDB.tt</DependentUpon>
+      <DependentUpon>shoopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Filters\VerificarSession.cs" />
@@ -219,15 +219,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Entity\LoginDB.Context.tt">
+    <Content Include="Entity\shoopbook.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LoginDB.edmx</DependentUpon>
-      <LastGenOutput>LoginDB.Context.cs</LastGenOutput>
+      <DependentUpon>shoopbook.edmx</DependentUpon>
+      <LastGenOutput>shoopbook.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\LoginDB.tt">
+    <Content Include="Entity\shoopbook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LoginDB.edmx</DependentUpon>
-      <LastGenOutput>LoginDB.cs</LastGenOutput>
+      <DependentUpon>shoopbook.edmx</DependentUpon>
+      <LastGenOutput>shoopbook.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -350,12 +350,12 @@
     <Content Include="Assets\webfonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Assets\webfonts\poppins\Poppins-ThinItalic.ttf" />
     <Content Include=".editorconfig" />
-    <EntityDeploy Include="Entity\LoginDB.edmx">
+    <EntityDeploy Include="Entity\shoopbook.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LoginDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>shoopbook.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Entity\LoginDB.edmx.diagram">
-      <DependentUpon>LoginDB.edmx</DependentUpon>
+    <Content Include="Entity\shoopbook.edmx.diagram">
+      <DependentUpon>shoopbook.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

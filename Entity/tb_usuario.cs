@@ -27,8 +27,8 @@ namespace ShopBook.Entity
         public System.DateTime fecha { get; set; }
         public int idRol { get; set; }
     
-        public virtual tb_rol tb_rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proveedor_data_temp> proveedor_data_temp { get; set; }
+        public virtual tb_rol tb_rol { get; set; }
     }
 }

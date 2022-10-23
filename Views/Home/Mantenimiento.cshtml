@@ -41,7 +41,7 @@
                     { "data": "numVentas", "autowidth": true },
                     {
                         "data": "idData", "width": "50px", "render": function (data) {
-                            return '<button onclick="promise(' + data +')">Editar</button>'
+                            return '<button onclick="getEditarModal(' + data +')">Editar</button>'
                         }
                     },
                     {
@@ -124,6 +124,7 @@
                 "mode": "cors"
             }).then(resp => resp.json()).then(js => {
                 response = js
+                console.log(response)
                 promiseEditar(response, idData)
             })
         }

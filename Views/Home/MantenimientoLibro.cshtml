@@ -17,10 +17,10 @@
                 <tr>
                     <th>Libro</th>
                     <th>Titulo</th>
-                    <th>Año</th>
                     <th>Autor</th>
                     <th>Precio</th>
-                    <th>Publicado</th>
+                    <th>Fech. Publicación</th>
+                    <th>Sinopsis</th>
                     <th>Editorial</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -35,7 +35,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Home/listarLibros",
+                    "url": "/Home/listarLibros?edit="+0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -45,10 +45,11 @@
                     { "data": "nomAutor", "autowidth": true },
                     { "data": "precUni", "autowidth": true },
                     { "data": "fechPub", "autowidth": true },
+                    { "data": "sinopsis", "autowidth": true },
                     { "data": "nomEdito", "autowidth": true },
                     {
                         "data": "idLibro", "width": "50px", "render": function (data) {
-                            return '<button onclick="getEditarModal('+data+',this)">Editar</button>'
+                            return '<button onclick="getEditarModal('+data+')">Editar</button>'
                         }
                     },
                     {
@@ -76,41 +77,38 @@
                                     <input type="text" id="nomAutor" placeholder="Autor" />
                                 </div>
                             </div>
-                            <div class="row gtr-uniform mb-2">
-                                <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="anio" placeholder="Año de publicacion" />
-                                </div>
+
+                                <div class="form-date" >
+                                
+                                    <input type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
+                                
+                               </div>
+
                                 <div class="col-6 col-12-xsmall">
                                     <input type="text" id="precUni" placeholder="Precio Unit." />
                                 </div>
-                            </div>
-                            <div class="row gtr-uniform mb-2">
                                 <div class="col-6 col-12-xsmall">
                                     <select class="form-control" id="idEdito">
                                         <option value="">Seleccione algo</option>
                                         <option value="1">1</option>
                                     </select>
                                 </div>
-                                <div class="col-6 col-12-xsmall">
-                                       <input type="text" id="fechPub" placeholder="Fecha de Publicacion" />
-                                </div>
-                            </div>
-                            <div class="row gtr-uniform">
+           
                                 <div class="col-12 col-12-xsmall">
                                     <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
                                 </div>
-                            </div>
                             `,
                 confirmButtonText: 'Registrar',
                 showCancelButton: true,
                 preConfirm: () => {
                     let tituLibro = $("#tituLibro").val();
                     let nomAutor = $("#nomAutor").val();
-                    let anio = parseInt($("#anio").val(), 10);
                     let precUni = parseFloat($("#precUni").val(), 10);
                     let idEdito = parseInt($("#idEdito").val(), 10);
                     let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
+
+                    /*MessageBox.Show("debe completar el campo apellido");*/
                     // validaciones
                     //if (Number.isInteger(anio) == false || Number.isInteger(numVentas) == false) {
                     //    Swal.showValidationMessage(`Complete los campos con solo numeros.`)
@@ -120,8 +118,7 @@
                 if (result.isConfirmed) {
                     let tituLibro = $("#tituLibro").val();
                     let nomAutor = $("#nomAutor").val();
-                    let anio = $("#anio").val();
-                    let precUni = $("#precUni").val();
+                    let precUni = parseFloat($("#precUni").val(), 10);
                     let idEdito = $("#idEdito").val();
                     let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
@@ -135,8 +132,8 @@
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/GuardarLibros?tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor +
-                                "&&anio=" + anio + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
+                            url: "/Home/GuardarLibros?tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                                 + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
                                 "&&sinopsis=" + sinopsis,
                             success: function (r) {
                                 window.location = "/Home/MantenimientoLibro?notification=" + message;
@@ -158,32 +155,45 @@
             element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
         }
 
-        function getEditarModal(idLibro, elem) {
-            // Valor de la fila segun indice
-            let id = elem.parentElement.parentElement.getElementsByTagName("td")[0].textContent;
+        function getEditarModal(idLibro) {
+            let json = fetch("/Home/listarLibros?edit=" + 1, {
+                "headers": {
+                    "accept": "*/*",
+                    "content-type": "application/JSON",
+                },
+                "body": null,
+                "method": "GET",
+                "mode": "cors"
+            }).then(resp => resp.json()).then(js => {
+                response = js
+                promiseEditar(response, idLibro)
+            })
+        }
 
+        function promiseEditar(response, idLibro) {
             Swal.fire({
                 title: 'Editar',
                 html: `
                             <div class="row gtr-uniform">
                                 <div class="col-12 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="idLibro" value=${id} placeholder="ID Usuario" />
+                                    <input disabled="disabled" type="text" id="idLibro" value=${response.data[idLibro-1].idLibro} placeholder="ID Usuario" />
                                 </div>
                             </div>
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="tituLibro" placeholder="Titulo" />
+                                    <input type="text" id="tituLibro" placeholder="Titulo" value=${response.data[idLibro - 1].tituLibro} />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="nomAutor" placeholder="Autor" />
+                                    <input type="text" id="nomAutor" placeholder="Autor" value=${response.data[idLibro - 1].nomAutor} />
                                 </div>
                             </div>
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="anio" placeholder="Año de publicacion" />
+                                    <input type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
                                 </div>
+                                
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="precUni" placeholder="Precio Unit." />
+                                    <input type="text" id="precUni" placeholder="Precio Unit." value=${response.data[idLibro - 1].precUni} />
                                 </div>
                             </div>
                             <div class="row gtr-uniform">
@@ -193,19 +203,28 @@
                                         <option value="1">1</option>
                                     </select>
                                 </div>
-                                <div class="col-6 col-12-xsmall">
-                                       <input type="text" id="fechPub" placeholder="Fecha de Publicacion" />
-                                </div>
+                  
                             </div>
                             <div class="row gtr-uniform">
                                 <div class="col-12 col-12-xsmall">
-                                    <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
+                                    <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
                                 </div>
                             </div>
                                     `,
                 confirmButtonText: 'Actualizar',
                 showCancelButton: true,
                 preConfirm: () => {
+                    let tituLibro = $("#tituLibro").val();
+                    let nomAutor = $("#nomAutor").val();
+                    let precUni = $("#precUni").val();
+                    let idEdito = $("#idEdito").val();
+                    let fechPub = $("#fechPub").val();
+                    let sinopsis = $("#sinopsis").val();
+
+                    //if (fechPub.valueAsDate == null) {
+                    //    Swal.showValidationMessage(`Seleccione una fecha.`)
+                    //}
+
                     //let numVentas = parseInt($("#numventa").val(), 10);
                     //if (Number.isInteger(numVentas) == false) {
                     //    Swal.showValidationMessage(`Complete los campos con solo numeros.`)
@@ -215,7 +234,6 @@
                 if (result.isConfirmed) {
                     let tituLibro = $("#tituLibro").val();
                     let nomAutor = $("#nomAutor").val();
-                    let anio = $("#anio").val();
                     let precUni = $("#precUni").val();
                     let idEdito = $("#idEdito").val();
                     let fechPub = $("#fechPub").val();
@@ -232,9 +250,9 @@
                     // Mediante Ajax envia la data al Controlador Home
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor +
-                                "&&anio=" + anio + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
-                                "&&sinopsis=" + sinopsis,
+                            url: "/Home/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                                  + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
+                                "&&sinopsis=" + sinopsis+"&&estado="+1,
                             success: function (r) {
                                 window.location = "/Home/MantenimientoLibro?notification=" + message;
                             }

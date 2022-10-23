@@ -26,7 +26,7 @@ namespace ShopBook.Controllers
             var descripRol=String.Empty;
             try
             {
-                using (Entity.LoginEntities db = new Entity.LoginEntities())
+                using (Entity.shopbookEntities db = new Entity.shopbookEntities())
                 {
                     var oEmail = (from d in db.tb_usuario
                                   where d.email == email.Trim() && d.password == pass.Trim()
@@ -78,7 +78,7 @@ namespace ShopBook.Controllers
             }
             try
             {
-                using(var db = new Entity.LoginEntities())
+                using(var db = new Entity.shopbookEntities())
                 {
                     var checkEmail = (from e in db.tb_usuario
                                      where email == e.email

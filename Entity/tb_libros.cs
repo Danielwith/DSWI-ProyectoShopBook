@@ -11,12 +11,12 @@ namespace ShopBook.Entity
 {
     using System;
     using System.Collections.Generic;
-    
     public partial class tb_libros
     {
         public int idLibro { get; set; }
         public string tituLibro { get; set; }
         public string nomAutor { get; set; }
+        public string sinopsis { get; set; }
         public Nullable<decimal> precUni { get; set; }
         public Nullable<System.DateTime> fechPub { get; set; }
         public Nullable<int> idEdito { get; set; }

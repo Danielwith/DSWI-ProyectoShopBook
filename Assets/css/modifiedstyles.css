@@ -127,3 +127,10 @@ header a{
 section{
     margin-top:-35px !important;
 }
+
+.form-date {
+    
+    display: flex;
+    flex-direction: column;
+}
+

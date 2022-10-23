@@ -2,6 +2,7 @@
 using ShopBook.Filters;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ namespace ShopBook.Controllers
 {
     public class HomeController : Controller
     {
-        private LoginEntities db = new LoginEntities();
+        private shopbookEntities db = new shopbookEntities();
         
         // PAGINA PRINCIPAL
         public ActionResult Index()
@@ -84,6 +85,8 @@ namespace ShopBook.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        //Mantenimiento Libro
+
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult MantenimientoLibro(string notification)
         {
@@ -93,31 +96,60 @@ namespace ShopBook.Controllers
 
         //Funciones del mantenimiento Libros
         [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult listarLibros()
+        public ActionResult listarLibros(int edit)
         {
             var libros = (from l in db.tb_libros
                           join e in db.tb_editoriales on l.idEdito equals e.idEdito
                           where l.estado == 1
-                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, e.nomEdito }).ToList();
-            return Json(new { data = libros }, JsonRequestBehavior.AllowGet);
+                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito }).ToList();
+            var parseo = (from p in libros
+                          select new
+                          {
+                              idLibro = p.idLibro,
+                              tituLibro = p.tituLibro,
+                              nomAutor = p.nomAutor,
+                              precUni = p.precUni,
+                              fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
+                              sinopsis=p.sinopsis,
+                              nomEdito=p.nomEdito
+                          }).ToList();
+            if (edit == 1)
+            {
+                libros = (from l in db.tb_libros
+                              join e in db.tb_editoriales on l.idEdito equals e.idEdito
+                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito }).ToList();
+                parseo = (from p in libros
+                              select new
+                              {
+                                  idLibro = p.idLibro,
+                                  tituLibro = p.tituLibro,
+                                  nomAutor = p.nomAutor,
+                                  precUni = p.precUni,
+                                  fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
+                                  sinopsis = p.sinopsis,
+                                  nomEdito = p.nomEdito
+                              }).ToList();
+            }
+            return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
         }
-        /*
+
+
         [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult GuardarLibros(string tituLibro, string sinopsis, string nomAutor, decimal precUni, int idEdito, DateTime fechPub)
+        public ActionResult GuardarLibros(string tituLibro,string nomAutor, decimal precUni, DateTime fechPub, string sinopsis,  int idEdito)
         {
-            var data = new tb_libros() { tituLibro = tituLibro, sinopsis = sinopsis, nomAutor = nomAutor, precUni = precUni, idEdito = idEdito, fechPub = fechPub, estado = 1 };
+            var data = new tb_libros() { tituLibro = tituLibro, nomAutor = nomAutor, precUni = precUni,fechPub = fechPub ,sinopsis = sinopsis, idEdito = idEdito, estado = 1 };
             db.tb_libros.Add(data);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+
         [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult EditarLibro(int idLibro, string tituLibro, string sinopsis, int anio, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, int estado)
+        public ActionResult EditarLibro(int idLibro, string tituLibro, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, string sinopsis, int estado)
         {
             var data = db.tb_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
             data.tituLibro = tituLibro;
             data.sinopsis = sinopsis;
-            data.anio = anio;
             data.nomAutor = nomAutor;
             data.precUni = precUni;
             data.idEdito = idEdito;
@@ -136,7 +168,6 @@ namespace ShopBook.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        */
 
 
         // VISTA COMUN USER

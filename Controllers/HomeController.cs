@@ -203,6 +203,91 @@ namespace ShopBook.Controllers
             
             return View();
         }
+
+
+
+
+        //Mantenimiento Editorial
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult Editorial()
+        {
+            return View();
+        }
+
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult MantenimientoEditorial(string notification)
+        {
+            ViewBag.notification = notification;
+            return View();
+        }
+
+        //Funciones
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult listarEditorial(int edit)
+        {
+            var Editorial = (from m in db.tb_editoriales
+
+                             where m.estado == "Activo"
+                             select new { m.idEdito, m.nomEdito, m.direccion, m.telefono, m.fechaRegistro }).ToList();
+
+            var parseo = (from p in Editorial
+                          select new
+                          {
+                              idEdito = p.idEdito,
+                              nomEdito = p.nomEdito,
+                              direccion = p.direccion,
+                              telefono = p.telefono,
+                              
+                              fechaRegistro = p.fechaRegistro.Value.ToString("yyyy-MM-dd"),
+                              
+                          }).ToList();
+
+            if (edit == 1)
+            {
+                Editorial = (from m in db.tb_editoriales
+                             select new { m.idEdito, m.nomEdito, m.direccion, m.telefono, m.fechaRegistro }).ToList();
+            }
+
+            return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
+        }
+        
+
+
+
+
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult GuardarEditorial(string nomEdito, string direccion, string telefono,  DateTime fechaRegistro)
+        {
+            var data = new tb_editoriales { nomEdito = nomEdito, direccion = direccion, telefono = telefono, estado = "Activo", fechaRegistro = fechaRegistro };
+            db.tb_editoriales.Add(data);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+       
+        [AutorizarUsuario(idOperacion: 2)]
+         public ActionResult EditarEditorial(int idEdito, string nomEdito, string direccion, string telefono,
+             string estado, DateTime fechagistro)
+         {
+             var data = db.tb_editoriales.Where(u => u.idEdito == idEdito).FirstOrDefault();
+            data.nomEdito = nomEdito;
+            data.direccion = direccion;
+            data.telefono = telefono;
+            data.fechaRegistro = fechagistro;
+             db.SaveChanges();
+             return Json(true, JsonRequestBehavior.AllowGet);
+         }
+        
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult EliminarEditorial(int idEdito)
+        {
+            var data = db.tb_editoriales.Find(idEdito);
+            data.estado = "Inactivo";
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+         
+
     }
 
 }

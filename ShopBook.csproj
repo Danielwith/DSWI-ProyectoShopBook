@@ -130,46 +130,58 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\CatalogoController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Class_DTO\LibroDTO.cs" />
+    <Compile Include="Entity\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\proveedor_data_temp.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\shoopbook.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>shoopbook.Context.tt</DependentUpon>
+    <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
+    <Compile Include="Entity\tb_categorias.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\shoopbook.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>shoopbook.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\shoopbook.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>shoopbook.edmx</DependentUpon>
+    <Compile Include="Entity\tb_cate_subcate_libros.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_editoriales.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_libros.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_modulo.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_operaciones.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol_operacion.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_sub_categorias.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_usuario.cs">
-      <DependentUpon>shoopbook.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Filters\VerificarSession.cs" />
@@ -207,6 +219,7 @@
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\sweetalert2.all.min.js" />
     <Content Include="Assets\js\util.js" />
+    <Content Include="Assets\svg\shopbook.svg" />
     <Content Include="Assets\webfonts\fa-brands-400.svg" />
     <Content Include="Assets\webfonts\fa-regular-400.svg" />
     <Content Include="Assets\webfonts\fa-solid-900.svg" />
@@ -219,15 +232,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Entity\shoopbook.Context.tt">
+    <Content Include="Entity\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>shoopbook.edmx</DependentUpon>
-      <LastGenOutput>shoopbook.Context.cs</LastGenOutput>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\shoopbook.tt">
+    <Content Include="Entity\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>shoopbook.edmx</DependentUpon>
-      <LastGenOutput>shoopbook.cs</LastGenOutput>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -350,12 +363,12 @@
     <Content Include="Assets\webfonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Assets\webfonts\poppins\Poppins-ThinItalic.ttf" />
     <Content Include=".editorconfig" />
-    <EntityDeploy Include="Entity\shoopbook.edmx">
+    <EntityDeploy Include="Entity\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>shoopbook.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Entity\shoopbook.edmx.diagram">
-      <DependentUpon>shoopbook.edmx</DependentUpon>
+    <Content Include="Entity\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -416,10 +429,11 @@
     <Content Include="Views\Acceso\Registrar.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
     <Content Include="Views\Home\MantenimientoLibro.cshtml" />
+    <Content Include="Views\Catalogo\listarLibrosPorCategoria.cshtml" />
+    <Content Include="Views\Catalogo\listarLibrosXSubCate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Sesion\" />
   </ItemGroup>
   <ItemGroup>

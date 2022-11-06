@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "listarLibrosXSubCate";
+}
+
+@model IEnumerable<ShopBook.Class_DTO.LibroDTO>
+@{
+    if (ViewBag.subcategoria != null)
+    {
+        <h2 class="text-center">@System.Web.HttpContext.Current.Session["nomcate"] > @ViewBag.subcategoria</h2>
+    }
+}
+
+<section style="display:flex;">
+    @foreach (var item in Model)
+    {
+        <article>
+            <div>
+                <img src="" class="border-danger" style="width:250px;height:250px" />
+            </div>
+            <h4 class="text-dark">@item.titulo.ToUpper()</h4>
+            <h5>@item.autor.ToUpper()</h5>
+            <h4>@item.precio.ToUpper()</h4>
+            <button class="button">@Html.ActionLink("COMPRAR", "agregarCarrito", "Carrito", new { id = item.idLibro }, null) </button>
+        </article>
+    }
+</section>

@@ -16,7 +16,9 @@ namespace ShopBook.Controllers
         // PAGINA PRINCIPAL
         public ActionResult Index()
         {
-            return View();
+            Session["subcate"] = null;
+            var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
+            return View(categorias);
         }
 
         // DEPENDE DEL ROL

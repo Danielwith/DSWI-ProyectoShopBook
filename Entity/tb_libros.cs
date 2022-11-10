@@ -11,8 +11,15 @@ namespace ShopBook.Entity
 {
     using System;
     using System.Collections.Generic;
+    
     public partial class tb_libros
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_libros()
+        {
+            this.tb_cate_subcate_libros = new HashSet<tb_cate_subcate_libros>();
+        }
+    
         public int idLibro { get; set; }
         public string tituLibro { get; set; }
         public string nomAutor { get; set; }
@@ -21,8 +28,10 @@ namespace ShopBook.Entity
         public Nullable<System.DateTime> fechPub { get; set; }
         public Nullable<int> idEdito { get; set; }
         public Nullable<int> estado { get; set; }
-        public Nullable<int> idcate { get; set; }
+        public string img { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_cate_subcate_libros> tb_cate_subcate_libros { get; set; }
         public virtual tb_editoriales tb_editoriales { get; set; }
     }
 }

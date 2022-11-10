@@ -2,37 +2,37 @@
 @{
     ViewBag.Title = "MantenimientoEditorial";
 }
-    @Styles.Render("~/Assets/css/modifiedstyles.css")
-    
-    
+@Styles.Render("~/Assets/css/modifiedstyles.css")
 
-    <header id="header">
-        <a href="#" class="logo"><strong>Mantenimiento de Editoriales</strong></a>
-    </header>
 
-    <section>
-        <ul class="actions">
-            <li><a href="#" onclick="getAgregarModal()" class="button">Registrar</a></li>
-        </ul>
-        <div class="table-wrapper">
-            <table id="tableId">
-                <thead>
-                    <tr>
-                        <th>ID Editorial</th>
-                        <th>Nombre</th>
-                        <th>Dirección</th>
-                        <th>Teléfono</th>
-         
-                        <th>Fecha Registro</th>
-                        <th>EDITAR</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </section>
-    @section scripts{
-        <script type="text/javascript">
+
+<header id="header">
+    <a href="#" class="logo"><strong>Mantenimiento de Editoriales</strong></a>
+</header>
+
+<section>
+    <ul class="actions">
+        <li><a href="#" onclick="getAgregarModal()" class="button">Registrar</a></li>
+    </ul>
+    <div class="table-wrapper">
+        <table id="tableId">
+            <thead>
+                <tr>
+                    <th>ID Editorial</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+
+                    <th>Fecha Registro</th>
+                    <th>EDITAR</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
@@ -45,7 +45,7 @@
                     { "data": "nomEdito", "autowidth": true },
                     { "data": "direccion", "autowidth": true },
                     { "data": "telefono", "autowidth": true },
-                    
+
                     { "data": "fechaRegistro", "autowidth": true },
 
                     {
@@ -65,65 +65,75 @@
         if ('@ViewBag.notification' != '') {
             Notification('@ViewBag.notification');
         }
-
-        function getAgregarModal() {
-            Swal.fire({
-                title: 'Agregar',
-                html: `
+      function getAgregarModal() {
+                Swal.fire({
+                    title: 'Agregar',
+                    html: `
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="iduser" placeholder="ID Usuario" />
+                                    <input type="text" id="nomEdito" placeholder="Nom Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="numventa" placeholder="Num. Ventas" />
+                                    <input type="text" id="direccion" placeholder="Direccion     " />
+                                </div>
+                                   <div class="col-6 col-12-xsmall">
+                                    <input type="text" id="telefono" placeholder="Telefono" />
+                                </div>
+
+                                <div class="col-6 col-12-xsmall">
+                                    <input type="date" id="fechaRegistro" placeholder="Fecha Registro" />
                                 </div>
                             </div>`,
-                confirmButtonText: 'Registrar',
-                showCancelButton: true,
-                preConfirm: () => {
-                    let idUser = parseInt($("#iduser").val(), 10);
-                    let numVentas = parseInt($("#numventa").val(), 10);
-                    if (Number.isInteger(idUser) == false || Number.isInteger(numVentas) == false) {
-                        Swal.showValidationMessage(`Complete los campos con solo numeros.`)
+                    confirmButtonText: 'Registrar',
+                    showCancelButton: true,
+                    preConfirm: () => {
+                        //let idUser = parseInt($("#iduser").val(), 10);
+                        //let numVentas = parseInt($("#numventa").val(), 10);
+                        //if (Number.isInteger(idUser) == false || Number.isInteger(numVentas) == false) {
+                        //    Swal.showValidationMessage(Complete los campos con solo numeros.)
+                        //}
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let nomEdito = $("#nomEdito").val();
+                        let direccion = $("#direccion").val();
+                        let telefono = $("#telefono").val();
+                        let fechaRegistro = $("#fechaRegistro").val();
+
+                        let message = "Se agrego correctamente";
+                        Swal.fire(
+                            'Agregado!',
+                            'Nombre de Editorial: ' + nomEdito + ' | Dirección de Editorial: ' + direccion, 'Telefono de Editorial: ' + telefono,
+                            'Fecha de Registro: ' + fechaRegistro,
+                            'success'
+                        )
+                        // Es solo estilo, tiene incompatiblidad con main.css
+                        element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                        $(".swal2-confirm").click(function () {
+                            $.ajax({
+                                url: "/Home/GuardarEditorial?nomEdito=" + nomEdito + "&&direccion=" + direccion + "&&telefono=" + telefono + "&&fechaRegistro=" + fechaRegistro,
+                                success: function (r) {
+                                    window.location = "/Home/MantenimientoEditorial?notification=" + message;
+                                }
+                            })
+                        })
+                    }
+                })
+                let element = document.getElementsByClassName("swal2-styled")
+                /* Alert Fix Styles */
+                for (let i = 0; i < element.length; i++) {
+                    if (element[i].getAttribute("style") == "display: none;") {
+                    }
+                    else {
+                        element[i].setAttribute("style",
+                            "height:2.5em !important; line-height: 0em !important; color: white !important")
                     }
                 }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let idUser = $("#iduser").val();
-                    let numVentas = $("#numventa").val();
-                    let message = "Se agrego correctamente";
-                    Swal.fire(
-                        'Agregado!',
-                        'Usuario: ' + idUser + ' | Numero de Ventas: ' + numVentas,
-                        'success'
-                    )
-                    // Es solo estilo, tiene incompatiblidad con main.css
-                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
-                    $(".swal2-confirm").click(function () {
-                        $.ajax({
-                            url: "/Home/GuardarProveedor?idUser=" + idUser + "&&numVentas=" + numVentas,
-                            success: function (r) {
-                                window.location = "/Home/Mantenimiento?notification=" + message;
-                            }
-                        })
-                    })
-                }
-            })
-            let element = document.getElementsByClassName("swal2-styled")
-            /* Alert Fix Styles */
-            for (let i = 0; i < element.length; i++) {
-                if (element[i].getAttribute("style") == "display: none;") {
-                }
-                else {
-                    element[i].setAttribute("style",
-                        "height:2.5em !important; line-height: 0em !important; color: white !important")
-                }
+                element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
             }
-            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
-        }
 
-        function getEditarModal(idData) {
-            let json = fetch("/Home/listarProveedor?edit="+1, {
+        function getEditarModal(idEdito) {
+            let json = fetch("/Home/listarEditorial?edit="+1, {
                 "headers": {
                     "accept": "*/*",
                     "content-type": "application/JSON",
@@ -133,37 +143,55 @@
                 "mode": "cors"
             }).then(resp => resp.json()).then(js => {
                 response = js
-                promiseEditar(response, idData)
+                console.log(response)
+                promiseEditar(response, idEdito)
             })
         }
 
-        function promiseEditar(response, idData) {
+        function promiseEditar(response, idEdito) {
             Swal.fire({
                 title: 'Editar',
                 html: `
                             <div class="row gtr-uniform">
+                                 <div class="col-6 col-12-xsmall">
+                                    <input type="hidden" id="nomEdito" value=${response.data[idEdito - 1].idEdito}placeholder="Id Editorial" />
+                                </div>
+
                                 <div class="col-6 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="iduser" value=${response.data[idData-1].idData} placeholder="ID Usuario" />
+                                    <input type="text" id="nomEdito" value=${response.data[idEdito - 1].nomEdito}placeholder="Nom Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="numventa" placeholder="Num. Ventas" value=${response.data[idData-1].numVentas} />
+                                    <input type="text" id="direccion" value=${response.data[idEdito - 1].direccion}placeholder="Direccion     " />
+                                </div>
+                                   <div class="col-6 col-12-xsmall">
+                                    <input type="text" id="telefono"value=${response.data[idEdito - 1].telefono} placeholder="Telefono" />
+                                </div>
+
+                                <div class="col-6 col-12-xsmall">
+                                    <input type="date" id="fechaRegistro" value=${response.data[idEdito - 1].fechaRegistro} placeholder="Fecha Registro" />
                                 </div>
                             </div>`,
                 confirmButtonText: 'Actualizar',
                 showCancelButton: true,
                 preConfirm: () => {
-                    let numVentas = parseInt($("#numventa").val(), 10);
-                    if (Number.isInteger(numVentas) == false) {
-                        Swal.showValidationMessage(`Complete los campos con solo numeros.`)
-                    }
+                    let nomEdito = $("#nomEdito").val();
+                    let direccion = $("#direccion").val();
+                    let telefono = $("#telefono").val();
+                    let fechaRegistro = $("#fechaRegistro").val();
+
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let numVentas = $("#numventa").val();
+                    let nomEdito = $("#nomEdito").val();
+                    let direccion = $("#direccion").val();
+                    let telefono = $("#telefono").val();
+                    let fechaRegistro = $("#fechaRegistro").val();
                     let message = "Actualizado correctamente";
                     Swal.fire(
                         'Actualizado!',
-                        'Numero de Ventas: ' + numVentas,
+                        'Editorial: ' + nomEdito + ' | Direccion: ' + direccion,
+                         ' |Telefono: ' + telefono,' | Fecha de Registro: ' + fechaRegistro,
+
                         'success'
                     )
                     // Es solo estilo, tiene incompatiblidad con main.css
@@ -172,9 +200,10 @@
                     // Mediante Ajax envia la data al Controlador Home
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EditarProveedor?idData=" + idData + "&&numVentas=" + numVentas,
+                            url: "/Home/EditarEditorial?idEdito=" + idEdito + "&&nomEdito=" + nomEdito+
+                            "&&direccion="+direccion+ "&&telefono=" + telefono+"&&fechaRegistro="+ fechaRegistro,
                             success: function (r) {
-                                window.location = "/Home/Mantenimiento?notification=" + message;
+                                window.location = "/Home/MantenimientoEditorial?notification=" + message;
                             }
                         })
                     })
@@ -193,10 +222,10 @@
             element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
         }
 
-        function getEliminarModal(idData) {
+        function getEliminarModal(idEdito) {
             Swal.fire({
                 title: 'Eliminar',
-                text: 'Deseas eliminar este proveedor?',
+                text: 'Deseas eliminar esta Editorial?',
                 confirmButtonText: 'Eliminar',
                 showCancelButton: true
             }).then((result) => {
@@ -211,9 +240,9 @@
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EliminarProveedor?idData=" + idData,
+                            url: "/Home/EliminarEditorial?idEdito=" + idEdito,
                             success: function (r) {
-                                window.location = "/Home/Mantenimiento?notification=" + message;
+                                window.location = "/Home/MantenimientoEditorial?notification=" + message;
                             }
                         })
                     })
@@ -476,7 +505,6 @@
                 "renameTitle": "Cambiar Nombre Estado"
             }
         }
-        </script>
-    }
-</h2>
+    </script>
+}
 

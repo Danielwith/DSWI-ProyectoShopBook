@@ -51,7 +51,7 @@ namespace ShopBook.Controllers
                                             join csl in db.tb_cate_subcate_libros on l.idLibro equals csl.idLibro
                                             join sc in db.tb_sub_categorias on csl.idSubCate equals sc.idsubCate
                                             join c in db.tb_categorias on csl.idCate equals c.idcate
-                                            where csl.idSubCate == idSubCate && l.estado != 0
+                                            where sc.idsubCate == idSubCate && l.estado != 0
                                             select new LibroDTO
                                             {
                                                 idLibro = l.idLibro.ToString(),
@@ -63,5 +63,29 @@ namespace ShopBook.Controllers
 
             return View(libros.OrderBy(x => x.titulo));
         }
+
+        public ActionResult listLibros(int idLib)
+        {
+            IEnumerable<LibroDTO> libros = (from e in db.tb_editoriales
+                                            join l in db.tb_libros on e.idEdito equals l.idEdito
+                                            join csl in db.tb_cate_subcate_libros on l.idLibro equals csl.idLibro
+                                            join sc in db.tb_sub_categorias on csl.idSubCate equals sc.idsubCate
+                                            join c in db.tb_categorias on csl.idCate equals c.idcate
+                                            where csl.idLibro == idLib && l.estado != 0
+                                            select new LibroDTO
+                                            {
+                                                idLibro = l.idLibro.ToString(),
+                                                titulo = l.tituLibro,
+                                                autor = l.nomAutor,
+                                                sinopsis = l.sinopsis,
+                                                precio = l.precUni.ToString(),
+                                                img = l.img
+                                            }).ToList();
+
+
+            return View(libros);
+        }
+
+
     }
 }

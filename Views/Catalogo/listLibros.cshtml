@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ShopBook.Class_DTO.LibroDTO>
+@{
+    ViewBag.Title = "listLibros";
+}
+
+<section>
+    <header class="major">
+        <h2>Detalle del Libro</h2>
+    </header>
+    <div class="features">
+        @foreach (var item in Model)
+        {
+        <article>
+            <span>  <img src="" class="border-danger" style="width:250px;height:250px" /></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="content">
+                <h3 class="text-dark">@item.titulo.ToUpper()</h3>
+                <h3>@item.autor.ToUpper()</h3>
+                <h3>@item.sinopsis</h3>
+                <h3>@item.precio.ToUpper()</h3>
+                <button class="button">@Html.ActionLink("Comprar", "AgregarCarrito", "Carrito", new { idLib = item.idLibro }, null) </button>
+            </div>
+        </article>
+        }
+        </div>
+</section>

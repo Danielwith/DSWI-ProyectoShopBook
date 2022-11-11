@@ -1,0 +1,409 @@
+﻿
+@{
+    ViewBag.Title = "Compras";
+}
+@Styles.Render("~/Assets/css/modifiedstyles.css")
+
+<header id="header">
+    <a href="#" class="logo"><strong>Carrito de Compras</strong></a>
+</header>
+<section>
+    <div class="table-wrapper" style="text-align: center;">
+        <table id="tableId">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+<hr />
+<div class="box">
+    <h3>Total a Pagar:</h3>
+    <input type="text" id="total" style="width:12em" value="Cargando..." readonly />
+    <hr />
+    <br />
+    <a style="float:right; margin-top:-35px" onclick="getConfirmarModal()" class="button">Finalizar Compra</a>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tableId").DataTable({
+                "ajax": {
+                    "url": "/Carrito/listarCarrito",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "tituLibro", "autowidth": true },
+                    { "data": "nomAutor", "autowidth": true },
+                    { "data": "precUni", "autowidth": true },
+                    { "data": "cantidad", "autowidth": true },
+                    { "data": "subtotal", "autowidth": true },
+                    {
+                        "data": "img", "autowidth": true, "render": function (data) {
+                            return '<img style="width: 100%; height:50px;object-fit:cover;" src='+data+' />'
+                        }
+                    },
+                    {
+                        "data": "idLibro", "autowidth": true, "render": function (data) {
+                            return '<button onclick="getEliminarModal(' + data + ')">ELIMINAR</button>'
+                        }
+                    }
+                ],
+                "language": espaniol
+            });
+        });
+
+        if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+        setTimeout(inputvalue, 3000);
+        function inputvalue() {
+            let d = document.getElementById("total");
+            let c = document.getElementsByTagName("tr");
+            let sumtotal = 0;
+            try {
+                for (let i = 1; i < c.length; i++) {
+                    sumtotal += parseInt(c[i].childNodes[4].firstChild.textContent);
+                }
+            }
+            catch {
+            }
+            
+            d.value = sumtotal;
+        }
+
+        function getEliminarModal(idData) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Estas seguro de querer eliminar este producto?',
+                text: '',
+                confirmButtonText: 'Eliminar',
+                showCancelButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let message = "Se elimino correctamente";
+                    Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                    )
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Carrito/Delete?id=" + idData,
+                            success: function (r) {
+                                window.location = "/Carrito/Compras?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        function getConfirmarModal() {
+            console.log(document.getElementById("total").value )
+            if (document.getElementById("total").value == 0 || document.getElementById("total").value == "Cargando...") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Aun tienes la canasta vacia!',
+                })
+                element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #d9071c  !important")
+            }
+            else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Gracias por su compra esperemos regrese pronto...!!!',
+                text: '',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let message = "Compra realizada con exito!"
+                        $.ajax({
+                            url: "/Carrito/FinalizarCompra",
+                            success: function (r) {
+                                window.location = "/Carrito/Compras?notification=" + message;
+                            }
+                        })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+                element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #22c41f   !important")
+            }
+        }
+
+        // Plug-in traductor a español
+        var espaniol = {
+            "processing": "Procesando...",
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "search": "Buscar:",
+            "infoThousands": ",",
+            "loadingRecords": "Cargando...",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad",
+                "collection": "Colección",
+                "colvisRestore": "Restaurar visibilidad",
+                "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                "copySuccess": {
+                    "1": "Copiada 1 fila al portapapeles",
+                    "_": "Copiadas %ds fila al portapapeles"
+                },
+                "copyTitle": "Copiar al portapapeles",
+                "csv": "CSV",
+                "excel": "Excel",
+                "pageLength": {
+                    "-1": "Mostrar todas las filas",
+                    "_": "Mostrar %d filas"
+                },
+                "pdf": "PDF",
+                "print": "Imprimir",
+                "renameState": "Cambiar nombre",
+                "updateState": "Actualizar",
+                "createState": "Crear Estado",
+                "removeAllStates": "Remover Estados",
+                "removeState": "Remover",
+                "savedStates": "Estados Guardados",
+                "stateRestore": "Estado %d"
+            },
+            "autoFill": {
+                "cancel": "Cancelar",
+                "fill": "Rellene todas las celdas con <i>%d<\/i>",
+                "fillHorizontal": "Rellenar celdas horizontalmente",
+                "fillVertical": "Rellenar celdas verticalmentemente"
+            },
+            "decimal": ",",
+            "searchBuilder": {
+                "add": "Añadir condición",
+                "button": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "clearAll": "Borrar todo",
+                "condition": "Condición",
+                "conditions": {
+                    "date": {
+                        "after": "Despues",
+                        "before": "Antes",
+                        "between": "Entre",
+                        "empty": "Vacío",
+                        "equals": "Igual a",
+                        "notBetween": "No entre",
+                        "notEmpty": "No Vacio",
+                        "not": "Diferente de"
+                    },
+                    "number": {
+                        "between": "Entre",
+                        "empty": "Vacio",
+                        "equals": "Igual a",
+                        "gt": "Mayor a",
+                        "gte": "Mayor o igual a",
+                        "lt": "Menor que",
+                        "lte": "Menor o igual que",
+                        "notBetween": "No entre",
+                        "notEmpty": "No vacío",
+                        "not": "Diferente de"
+                    },
+                    "string": {
+                        "contains": "Contiene",
+                        "empty": "Vacío",
+                        "endsWith": "Termina en",
+                        "equals": "Igual a",
+                        "notEmpty": "No Vacio",
+                        "startsWith": "Empieza con",
+                        "not": "Diferente de",
+                        "notContains": "No Contiene",
+                        "notStartsWith": "No empieza con",
+                        "notEndsWith": "No termina con"
+                    },
+                    "array": {
+                        "not": "Diferente de",
+                        "equals": "Igual",
+                        "empty": "Vacío",
+                        "contains": "Contiene",
+                        "notEmpty": "No Vacío",
+                        "without": "Sin"
+                    }
+                },
+                "data": "Data",
+                "deleteTitle": "Eliminar regla de filtrado",
+                "leftTitle": "Criterios anulados",
+                "logicAnd": "Y",
+                "logicOr": "O",
+                "rightTitle": "Criterios de sangría",
+                "title": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "value": "Valor"
+            },
+            "searchPanes": {
+                "clearMessage": "Borrar todo",
+                "collapse": {
+                    "0": "Paneles de búsqueda",
+                    "_": "Paneles de búsqueda (%d)"
+                },
+                "count": "{total}",
+                "countFiltered": "{shown} ({total})",
+                "emptyPanes": "Sin paneles de búsqueda",
+                "loadMessage": "Cargando paneles de búsqueda",
+                "title": "Filtros Activos - %d",
+                "showMessage": "Mostrar Todo",
+                "collapseMessage": "Colapsar Todo"
+            },
+            "select": {
+                "cells": {
+                    "1": "1 celda seleccionada",
+                    "_": "%d celdas seleccionadas"
+                },
+                "columns": {
+                    "1": "1 columna seleccionada",
+                    "_": "%d columnas seleccionadas"
+                },
+                "rows": {
+                    "1": "1 fila seleccionada",
+                    "_": "%d filas seleccionadas"
+                }
+            },
+            "thousands": ".",
+            "datetime": {
+                "previous": "Anterior",
+                "next": "Proximo",
+                "hours": "Horas",
+                "minutes": "Minutos",
+                "seconds": "Segundos",
+                "unknown": "-",
+                "amPm": [
+                    "AM",
+                    "PM"
+                ],
+                "months": {
+                    "0": "Enero",
+                    "1": "Febrero",
+                    "10": "Noviembre",
+                    "11": "Diciembre",
+                    "2": "Marzo",
+                    "3": "Abril",
+                    "4": "Mayo",
+                    "5": "Junio",
+                    "6": "Julio",
+                    "7": "Agosto",
+                    "8": "Septiembre",
+                    "9": "Octubre"
+                },
+                "weekdays": [
+                    "Dom",
+                    "Lun",
+                    "Mar",
+                    "Mie",
+                    "Jue",
+                    "Vie",
+                    "Sab"
+                ]
+            },
+            "editor": {
+                "close": "Cerrar",
+                "create": {
+                    "button": "Nuevo",
+                    "title": "Crear Nuevo Registro",
+                    "submit": "Crear"
+                },
+                "edit": {
+                    "button": "Editar",
+                    "title": "Editar Registro",
+                    "submit": "Actualizar"
+                },
+                "remove": {
+                    "button": "Eliminar",
+                    "title": "Eliminar Registro",
+                    "submit": "Eliminar",
+                    "confirm": {
+                        "_": "¿Está seguro que desea eliminar %d filas?",
+                        "1": "¿Está seguro que desea eliminar 1 fila?"
+                    }
+                },
+                "error": {
+                    "system": "Ha ocurrido un error en el sistema (<a target=\"\\\" rel=\"\\ nofollow\" href=\"\\\">Más información&lt;\\\/a&gt;).<\/a>"
+                },
+                "multi": {
+                    "title": "Múltiples Valores",
+                    "info": "Los elementos seleccionados contienen diferentes valores para este registro. Para editar y establecer todos los elementos de este registro con el mismo valor, hacer click o tap aquí, de lo contrario conservarán sus valores individuales.",
+                    "restore": "Deshacer Cambios",
+                    "noMulti": "Este registro puede ser editado individualmente, pero no como parte de un grupo."
+                }
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "stateRestore": {
+                "creationModal": {
+                    "button": "Crear",
+                    "name": "Nombre:",
+                    "order": "Clasificación",
+                    "paging": "Paginación",
+                    "search": "Busqueda",
+                    "select": "Seleccionar",
+                    "columns": {
+                        "search": "Búsqueda de Columna",
+                        "visible": "Visibilidad de Columna"
+                    },
+                    "title": "Crear Nuevo Estado",
+                    "toggleLabel": "Incluir:"
+                },
+                "emptyError": "El nombre no puede estar vacio",
+                "removeConfirm": "¿Seguro que quiere eliminar este %s?",
+                "removeError": "Error al eliminar el registro",
+                "removeJoiner": "y",
+                "removeSubmit": "Eliminar",
+                "renameButton": "Cambiar Nombre",
+                "renameLabel": "Nuevo nombre para %s",
+                "duplicateError": "Ya existe un Estado con este nombre.",
+                "emptyStates": "No hay Estados guardados",
+                "removeTitle": "Remover Estado",
+                "renameTitle": "Cambiar Nombre Estado"
+            }
+        }
+    </script>
+}

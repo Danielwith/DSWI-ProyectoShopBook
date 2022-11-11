@@ -1,26 +1,100 @@
-﻿@model IEnumerable<ShopBook.Class_DTO.LibroDTO>
-@{
+﻿@model ShopBook.Class_DTO.LibroDTO
+    @{
     ViewBag.Title = "listLibros";
-}
+    }
 
-<section>
-    <header class="major">
-        <h2>Detalle del Libro</h2>
-    </header>
-    <div class="features">
-        @foreach (var item in Model)
-        {
-        <article>
-            <span>  <img src="" class="border-danger" style="width:250px;height:250px" /></span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="content">
-                <h3 class="text-dark">@item.titulo.ToUpper()</h3>
-                <h3>@item.autor.ToUpper()</h3>
-                <h3>@item.sinopsis</h3>
-                <h3>@item.precio.ToUpper()</h3>
-                <button class="button">@Html.ActionLink("Comprar", "AgregarCarrito", "Carrito", new { idLib = item.idLibro }, null) </button>
-            </div>
-        </article>
-        }
+    <section>
+        <header class="major">
+            <h2>Detalle del Libro</h2>
+        </header>
+        <div class="features">
+            <article>
+                <span>  <img src="" class="border-danger" style="width:250px;height:250px" /></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="content">
+                    <h3 class="text-dark">@Model.titulo.ToUpper()</h3>
+                    <h3>@Model.autor.ToUpper()</h3>
+                    <h3>@Model.sinopsis</h3>
+                    <h3>@Model.precio.ToUpper()</h3>
+                    <input type="number" class="" id="idcant" name="cant" />
+                    <button class="button" id="idAgregarCarrito">Agregar</button>
+                </div>
+            </article>
         </div>
-</section>
+    </section>
+    @{
+
+    if (System.Web.HttpContext.Current.Session["email"] == null)
+    {
+@section scripts{
+    <script type="text/javascript">
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debes iniciar sesion!',
+            confirmButtonText: 'Logear',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "/Acceso/Login";
+            }
+        })
+
+        let element = document.getElementsByClassName("swal2-styled")
+        /* Alert Fix Styles */
+        for (let i = 0; i < element.length; i++) {
+            if (element[i].getAttribute("style") == "display: none;") {
+            }
+            else {
+                element[i].setAttribute("style",
+                    "height:2.5em !important; line-height: 0em !important; color: white !important")
+            }
+        }
+        element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+    </script>
+    }
+        }
+    else {
+        @section scripts{
+            <script type="text/javascript">
+
+                var btnagregar = document.getElementById("idAgregarCarrito")
+                btnagregar.addEventListener("click", function confirmarModal() {
+                    var id = @Model.idLibro;
+                    var cant = document.getElementById('idcant').value;
+                    console.log(id);
+                    console.log(cant);
+                    Swal.fire({
+                        title: 'Agregar al carrito?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Agregar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "/Carrito/AgregarCarrito?idLib=" + id + "&&cantidad=" + cant,
+                                success: function (r) {
+                                    Notification("Agregado al carrito!")
+                                }
+                            })
+                        }
+                    })
+
+                    let element = document.getElementsByClassName("swal2-styled")
+                    /* Alert Fix Styles */
+                    for (let i = 0; i < element.length; i++) {
+                        if (element[i].getAttribute("style") == "display: none;") {
+                        }
+                        else {
+                            element[i].setAttribute("style",
+                                "height:2.5em !important; line-height: 0em !important; color: white !important")
+                        }
+                    }
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+
+                })
+            </script>
+        }
+        }
+
+    }
+    }

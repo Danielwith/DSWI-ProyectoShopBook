@@ -134,6 +134,10 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Class_DTO\LibroDTO.cs" />
+    <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
+    <Compile Include="Entity\database_firewall_rules.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,7 +156,6 @@
     <Compile Include="Entity\proveedor_data_temp.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
     <Compile Include="Entity\tb_categorias.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

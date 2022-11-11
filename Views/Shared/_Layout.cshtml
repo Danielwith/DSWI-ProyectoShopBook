@@ -57,9 +57,12 @@
                     <!-- ELEMENTOS DEL MENU -->
                     <ul>
                         <!-- ELEMENTOS GLOBALES -->
-                        <li><a onclick="Alert('Test','info','success')" href="#">Alerta</a></li>
-                        <li><a onclick="Notification('Esta es una prueba')" href="#">Notificación</a></li>
-                        <li><a onclick="Delete()" href="#">Delete</a></li>
+                        @if (System.Web.HttpContext.Current.Session["email"] == null)
+                        {
+                        
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("CarritoPrueba", "Compras", "Carrito")</li>
+                        }
 
                         <!-- ELEMENTOS AL LOGEAR -->
                         <!-- AHORA SE MANEJA DESDE ID ROL -->
@@ -69,47 +72,48 @@
                                 /* ADMINISTRADOR */
                                 if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 1)
                                 {
-                                    <li>
-                                        <span class="opener">Acciones de SuperUsuario</span>
-                                        <ul>
-                                            <li>@Html.ActionLink("Inicio", "Admin", "Home")</li>
-                                            <li>@Html.ActionLink("Moderar", "About", "Home")</li>
-                                            <li>@Html.ActionLink("Generar", "Contact", "Home")</li>
-                                            <li>@Html.ActionLink("Libro", "MantenimientoLibro", "Home")</li>
-                                        </ul>
-                                    </li>
+                            
+                            <li>
+                                <span class="opener">Acciones de SuperUsuario</span>
+                                <ul>
+                                    <li>@Html.ActionLink("Inicio", "Admin", "Home")</li>
+                                    <li>@Html.ActionLink("Moderar", "About", "Home")</li>
+                                    <li>@Html.ActionLink("Generar", "Contact", "Home")</li>
+                                    <li>@Html.ActionLink("Libro", "MantenimientoLibro", "Home")</li>
+                                </ul>
+                            </li>
                                 }
 
                                 /* PROVEEDOR */
                                 if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 2)
                                 {
-                                    <li>@Html.ActionLink("Inicio", "Proveedor", "Home")</li>
-                                    <li>@Html.ActionLink("Mantenimiento", "Mantenimiento", "Home")</li>
-                                    <li>@Html.ActionLink("Eliminar Libro", "Proveedor", "Home")</li>
-                                    <li>@Html.ActionLink("MantenimientoEditorial", "MantenimientoEditorial", "Home")</li>
+                            
+                            <li>@Html.ActionLink("Inicio", "Proveedor", "Home")</li>
+                            <li>@Html.ActionLink("Mantenimiento", "Mantenimiento", "Home")</li>
+                            <li>@Html.ActionLink("Eliminar Libro", "Proveedor", "Home")</li>
+                            <li>@Html.ActionLink("MantenimientoEditorial", "MantenimientoEditorial", "Home")</li>
                                 }
 
                                 /* USUARIO DEFAULT - INICIO AL LOGEAR */
                                 if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 4)
                                 {
-                                    <li>@Html.ActionLink("Inicio", "Inicio", "Home")</li>
-                                    <li>@Html.ActionLink("Ver Favoritos", "Inicio", "Home")</li>
-                                    <li>@Html.ActionLink("Mis Compras", "Inicio", "Home")</li>
+                            <li>@Html.ActionLink("Inicio", "Inicio", "Home")</li>
+                            <li>@Html.ActionLink("Ver Favoritos", "Inicio", "Home")</li>
+                            <li>@Html.ActionLink("Mis Compras", "Inicio", "Home")</li>
                                 }
-
                             }
                         }
-                        
+
                         <li>
                             <span class="opener">Cuenta</span>
                             <ul>
                                 @{ if (System.Web.HttpContext.Current.Session["email"] != null)
                                     {
-                                        <li>@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso")</li>
+                                    <li>@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso")</li>
                                     }
                                     else
                                     {
-                                        <li>@Html.ActionLink("Iniciar Sesión", "Login", "Acceso")</li>
+                                    <li>@Html.ActionLink("Iniciar Sesión", "Login", "Acceso")</li>
                                     }
                                 }
                             </ul>

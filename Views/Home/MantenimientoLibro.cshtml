@@ -65,36 +65,43 @@
             Notification('@ViewBag.notification');
         }
 
+        //function sonLetrasSolamente(tituLibro) {
+        //    var regex = /^[á-zÁ-Z ]+$/;
+        //    return regex.test(tituLibro);
+        //}
+
         function getAgregarModal() {
             Swal.fire({
                 title: 'Agregar',
                 html: `
-                            <div class="row gtr-uniform mb-2">
+
+                            <div class="row gtr-uniform" style="margin-bottom:10px">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="tituLibro" placeholder="Titulo" />
+                                    <input type="text" id="tituLibro"  placeholder="Titulo" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
                                     <input type="text" id="nomAutor" placeholder="Autor" />
                                 </div>
                             </div>
 
-                                <div class="form-date" >
-                                
-                                    <input type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
-                                
-                               </div>
+                                <div class="row mb-2" style="margin-bottom:10px">
 
-                                <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="precUni" placeholder="Precio Unit." />
-                                </div>
-                                <div class="col-6 col-12-xsmall">
+                                    <div class="col-6" >
+                                        <input class="form-date" type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
+                                    </div>
+                                    <div class="col-6">
+                                            <input type="text" id="precUni" class="form-control"  placeholder="Precio Unit." />
+                                     </div>
+                               </div>
+                                 
+                                <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
                                     <select class="form-control" id="idEdito">
                                         <option value="">Seleccione algo</option>
                                         <option value="1">1</option>
                                     </select>
                                 </div>
-           
-                                <div class="col-12 col-12-xsmall">
+
+                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
                                     <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
                                 </div>
                             `,
@@ -103,16 +110,37 @@
                 preConfirm: () => {
                     let tituLibro = $("#tituLibro").val();
                     let nomAutor = $("#nomAutor").val();
-                    let precUni = parseFloat($("#precUni").val(), 10);
+                    let precUni = $("#precUni").val();
                     let idEdito = parseInt($("#idEdito").val(), 10);
                     let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
 
-                    /*MessageBox.Show("debe completar el campo apellido");*/
-                    // validaciones
-                    //if (Number.isInteger(anio) == false || Number.isInteger(numVentas) == false) {
-                    //    Swal.showValidationMessage(`Complete los campos con solo numeros.`)
-                    //}
+                    const pregPrecio = /^\d*\.\d+$/;
+
+                    const pregNomAutor = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
+
+                    if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
+                        return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                    } else {
+
+                        if (!pregNomAutor.test(nomAutor)) {
+                            return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
+                        }
+                        if (!pregPrecio.test(precUni)) {
+                            return Swal.showValidationMessage(`Campo precio invalido`);
+                        }
+                        if (!fechPub) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                        }
+                        if (!idEdito) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la editorial.`)
+                        }
+                        if (sinopsis == '') {
+                            return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
+                        }
+                    }
+
+
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -174,12 +202,12 @@
             Swal.fire({
                 title: 'Editar',
                 html: `
-                            <div class="row gtr-uniform">
+                            <div class="row gtr-uniform" style="margin-bottom:10px">
                                 <div class="col-12 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="idLibro" value=${response.data[idLibro-1].idLibro} placeholder="ID Usuario" />
+                                    <input disabled="disabled" type="text" id="idLibro"  value=${response.data[idLibro-1].idLibro} placeholder="ID Usuario" />
                                 </div>
                             </div>
-                            <div class="row gtr-uniform">
+                            <div class="row gtr-uniform" style="margin-bottom:10px">
                                 <div class="col-6 col-12-xsmall">
                                     <input type="text" id="tituLibro" placeholder="Titulo" value=${response.data[idLibro - 1].tituLibro} />
                                 </div>
@@ -187,29 +215,29 @@
                                     <input type="text" id="nomAutor" placeholder="Autor" value=${response.data[idLibro - 1].nomAutor} />
                                 </div>
                             </div>
-                            <div class="row gtr-uniform">
-                                <div class="col-6 col-12-xsmall">
-                                    <input type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
+                            <div class="row gtr-uniform" style="margin-bottom:10px">
+                                <div class="col-6">
+                                    <input class="form-date" type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
                                 </div>
-                                
-                                <div class="col-6 col-12-xsmall">
+
+                                <div class="col-6">
                                     <input type="text" id="precUni" placeholder="Precio Unit." value=${response.data[idLibro - 1].precUni} />
                                 </div>
                             </div>
                             <div class="row gtr-uniform">
-                                <div class="col-6 col-12-xsmall">
+                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
                                     <select class="form-control" id="idEdito">
                                         <option value="">Seleccione algo</option>
                                         <option value="1">1</option>
                                     </select>
                                 </div>
-                  
+
                             </div>
-                            <div class="row gtr-uniform">
-                                <div class="col-12 col-12-xsmall">
+                            
+                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
                                     <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
                                 </div>
-                            </div>
+                            
                                     `,
                 confirmButtonText: 'Actualizar',
                 showCancelButton: true,
@@ -221,14 +249,31 @@
                     let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
 
-                    //if (fechPub.valueAsDate == null) {
-                    //    Swal.showValidationMessage(`Seleccione una fecha.`)
-                    //}
+                    const pregPrecio = /^\d*\.\d+$/;
 
-                    //let numVentas = parseInt($("#numventa").val(), 10);
-                    //if (Number.isInteger(numVentas) == false) {
-                    //    Swal.showValidationMessage(`Complete los campos con solo numeros.`)
-                    //}
+                    const pregNomAutor = /^[a-zA-Z]+$/i;
+
+                    if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
+                        return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                    } else {
+
+                        if (!pregNomAutor.test(nomAutor)) {
+                            return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
+                        }
+                        if (!pregPrecio.test(precUni)) {
+                            return Swal.showValidationMessage(`Campo precio invalido`);
+                        }
+                        if (!fechPub) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                        }
+                        if (!idEdito) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la editorial.`)
+                        }
+                        if (sinopsis == '') {
+                            return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
+                        }
+                    }
+                    
                 }
             }).then((result) => {
                 if (result.isConfirmed) {

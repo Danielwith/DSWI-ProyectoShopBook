@@ -71,7 +71,7 @@
                     html: `
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="nomEdito" placeholder="Nom Editorial" />
+                                    <input type="text" id="nomEdito" oninput="this.value = this.value.replace(/[^á-zÁ-Z0-9]/,'')" placeholder="Nom Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
                                     <input type="text" id="direccion" placeholder="Direccion     " />
@@ -87,11 +87,35 @@
                     confirmButtonText: 'Registrar',
                     showCancelButton: true,
                     preConfirm: () => {
-                        //let idUser = parseInt($("#iduser").val(), 10);
-                        //let numVentas = parseInt($("#numventa").val(), 10);
-                        //if (Number.isInteger(idUser) == false || Number.isInteger(numVentas) == false) {
-                        //    Swal.showValidationMessage(Complete los campos con solo numeros.)
-                        //}
+                        let nomEdito = $("#nomEdito").val();
+                        let direccion = $("#direccion").val();
+                        let telefono = $("#telefono").val();
+                        let fechaRegistro = $("#fechaRegistro").val();
+
+                        const pregTele = /^[\(]?[\+]?(\d{2}|\d{3})[\)]?[\s]?((\d{6}|\d{8})|(\d{3}[\*\.\-\s]){3}|(\d{2}[\*\.\-\s]){4}|(\d{4}[\*\.\-\s]){2})|\d{8}|\d{10}|\d{12}$/;
+
+                        const pregdirecc = /[A-Za-z0-9]+/g;
+
+                        const pregNomEdito = /^[a-zA-Z]+$/i;
+
+                        if (nomEdito == '' || direccion == '' || telefono == '') {
+                            return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                        } else {
+
+                            if (!pregNomEdito.test(nomEdito)) {
+                                return Swal.showValidationMessage(`Campo nombre editorial invalido,solo letras`)
+                            }
+                            if (!pregdirecc.test(direccion)) {
+                                return Swal.showValidationMessage(`Campo direccion invalido, ingrese correctamente`)
+                            }
+                            if (!pregTele.test(telefono)) {
+                                return Swal.showValidationMessage(`Campo telefono invalido`);
+                            }
+                            if (fechaRegistro == '') {
+                                return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                            }
+                        }
+
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -178,7 +202,31 @@
                     let direccion = $("#direccion").val();
                     let telefono = $("#telefono").val();
                     let fechaRegistro = $("#fechaRegistro").val();
+                    
 
+                    const pregTele = /^[\(]?[\+]?(\d{2}|\d{3})[\)]?[\s]?((\d{6}|\d{8})|(\d{3}[\*\.\-\s]){3}|(\d{2}[\*\.\-\s]){4}|(\d{4}[\*\.\-\s]){2})|\d{8}|\d{10}|\d{12}$/;
+                    
+                    const pregdirecc = /[A-Za-z0-9]+/g;
+
+                    const pregNomEdito = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
+
+                    if (nomEdito == '' || direccion == '' || telefono == '') {
+                        return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                    } else {
+
+                        if (!pregNomEdito.test(nomEdito)) {
+                            return Swal.showValidationMessage(`Campo nombre editorial invalido,solo letras`)
+                        }
+                        if (!pregdirecc.test(direccion)) {
+                            return Swal.showValidationMessage(`Campo direccion invalido, ingrese correctamente`)
+                        }
+                        if (!pregTele.test(telefono)) {
+                            return Swal.showValidationMessage(`Campo telefono invalido`);
+                        }
+                        if (fechaRegistro == '') {
+                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                        }
+                    }
                 }
             }).then((result) => {
                 if (result.isConfirmed) {

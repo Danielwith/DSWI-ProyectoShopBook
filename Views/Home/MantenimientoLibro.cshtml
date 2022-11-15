@@ -52,6 +52,8 @@
                             return '<button onclick="getEditarModal('+data+')">Editar</button>'
                         }
                     },
+
+
                     {
                         "data": "idLibro", "width": "50px", "render": function (data) {
                             return '<button onclick="getEliminarModal('+data+')">Eliminar</button>'
@@ -96,7 +98,7 @@
                                  
                                 <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
                                     <select class="form-control" id="idEdito">
-                                        <option value="">Seleccione algo</option>
+                                        <option value=${response.data[idLibro - 1].idLibro}>Seleccione algo</option>
                                         <option value="1">1</option>
                                     </select>
                                 </div>

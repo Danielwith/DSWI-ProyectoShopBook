@@ -52,6 +52,8 @@
                             return '<button onclick="getEditarModal('+data+')">Editar</button>'
                         }
                     },
+
+
                     {
                         "data": "idLibro", "width": "50px", "render": function (data) {
                             return '<button onclick="getEliminarModal('+data+')">Eliminar</button>'
@@ -95,7 +97,8 @@
                                </div>
 
                                 <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
-                                      @Html.DropDownList("idEdito",(SelectList)ViewBag.editorial)
+                                    @Html.DropDownList("idEdito",(SelectList)ViewBag.editorial)
+
                                 </div>
 
                                 <div class="col-12 col-12-xsmall" style="margin-bottom:10px">

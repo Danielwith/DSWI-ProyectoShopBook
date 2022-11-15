@@ -50,7 +50,7 @@
 
                     {
                         "data": "idEdito", "width": "50px", "render": function (data) {
-                            return '<button onclick="promise(' + data +')">Editar</button>'
+                            return '<button onclick="getEditarModal(' + data +')">Editar</button>'
                         }
                     },
                     {
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="date" id="fechaRegistro" placeholder="Fecha Registro" />
+                                    <input class="form-date" type="datetime-local" id="fechaRegistro" placeholder="Fecha de publicacion" />
                                 </div>
                             </div>`,
                     confirmButtonText: 'Registrar',
@@ -96,7 +96,7 @@
 
                         const pregdirecc = /[A-Za-z0-9]+/g;
 
-                        const pregNomEdito = /^[a-zA-Z]+$/i;
+                        const pregNomEdito = /^[a-zA-Z ]+$/i;
 
                         if (nomEdito == '' || direccion == '' || telefono == '') {
                             return Swal.showValidationMessage(`Todos los campos son requeridos`)
@@ -178,21 +178,21 @@
                 html: `
                             <div class="row gtr-uniform">
                                  <div class="col-6 col-12-xsmall">
-                                    <input type="hidden" id="nomEdito" value=${response.data[idEdito - 1].idEdito}placeholder="Id Editorial" />
+                                    <input disabled="disabled" type="text" id="idEdito" value=${response.data[idEdito - 1].idEdito} placeholder="Id Editorial" />
                                 </div>
 
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="nomEdito" value=${response.data[idEdito - 1].nomEdito}placeholder="Nom Editorial" />
+                                    <input type="text" id="nomEdito" value=${response.data[idEdito - 1].nomEdito} placeholder="Nom Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="direccion" value=${response.data[idEdito - 1].direccion}placeholder="Direccion     " />
+                                    <input type="text" id="direccion" value=${response.data[idEdito - 1].direccion} placeholder="Direccion" />
                                 </div>
                                    <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="telefono"value=${response.data[idEdito - 1].telefono} placeholder="Telefono" />
+                                    <input type="text" id="telefono" value=${response.data[idEdito - 1].telefono} placeholder="Telefono" />
                                 </div>
 
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="date" id="fechaRegistro" value=${response.data[idEdito - 1].fechaRegistro} placeholder="Fecha Registro" />
+                                    <input class="form-date" type="datetime-local" id="fechaRegistro" placeholder="Fecha de publicacion" />
                                 </div>
                             </div>`,
                 confirmButtonText: 'Actualizar',
@@ -215,7 +215,7 @@
                     } else {
 
                         if (!pregNomEdito.test(nomEdito)) {
-                            return Swal.showValidationMessage(`Campo nombre editorial invalido,solo letras`)
+                            return Swal.showValidationMessage(`Campo nombre editorial invalido, solo letras`)
                         }
                         if (!pregdirecc.test(direccion)) {
                             return Swal.showValidationMessage(`Campo direccion invalido, ingrese correctamente`)
@@ -237,9 +237,7 @@
                     let message = "Actualizado correctamente";
                     Swal.fire(
                         'Actualizado!',
-                        'Editorial: ' + nomEdito + ' | Direccion: ' + direccion,
-                         ' |Telefono: ' + telefono,' | Fecha de Registro: ' + fechaRegistro,
-
+                        'Editorial: ' + nomEdito ,
                         'success'
                     )
                     // Es solo estilo, tiene incompatiblidad con main.css
@@ -248,8 +246,8 @@
                     // Mediante Ajax envia la data al Controlador Home
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EditarEditorial?idEdito=" + idEdito + "&&nomEdito=" + nomEdito+
-                            "&&direccion="+direccion+ "&&telefono=" + telefono+"&&fechaRegistro="+ fechaRegistro,
+                            url: "/Home/EditarEditorial?idEdito=" + idEdito + "&&nomEdito=" + nomEdito +
+                            "&&direccion="+ direccion + "&&telefono=" + telefono + "&&fechaRegistro="+ fechaRegistro,
                             success: function (r) {
                                 window.location = "/Home/MantenimientoEditorial?notification=" + message;
                             }

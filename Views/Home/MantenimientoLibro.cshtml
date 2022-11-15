@@ -3,7 +3,7 @@
     ViewBag.Title = "MantenimientoLibro";
 }
 @Styles.Render("~/Assets/css/modifiedstyles.css")
-
+@model IEnumerable<ShopBook.Entity.tb_editoriales>
 <header id="header">
     <a href="#" class="logo"><strong>Mantenimiento de Libros</strong></a>
 </header>
@@ -95,12 +95,10 @@
                                             <input type="text" id="precUni" class="form-control"  placeholder="Precio Unit." />
                                      </div>
                                </div>
-                                 
+
                                 <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
-                                    <select class="form-control" id="idEdito">
-                                        <option value=${response.data[idLibro - 1].idLibro}>Seleccione algo</option>
-                                        <option value="1">1</option>
-                                    </select>
+                                    @Html.DropDownList("idEdito",(SelectList)ViewBag.editorial)
+
                                 </div>
 
                                 <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
@@ -235,11 +233,11 @@
                                 </div>
 
                             </div>
-                            
+
                                 <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
                                     <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
                                 </div>
-                            
+
                                     `,
                 confirmButtonText: 'Actualizar',
                 showCancelButton: true,
@@ -275,7 +273,7 @@
                             return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
                         }
                     }
-                    
+
                 }
             }).then((result) => {
                 if (result.isConfirmed) {

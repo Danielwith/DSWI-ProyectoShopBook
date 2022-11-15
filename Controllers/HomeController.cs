@@ -92,7 +92,7 @@ namespace ShopBook.Controllers
 
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult MantenimientoLibro(string notification)
-        {
+        {   ViewBag.editorial = new SelectList(db.tb_editoriales, "idEdito", "nomEdito");
             ViewBag.notification = notification;
             return View();
         }
@@ -139,7 +139,7 @@ namespace ShopBook.Controllers
 
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult GuardarLibros(string tituLibro,string nomAutor, decimal precUni, DateTime fechPub, string sinopsis,  int idEdito)
-        {
+        { 
             var data = new tb_libros() { tituLibro = tituLibro, nomAutor = nomAutor, precUni = precUni,fechPub = fechPub ,sinopsis = sinopsis, idEdito = idEdito, estado = 1 };
             db.tb_libros.Add(data);
             db.SaveChanges();
@@ -260,7 +260,7 @@ namespace ShopBook.Controllers
 
         [AutorizarUsuario(idOperacion: 2)]
         public ActionResult GuardarEditorial(string nomEdito, string direccion, string telefono,  DateTime fechaRegistro)
-        {
+        {   
             var data = new tb_editoriales { nomEdito = nomEdito, direccion = direccion, telefono = telefono, estado = "Activo", fechaRegistro = fechaRegistro };
             db.tb_editoriales.Add(data);
             db.SaveChanges();
@@ -268,14 +268,13 @@ namespace ShopBook.Controllers
         }
        
         [AutorizarUsuario(idOperacion: 2)]
-         public ActionResult EditarEditorial(int idEdito, string nomEdito, string direccion, string telefono,
-             string estado, DateTime fechagistro)
+         public ActionResult EditarEditorial(int idEdito, string nomEdito, string direccion, string telefono, DateTime fechaRegistro)
          {
              var data = db.tb_editoriales.Where(u => u.idEdito == idEdito).FirstOrDefault();
             data.nomEdito = nomEdito;
             data.direccion = direccion;
             data.telefono = telefono;
-            data.fechaRegistro = fechagistro;
+            data.fechaRegistro = fechaRegistro;
              db.SaveChanges();
              return Json(true, JsonRequestBehavior.AllowGet);
          }

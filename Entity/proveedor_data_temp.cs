@@ -20,5 +20,8 @@ namespace ShopBook.Entity
         public int idUser { get; set; }
     
         public virtual tb_usuario tb_usuario { get; set; }
+        public virtual tb_usuario tb_usuario1 { get; set; }
+        public virtual tb_usuario tb_usuario2 { get; set; }
+        public virtual tb_usuario tb_usuario3 { get; set; }
     }
 }

@@ -451,6 +451,7 @@
     <Content Include="Views\Catalogo\listarLibrosPorCategoria.cshtml" />
     <Content Include="Views\Catalogo\listarLibrosXSubCate.cshtml" />
     <Content Include="Views\Carrito\Compras.cshtml" />
+    <Content Include="Views\Home\MantenimientoEditorial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

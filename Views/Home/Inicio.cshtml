@@ -3,14 +3,47 @@
     ViewBag.Title = "Inicio";
 }
 
-<header id="header">
-    <a href="index.html" class="logo"><strong>Editorial</strong> - APARTADO VISUAL "USER"</a>
-    <ul class="icons">
-        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-    </ul>
-</header>
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Dale un vistazo a nuestro Catálogo de libros, de seguro te va impresionar</h2>
+    </header>
+    <div class="posts">
+        <div class="ism-slider" data-play_type="once-rewind" id="my-slider">
+            <ol>
+                <li>
+                    <img src="ism/image/slides/flower-729514_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+                <li>
+                    <img src="ism/image/slides/beautiful-701678_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+                <li>
+                    <img src="ism/image/slides/summer-192179_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+            </ol>
+        </div>
+        <p class="ism-badge" id="my-slider-ism-badge"><a class="ism-link" href="http://imageslidermaker.com" rel="nofollow">generated with ISM</a></p>
 
+    </div>
+    <div class="posts">
+        @foreach (var item in Model)
+        {
+            <article>
+                <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+                <h3>@item.nombreCate</h3>
+                <p>
+                    @item.descripcion
+                </p>
+                <ul class="actions">
+                    <li>
+                        @Html.ActionLink("Explorar", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate, op = 1 }, null)
+
+                    </li>
+                </ul>
+            </article>
+        }
+    </div>
+</section>

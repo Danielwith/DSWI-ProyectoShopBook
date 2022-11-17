@@ -22,7 +22,6 @@
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
-
                     <th>Fecha Registro</th>
                     <th>EDITAR</th>
                     <th>Eliminar</th>
@@ -202,10 +201,10 @@
                     let direccion = $("#direccion").val();
                     let telefono = $("#telefono").val();
                     let fechaRegistro = $("#fechaRegistro").val();
-                    
+
 
                     const pregTele = /^[\(]?[\+]?(\d{2}|\d{3})[\)]?[\s]?((\d{6}|\d{8})|(\d{3}[\*\.\-\s]){3}|(\d{2}[\*\.\-\s]){4}|(\d{4}[\*\.\-\s]){2})|\d{8}|\d{10}|\d{12}$/;
-                    
+
                     const pregdirecc = /[A-Za-z0-9]+/g;
 
                     const pregNomEdito = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;

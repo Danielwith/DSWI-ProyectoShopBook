@@ -18,6 +18,7 @@ namespace ShopBook.Entity
         public tb_libros()
         {
             this.tb_cate_subcate_libros = new HashSet<tb_cate_subcate_libros>();
+            this.tb_detalle_boletas = new HashSet<tb_detalle_boletas>();
         }
     
         public int idLibro { get; set; }
@@ -33,5 +34,7 @@ namespace ShopBook.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_cate_subcate_libros> tb_cate_subcate_libros { get; set; }
         public virtual tb_editoriales tb_editoriales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_detalle_boletas> tb_detalle_boletas { get; set; }
     }
 }

@@ -22,10 +22,6 @@ namespace ShopBook.Entity
     
         public int idEdito { get; set; }
         public string nomEdito { get; set; }
-        public string direccion { get; set; }
-        public string telefono { get; set; }
-        public string estado { get; set; }
-        public Nullable<System.DateTime> fechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_libros> tb_libros { get; set; }

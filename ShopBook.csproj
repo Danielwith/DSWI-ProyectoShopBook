@@ -138,9 +138,6 @@
     <Compile Include="Class_DTO\LibroDTO.cs" />
     <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
     <Compile Include="Class_DTO\ShoppingCart.cs" />
-    <Compile Include="Entity\database_firewall_rules.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -454,12 +451,9 @@
     <Content Include="Views\Catalogo\listarLibrosPorCategoria.cshtml" />
     <Content Include="Views\Catalogo\listarLibrosXSubCate.cshtml" />
     <Content Include="Views\Carrito\Compras.cshtml" />
-    <Content Include="Views\Home\MantenimientoEditorial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\NewFolder1\" />
-    <Folder Include="Assets\NewFolder2\" />
     <Folder Include="Views\Sesion\" />
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,6 @@ namespace ShopBook.Controllers
         public ActionResult Desconectar()
         {
             Session["email"] = null;
-            Session["carrito"] = null;
             return RedirectToAction("Login", "Acceso");
         }
 

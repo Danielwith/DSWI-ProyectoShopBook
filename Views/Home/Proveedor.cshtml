@@ -13,3 +13,27 @@
         <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
     </ul>
 </header>
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Dale un vistazo a nuestro Catálogo de libros, de seguro te va impresionar</h2>
+    </header>
+    <div class="posts">
+        @foreach (var item in Model)
+        {
+        <article>
+            <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+            <h3>@item.nombreCate</h3>
+            <p>
+                @item.descripcion
+            </p>
+            <ul class="actions">
+                <li>
+                    @Html.ActionLink("Explorar", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate, op = 1 }, null)
+
+                </li>
+            </ul>
+        </article>
+        }
+    </div>
+</section>

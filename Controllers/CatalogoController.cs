@@ -64,7 +64,7 @@ namespace ShopBook.Controllers
             return View(libros.OrderBy(x => x.titulo));
         }
         
-        public ActionResult listLibros(int idLib, string notification)
+        public ActionResult listLibros(int idLib)
         {
             LibroDTO libro = (from e in db.tb_editoriales
                                             join l in db.tb_libros on e.idEdito equals l.idEdito
@@ -81,7 +81,6 @@ namespace ShopBook.Controllers
                                                 precio = l.precUni.ToString(),
                                                 img = l.img
                                             }).FirstOrDefault();
-            ViewBag.notification = notification;
             return View(libro);
         }
     }

@@ -116,6 +116,7 @@
                     let sinopsis = $("#sinopsis").val();
 
                     const pregPrecio = /^\d*\.\d+$/;
+
                     const pregNomAutor = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
 
                     if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
@@ -138,6 +139,8 @@
                             return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
                         }
                     }
+
+
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -247,6 +250,7 @@
                     let sinopsis = $("#sinopsis").val();
 
                     const pregPrecio = /^\d*\.\d+$/;
+
                     const pregNomAutor = /^[a-zA-Z]+$/i;
 
                     if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {

@@ -190,8 +190,8 @@
                                     <input type="text" id="telefono" value=${response.data[idEdito - 1].telefono} placeholder="Telefono" />
                                 </div>
 
-                                <div class="col-6 col-12-xsmall">
-                                    <input class="form-date" type="datetime-local" id="fechaRegistro" placeholder="Fecha de publicacion" />
+                               <div class="col-6 col-12-xsmall">
+                                    <input class="form-date" type="date" id="fechaRegistro" value=${response.data[idEdito - 1].fechaRegistro} placeholder="Fecha Registro" />
                                 </div>
                             </div>`,
                 confirmButtonText: 'Actualizar',

@@ -3,7 +3,7 @@
     ViewBag.Title = "MantenimientoLibro";
 }
 @Styles.Render("~/Assets/css/modifiedstyles.css")
-@model IEnumerable<ShopBook.Entity.tb_editoriales>
+@model IEnumerable<ShopBook.Entity.tb_libros>
 <header id="header">
     <a href="#" class="logo"><strong>Mantenimiento de Libros</strong></a>
 </header>
@@ -49,7 +49,7 @@
                     { "data": "nomEdito", "autowidth": true },
                     {
                         "data": "idLibro", "width": "50px", "render": function (data) {
-                            return '<button onclick="getEditarModal('+data+')">Editar</button>'
+                            return '<button onclick="getEditarModal(' + data +')">Editar</button>'
                         }
                     },
 
@@ -97,7 +97,7 @@
                                </div>
 
                                 <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
-                                    @Html.DropDownList("idEdito",(SelectList)ViewBag.editorial)
+                                    @Html.DropDownList("idEdito", (SelectList)ViewBag.editorial )
 
                                 </div>
 
@@ -201,7 +201,7 @@
                 html: `
                             <div class="row gtr-uniform" style="margin-bottom:10px">
                                 <div class="col-12 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="idLibro"  value=${response.data[idLibro-1].idLibro} placeholder="ID Usuario" />
+                                    <input disabled="disabled" type="text" id="idLibro"  value=${response.data[idLibro - 1].idLibro} placeholder="ID Usuario" />
                                 </div>
                             </div>
                             <div class="row gtr-uniform" style="margin-bottom:10px">
@@ -214,7 +214,7 @@
                             </div>
                             <div class="row gtr-uniform" style="margin-bottom:10px">
                                 <div class="col-6">
-                                    <input class="form-date" type="datetime-local" id="fechPub" placeholder="Fecha de publicacion" />
+                                                    <input class="form-date" type="date" id="fechPub" value=${response.data[idLibro - 1].fechPub} placeholder="Fecha Registro" />
                                 </div>
 
                                 <div class="col-6">
@@ -222,16 +222,13 @@
                                 </div>
                             </div>
                             <div class="row gtr-uniform">
-                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
-                                    <select class="form-control" id="idEdito">
-                                        <option value="">Seleccione algo</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-
+                                <div class="col-12 col-12-xsmall">
+                              
+                                @Html.DropDownList("nomEdito", (SelectList)ViewBag.editorial)
+                                 </div>
                             </div>
 
-                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
+                                <div class="col-12 col-12-xsmall" style="margin-bottom:10px;margin-top:10px">
                                     <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
                                 </div>
 
@@ -301,6 +298,8 @@
                     })
                 }
             })
+            let changue = document.getElementById("nomEdito")
+            changue.selectedIndex = (response.data[idLibro - 1].idEdito) - 1
             let element = document.getElementsByClassName("swal2-styled")
             /* Alert Fix Styles */
             for (let i = 0; i < element.length; i++) {

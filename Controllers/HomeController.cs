@@ -32,8 +32,7 @@ namespace ShopBook.Controllers
         [AutorizarUsuario(idOperacion: 2)]
         public ActionResult Proveedor()
         {
-            var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
-            return View(categorias);
+            return View();
         }
 
         [AutorizarUsuario(idOperacion: 2)]
@@ -177,7 +176,8 @@ namespace ShopBook.Controllers
         [AutorizarUsuario(idOperacion: 4)]
         public ActionResult Inicio()
         {
-            return View();
+            var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
+            return View(categorias);
         }
 
         // OPERACIONES

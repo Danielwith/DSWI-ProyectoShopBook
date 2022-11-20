@@ -91,7 +91,8 @@ namespace ShopBook.Controllers
 
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult MantenimientoLibro(string notification)
-        {   ViewBag.editorial = new SelectList(db.tb_editoriales, "idEdito", "nomEdito");
+        {
+            ViewBag.editorial = new SelectList(db.tb_editoriales, "idEdito","nomEdito");
             ViewBag.notification = notification;
             return View();
         }
@@ -103,7 +104,7 @@ namespace ShopBook.Controllers
             var libros = (from l in db.tb_libros
                           join e in db.tb_editoriales on l.idEdito equals e.idEdito
                           where l.estado == 1
-                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito }).ToList();
+                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito ,e.idEdito}).ToList();
             var parseo = (from p in libros
                           select new
                           {
@@ -113,13 +114,14 @@ namespace ShopBook.Controllers
                               precUni = p.precUni,
                               fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
                               sinopsis=p.sinopsis,
-                              nomEdito=p.nomEdito
+                              nomEdito=p.nomEdito,
+                              idEdito= p.idEdito
                           }).ToList();
             if (edit == 1)
             {
                 libros = (from l in db.tb_libros
                               join e in db.tb_editoriales on l.idEdito equals e.idEdito
-                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito }).ToList();
+                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito ,e.idEdito}).ToList();
                 parseo = (from p in libros
                               select new
                               {
@@ -129,7 +131,8 @@ namespace ShopBook.Controllers
                                   precUni = p.precUni,
                                   fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
                                   sinopsis = p.sinopsis,
-                                  nomEdito = p.nomEdito
+                                  nomEdito = p.nomEdito,
+                                  idEdito = p.idEdito
                               }).ToList();
             }
             return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);

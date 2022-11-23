@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+}
+@Styles.Render("~/Assets/css/modifiedstyles.css")
+
+<!-- Header -->
+<header id="header" style="text-align: right;">
+    <h3>
+        <span>
+            <img style="transform: translateY(3px);" width="20px" src="~/Assets/images/icons/num2.svg" alt="">
+        </span>
+        <strong>
+            REVISIÓN Y PAGOS
+        </strong>
+        <span>
+            <img style="transform: translateY(3px);" width="20px" src="~/Assets/images/icons/iconcredit.svg" alt="">
+        </span>
+    </h3>
+</header>
+
+<!-- Elements -->
+<br />
+<div class="row gtr-100 box">
+    <div class="col-8 col-12-small">
+        <h2 id="elements">Forma de Pago</h2>
+        <hr />
+        @using (Html.BeginForm("Payment", "CheckPayment", FormMethod.Post, new { id = "idRegistrar" }))
+        {
+            <div class="row gtr-uniform">
+                <div class="col-12">
+                    <span>Número de tarjeta</span>
+                    <input type="number" name="numTarjeta" id="demo-name" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <div class="row gtr-uniform">
+                        <div class="col-5">
+                            <span>MM</span>
+                            <select class="charafterinput" name="mes" id="demo-category">
+                                <option value="1">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                                <option value="4">04</option>
+                                <option value="5">05</option>
+                                <option value="6">06</option>
+                                <option value="7">07</option>
+                                <option value="8">08</option>
+                                <option value="9">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <span class="slash" style="font-size: 2em;">/</span>
+                        </div>
+                        <div class="col-4">
+                            <span>AA</span>
+                            <input type="number" name="anio" id="demo-name" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>CVC</span>
+                    <input type="number" name="cvc" id="demo-email" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Nombre del titular</span>
+                    <input type="text" name="titular" id="demo-email" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Código postal</span>
+                    <input type="text" name="codPostal" id="demo-email" value="" />
+                </div>
+                <div class="col-12">
+                    <br />
+                    <ul class="actions">
+                        <li><input type="submit" value="Realizar Pago" class="primary" /></li>
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-4">
+        <span class="image fit" style="margin-top: 2em; margin-left: 1.5em; max-width: 85%;">
+            <img src="~/Assets/images/icons/creditcard.svg" alt="">
+        </span>
+
+    </div>
+</div>
+
+<style>
+    hr {
+        margin: 1em 0;
+    }
+
+    h2,
+    h4 {
+        margin: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .charafterinput {
+        width: calc(100% - 2.6em) !important;
+        display: inline !important;
+        margin-right: 20px;
+    }
+
+    .slash {
+        font-size: 2em;
+        line-height: 0;
+        display: inline-block;
+        transform: translateY(3px);
+    }
+</style>
+
+@section scripts{
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script>
+    if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+    </script>
+    <script>
+        $().ready(function () {
+            $("#idRegistrar").validate({
+                rules: {
+                    numTarjeta: {
+                        required: true,
+                        maxlength: 16
+                    },
+                    anio: {
+                        required: true,
+                        range: [2022, 9999],
+                        maxlength: 4
+                    },
+                    cvc: {
+                        required: true,
+                        maxlength:3
+
+                    },
+                    titular: {
+                        required: true
+                    },
+                    codPostal: {
+                        required:true
+                    }
+                },
+                messages: {
+                    numTarjeta: {
+                        required: "Debes completar este campo.",
+                        maxlength: "Tarjeta de credito invalida."
+                    },
+                    anio: {
+                        required: "Debes completar este campo.",
+                        range: "Año invalido.",
+                        maxlength: "Debe ser de 4 digitos."
+                    },
+                    cvc: {
+                        required: "Debes completar este campo.",
+                        maxlength: "Debe ser de 3 digitos."
+                    },
+                    titular: {
+                        required: "Debes completar este campo."
+                    },
+                    codPostal: {
+                        required: "Debes completar este campo."
+                    }
+                }
+            })
+        })
+    </script>
+}

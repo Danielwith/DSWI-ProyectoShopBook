@@ -110,34 +110,6 @@ namespace ShopBook.Controllers
         //    return ((string)(result.ReturnValue));
         //}
 
-        public void FinalizarCompra()
-        {
-            var usuario = (tb_usuario)Session["email"];
-            List<ShoppingCart> compras = (List<ShoppingCart>)Session["carrito"];
-            if (compras != null && compras.Count > 0)
-            {
-                tb_boletas nuevaVenta = new tb_boletas();
-                nuevaVenta.nroBoleta = db.usp_maxBoleta().FirstOrDefault();
-                nuevaVenta.fechGene = DateTime.Now;
-                nuevaVenta.idUser = usuario.idUser;
-                nuevaVenta.total = decimal.Parse(Session["total"].ToString());
-                db.tb_boletas.Add(nuevaVenta);
-                db.SaveChanges();
-
-                foreach (var item in compras)
-                {
-                    tb_detalle_boletas nuevoDetalleBoleta = new tb_detalle_boletas();
-                    nuevoDetalleBoleta.nroBoleta = nuevaVenta.nroBoleta;
-                    nuevoDetalleBoleta.idLibro = item.Libros.idLibro;
-                    nuevoDetalleBoleta.cantidad = item.Cantidad;
-                    nuevoDetalleBoleta.precio = item.Libros.precUni;
-                    nuevoDetalleBoleta.importe = item.Libros.precUni * item.Cantidad;
-                    db.tb_detalle_boletas.Add(nuevoDetalleBoleta);
-                    db.SaveChanges();
-                }
-
-                Session["carrito"] = new List<ShoppingCart>();
-            }
-        }
+        
     }
 }

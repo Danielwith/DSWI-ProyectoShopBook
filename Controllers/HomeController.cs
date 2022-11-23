@@ -1,4 +1,5 @@
-﻿using ShopBook.Entity;
+﻿using ShopBook.Class_DTO;
+using ShopBook.Entity;
 using ShopBook.Filters;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace ShopBook.Controllers
         public ActionResult Index()
         {
             var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
+            var comprobante = new pdftestingzone();
+            comprobante.generate();
             return View(categorias);
         }
 
@@ -191,16 +194,6 @@ namespace ShopBook.Controllers
             return View();
         }
 
-        // Test Alert Form ! ! !
-        // No funciona, falta implementar alert.js
-        [HttpPost]
-        [AutorizarUsuario(idOperacion:1)]
-        public ActionResult About(string name, string descrip)
-        {
-            TempData["Notification"] = $"Notification('Esta es una prueba')";
-            return View();
-        }
-
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult Contact()
         {
@@ -289,9 +282,5 @@ namespace ShopBook.Controllers
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
-         
-
     }
-
 }

@@ -4,6 +4,7 @@ using ShopBook.Filters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,8 +19,7 @@ namespace ShopBook.Controllers
         public ActionResult Index()
         {
             var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
-            var comprobante = new pdftestingzone();
-            comprobante.generate();
+            
             return View(categorias);
         }
 

@@ -249,9 +249,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Class_DTO\EmailSend.cs" />
+    <Compile Include="Class_DTO\ClientData.cs" />
+    <Compile Include="Class_DTO\EmailSenderDotNet.cs" />
     <Compile Include="Class_DTO\PdfGenerator.cs" />
-    <Compile Include="Class_DTO\pdftestingzone.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\CheckPaymentController.cs" />

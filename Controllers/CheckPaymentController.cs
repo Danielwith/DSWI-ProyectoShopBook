@@ -1,7 +1,9 @@
-﻿using ShopBook.Class_DTO;
+﻿using iText.Kernel.Pdf;
+using ShopBook.Class_DTO;
 using ShopBook.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -23,15 +25,29 @@ namespace ShopBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(string userEmail, string userName, string userApe)
+        public ActionResult Checkout(string userEmail, string userName, string userApe, string tipoDoc, string userDocNum, string fecNac, string userPhone, string userAddress)
         {
-            Session["comprobante"] = new EmailSend()
+            List<ShoppingCart> compras = (List<ShoppingCart>)Session["carrito"];
+
+            ClientData client = new ClientData()
             {
                 email = userEmail,
-                name = userName.Trim() + " " + userApe.Trim(),
-                message = "Se a realizado con exito su compra.",
-                html = "<h1>Gracias por su compra!</h1>"
+                name = userName.Trim(),
+                apellido = userApe.Trim(),
+                tipDoc = tipoDoc,
+                docNum = userDocNum,
+                fecNac = fecNac,
+                phone = userPhone,
+                direccion = userAddress
             };
+
+            Session["dataCliente"] = client;
+
+            string ruta = Server.MapPath("~/");
+            string PathPDF = Path.Combine(ruta + "Assets\\Comprobante.pdf");
+
+            var comprobante = new PdfGenerator();
+            comprobante.generate(compras,PathPDF,client);
             
             return RedirectToAction("Payment");
         }
@@ -65,30 +81,25 @@ namespace ShopBook.Controllers
             }
             else
             {
-                using (var client = new HttpClient())
+                string ruta = Server.MapPath("~/");
+                string PathPDF = Path.Combine(ruta + "Assets\\Comprobante.pdf");
+
+                var em = new EmailSenderDotNet();
+                var user = (ClientData)Session["dataCliente"];
+
+                var postResult = em.sendEmail(user, PathPDF);
+
+                if (postResult == true)
                 {
-                    var email = (EmailSend)Session["comprobante"];
-                    client.BaseAddress = new Uri("https://shopbook.ml/api/contact");
-
-                    var postTask = client.PostAsJsonAsync<EmailSend>("contact", email);
-                    postTask.Wait();
-
-                    var postResult = postTask.Result;
-                    if (postResult.IsSuccessStatusCode)
-                    {
-                        List<ShoppingCart> compras = (List<ShoppingCart>)Session["carrito"];
-                        var comprobante = new PdfGenerator();
-                        comprobante.generate(compras);
-                        /*FinalizarCompra();*/
-                        return RedirectToAction("Finish");
-                    }
-                    else
-                    {
-                        ViewBag.Notification = "A ocurrido un error.";
-                        return View();
-                    }
+                    /*FinalizarCompra();*/
+                    Session["dataCliente"] = null;
+                    return RedirectToAction("Finish");
                 }
-                
+                else
+                {
+                    ViewBag.Notification = "A ocurrido un error.";
+                    return View();
+                }
             }
         }
 

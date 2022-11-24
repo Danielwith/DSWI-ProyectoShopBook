@@ -33,15 +33,15 @@
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Nombre</span>
-                    <input type="text" name="userName" id="demo-name" value=@Model.nombre readonly="readonly" />
+                    <input type="text" name="userName" id="demo-name" value="" />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Apellidos</span>
-                    <input type="email" name="userApe" id="demo-email" value=@Model.nombre readonly="readonly" />
+                    <input type="text" name="userApe" id="demo-email" value="" />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Tipo de documento</span>
-                    <select name="demo-category" id="demo-category">
+                    <select name="tipoDoc" id="tipoDoc">
                         <option value="1">DNI</option>
                         <option value="2">RUC</option>
                     </select>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-12">
                     <span>Dirección</span>
-                    <input type="email" name="userAddress" id="demo-email" value="" />
+                    <input type="text" name="userAddress" id="demo-email" value="" />
                 </div>
                 <div class="col-12">
                     <br />
@@ -75,7 +75,7 @@
         }
 
 
-        </div>
+    </div>
 
     <div class="col-4">
         <div class="box">
@@ -94,5 +94,72 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script>
+    if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+    </script>
+    <script>
+        $().ready(function () {
+            $("#idRegistrar").validate({
+                rules: {
+                    userName: {
+                        required: true
+                    },
+                    userApe: {
+                        required: true
+                    },
+                    userDocNum: {
+                        required: true,
+                        maxlength: function (element) {
+                            if ($("#tipoDoc").val() == 1) {
+                                return 8;
+                            }
+                            else {
+                                return 11;
+                            }
+                        }
+                    },
+                    fecNac: {
+                        required: true
+                    },
+                    userPhone: {
+                        required: true,
+                        minlength: 7,
+                        maxlength: 9
+                    },
+                    userAddress: {
+                        required: true
+                    }
+                },
+                messages: {
+                    userName: {
+                        required: "Debes completar este campo."
+                    },
+                    userApe: {
+                        required: "Debes completar este campo."
+                    },
+                    userDocNum: {
+                        required: "Debes completar este campo."
+                    },
+                    fecNac: {
+                        required: "Debe seleccionar una fecha."
+                    },
+                    userPhone: {
+                        required: "Debes completar este campo.",
+                        minlength: "Minimo 7 digitos.",
+                        maxlength: "Maximo 9 digitos."
+                    },
+                    userAddress: {
+                        required: "Debes completar este campo."
+                    }
+                }
+            })
+        })
+    </script>
+}
 
 

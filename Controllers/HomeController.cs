@@ -91,40 +91,58 @@ namespace ShopBook.Controllers
 
         //Mantenimiento Libro
 
-        [AutorizarUsuario(idOperacion: 1)]
+        [AutorizarUsuario(idOperacion: 2)]
         public ActionResult MantenimientoLibro(string notification)
         {
             ViewBag.editorial = new SelectList(db.tb_editoriales, "idEdito","nomEdito");
+            ViewBag.categoria = new SelectList(db.tb_categorias, "idcate", "nombreCate");
             ViewBag.notification = notification;
             return View();
         }
 
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult SubCateResponse(int idCat)
+        {
+            var subcate = (from s in db.tb_sub_categorias
+                           where s.idCate == idCat
+                           select new { s.idsubCate,s.nombreSubCate }).ToList();
+            return Json(new { data=subcate }, JsonRequestBehavior.AllowGet);
+        }
+
         //Funciones del mantenimiento Libros
-        [AutorizarUsuario(idOperacion: 1)]
+        [AutorizarUsuario(idOperacion: 2)]
         public ActionResult listarLibros(int edit)
         {
-            var libros = (from l in db.tb_libros
-                          join e in db.tb_editoriales on l.idEdito equals e.idEdito
-                          where l.estado == 1
-                          select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito ,e.idEdito}).ToList();
-            var parseo = (from p in libros
-                          select new
-                          {
-                              idLibro = p.idLibro,
-                              tituLibro = p.tituLibro,
-                              nomAutor = p.nomAutor,
-                              precUni = p.precUni,
-                              fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
-                              sinopsis=p.sinopsis,
-                              nomEdito=p.nomEdito,
-                              idEdito= p.idEdito
-                          }).ToList();
             if (edit == 1)
             {
-                libros = (from l in db.tb_libros
+                var libros2 = (from l in db.tb_libros
+                               join e in db.tb_editoriales on l.idEdito equals e.idEdito
+                               join cs in db.tb_cate_subcate_libros on l.idLibro equals cs.idLibro
+                               join sc in db.tb_sub_categorias on cs.idSubCate equals sc.idsubCate
+                               select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito, e.idEdito, cs.idCate, cs.idSubCate }).ToList();
+                var parseo2 = (from p in libros2
+                               select new
+                               {
+                                   idLibro = p.idLibro,
+                                   tituLibro = p.tituLibro,
+                                   nomAutor = p.nomAutor,
+                                   precUni = p.precUni,
+                                   fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
+                                   sinopsis = p.sinopsis,
+                                   nomEdito = p.nomEdito,
+                                   idEdito = p.idEdito,
+                                   idCate = p.idCate,
+                                   idSubCate = p.idSubCate
+                               }).ToList();
+                return Json(new { data = parseo2 }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var libros = (from l in db.tb_libros
                               join e in db.tb_editoriales on l.idEdito equals e.idEdito
-                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito ,e.idEdito}).ToList();
-                parseo = (from p in libros
+                              where l.estado == 1
+                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito, e.idEdito }).ToList();
+                var parseo = (from p in libros
                               select new
                               {
                                   idLibro = p.idLibro,
@@ -136,23 +154,29 @@ namespace ShopBook.Controllers
                                   nomEdito = p.nomEdito,
                                   idEdito = p.idEdito
                               }).ToList();
+
+                return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
         }
 
 
-        [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult GuardarLibros(string tituLibro,string nomAutor, decimal precUni, DateTime fechPub, string sinopsis,  int idEdito)
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult GuardarLibros(string tituLibro,string nomAutor, decimal precUni, DateTime fechPub, string sinopsis,  int idEdito, int idCate, int idSubCate)
         { 
             var data = new tb_libros() { tituLibro = tituLibro, nomAutor = nomAutor, precUni = precUni,fechPub = fechPub ,sinopsis = sinopsis, idEdito = idEdito, estado = 1 };
             db.tb_libros.Add(data);
+            db.SaveChanges();
+
+            int idLibro = db.tb_libros.OrderByDescending(x => x.idLibro).First().idLibro;
+            var data2 = new tb_cate_subcate_libros() { idLibro = idLibro, idCate = idCate, idSubCate = idSubCate };
+            db.tb_cate_subcate_libros.Add(data2);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
-        [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult EditarLibro(int idLibro, string tituLibro, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, string sinopsis, int estado)
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult EditarLibro(int idLibro, string tituLibro, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, string sinopsis, int estado, int idCate, int idSubCate)
         {
             var data = db.tb_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
             data.tituLibro = tituLibro;
@@ -163,12 +187,21 @@ namespace ShopBook.Controllers
             data.fechPub = fechPub;
             data.estado = estado;
             db.SaveChanges();
+
+            var data2 = db.tb_cate_subcate_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
+            data2.idCate = idCate;
+            data2.idSubCate = idSubCate;
+            db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
-        [AutorizarUsuario(idOperacion: 1)]
+        [AutorizarUsuario(idOperacion: 2)]
         public ActionResult EliminarLibro(int idLibro)
         {
+            var data2 = db.tb_cate_subcate_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
+            db.tb_cate_subcate_libros.Remove(data2);
+            db.SaveChanges();
+
             var data = db.tb_libros.Find(idLibro);
             data.estado = 0;
             db.SaveChanges();

@@ -35,7 +35,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Home/listarLibros?edit=" + 0,
+                    "url": "/Mantenimiento/listarLibros?edit=" + 0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -66,7 +66,7 @@
             $(document).on("change", "#idcate", function () {
                 let catVal;
                 catVal = $(this).val();
-                $.get("/Home/SubCateResponse?idCat=" + catVal, function (response) {
+                $.get("/Mantenimiento/SubCateResponse?idCat=" + catVal, function (response) {
                     $("#idsubcate").empty();
                     $.each(response.data, function (index, item) {
                         $("#idsubcate").append("<option value='"+ item.idsubCate+"'>"+item.nombreSubCate+"</option>");
@@ -183,18 +183,18 @@
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/GuardarLibros?tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                            url: "/Mantenimiento/GuardarLibros?tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
                                 + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
                                 "&&sinopsis=" + sinopsis + "&&idCate=" + idCate + "&&idSubCate=" + idSubCate,
                             success: function (r) {
-                                window.location = "/Home/MantenimientoLibro?notification=" + message;
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
                             }
                         })
                     })
                 }
             })
             let idCate = $("#idcate").val();
-            $.get("/Home/SubCateResponse?idCat=" + idCate, function (response) {
+            $.get("/Mantenimiento/SubCateResponse?idCat=" + idCate, function (response) {
                 $("#idsubcate").empty();
                 $.each(response.data, function (index, item) {
                     $("#idsubcate").append("<option value='" + item.idsubCate + "'>" + item.nombreSubCate + "</option>");
@@ -215,7 +215,7 @@
         }
 
         function getEditarModal(idLibro) {
-            let json = fetch("/Home/listarLibros?edit=" + 1, {
+            let json = fetch("/Mantenimiento/listarLibros?edit=" + 1, {
                 "headers": {
                     "accept": "*/*",
                     "content-type": "application/JSON",
@@ -329,27 +329,27 @@
                     // Es solo estilo, tiene incompatiblidad con main.css
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
 
-                    // Mediante Ajax envia la data al Controlador Home
+                    // Mediante Ajax envia la data al Controlador Mantenimiento
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                            url: "/Mantenimiento/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
                                   + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
                                 "&&sinopsis=" + sinopsis + "&&estado=" + 1 + "&&idCate=" + idCate + "&&idSubCate=" + idSubCate,
                             success: function (r) {
-                                window.location = "/Home/MantenimientoLibro?notification=" + message;
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
                             }
                         })
                     })
                 }
             })
 
-            $.get("/Home/SubCateResponse?idCat=" + response.data[idLibro - 1].idCate, function (response) {
+            $.get("/Mantenimiento/SubCateResponse?idCat=" + response.data[idLibro - 1].idCate, function (response) {
                 $("#idsubcate").empty();
                 $.each(response.data, function (index, item) {
                     $("#idsubcate").append("<option value='" + item.idsubCate + "'>" + item.nombreSubCate + "</option>");
                 })
             })
-            
+
             let editorialValue = document.getElementById("nomEdito")
             editorialValue.selectedIndex = (response.data[idLibro - 1].idEdito) - 1
 
@@ -394,9 +394,9 @@
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EliminarLibro?idLibro=" + idLibro,
+                            url: "/Mantenimiento/EliminarLibro?idLibro=" + idLibro,
                             success: function (r) {
-                                window.location = "/Home/MantenimientoLibro?notification=" + message;
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
                             }
                         })
                     })

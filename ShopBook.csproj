@@ -249,6 +249,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Class_DTO\CategoriaLibroDTO.cs" />
     <Compile Include="Class_DTO\ClientData.cs" />
     <Compile Include="Class_DTO\EmailSenderDotNet.cs" />
     <Compile Include="Class_DTO\PdfGenerator.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Class_DTO\LibroDTO.cs" />
     <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
     <Compile Include="Class_DTO\ShoppingCart.cs" />
+    <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Entity\database_firewall_rules.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -344,6 +346,7 @@
     <Content Include="Assets\css\modifiedstyles.css" />
     <Content Include="Assets\css\util.css" />
     <Content Include="Assets\images\error404.jpg" />
+    <Content Include="Assets\images\example.jpg" />
     <Content Include="Assets\images\icons\creditcard.svg" />
     <Content Include="Assets\images\icons\favicon.ico" />
     <Content Include="Assets\images\icons\iconcredit.svg" />
@@ -580,15 +583,15 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Acceso\Registrar.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
-    <Content Include="Views\Home\MantenimientoLibro.cshtml" />
     <Content Include="Views\Catalogo\listLibros.cshtml" />
     <Content Include="Views\Catalogo\listarLibrosPorCategoria.cshtml" />
     <Content Include="Views\Catalogo\listarLibrosXSubCate.cshtml" />
     <Content Include="Views\Carrito\Compras.cshtml" />
-    <Content Include="Views\Home\MantenimientoEditorial.cshtml" />
+    <Content Include="Views\Mantenimiento\MantenimientoEditorial.cshtml" />
     <Content Include="Views\CheckPayment\Checkout.cshtml" />
     <Content Include="Views\CheckPayment\Payment.cshtml" />
     <Content Include="Views\CheckPayment\Finish.cshtml" />
+    <Content Include="Views\Mantenimiento\MantenimientoLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

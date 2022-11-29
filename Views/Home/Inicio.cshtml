@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Inicio";
 }
 
@@ -28,22 +27,51 @@
         <p class="ism-badge" id="my-slider-ism-badge"><a class="ism-link" href="http://imageslidermaker.com" rel="nofollow">generated with ISM</a></p>
 
     </div>
-    <div class="posts">
-        @foreach (var item in Model)
-        {
-            <article>
-                <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-                <h3>@item.nombreCate</h3>
-                <p>
-                    @item.descripcion
-                </p>
-                <ul class="actions">
-                    <li>
-                        @Html.ActionLink("Explorar", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate, op = 1 }, null)
+        @*@foreach (var item in Model)
+            {
+                <article>
+                    <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+                    <h3>@item.nombreCate</h3>
+                    <p>
+                        @item.descripcion
+                    </p>
+                    <ul class="actions">
+                        <li>
+                            @Html.ActionLink("Explorar", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate, op = 1 }, null)
 
-                    </li>
-                </ul>
-            </article>
-        }
-    </div>
+                        </li>
+                    </ul>
+                </article>
+            }*@
+    <hr/>
+        <div class="col-6 col-12-medium">
+            @foreach (var item in Model)
+            {
+                <p>@item.categoria</p>
+                <div class="box">
+                    <div class="row gtr-50 gtr-uniform">
+                        @foreach (var libro in item.libros)
+                        {
+                            <div class="col-2-xlarge col-4-medium col-6-small">
+                                <span class="image fit">
+                                    <img src="images/example.jpg"
+                                         alt="" />
+                                    <br />
+                                    <center>@libro.titulo</center><br />
+                                    <center>@libro.autor</center><br />
+                                    <center><a href="#" class="button primary">@libro.precio</a></center>
+                                </span>
+                            </div>
+                            if (item.libros.IndexOf(libro) == item.libros.Count - 1 || item.libros.IndexOf(libro)==5)
+                            {
+                            <div class="col-12">
+                                @Html.ActionLink("Ver más", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcategoria, op = 1 }, new { @class = "button fit"})
+                            </div>
+                                break;
+                            }
+                        }
+                    </div>
+                    </div>
+            }
+            </div>
 </section>

@@ -16,6 +16,6 @@ namespace ShopBook.Class_DTO
         public string fecha { get; set; }
         public string img { get; set; }
         public int idSubCategoria { get; set; }
-        public int idCategoria { get; set; }
+        public int? idCategoria { get; set; }
     }
 }

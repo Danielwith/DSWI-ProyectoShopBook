@@ -42,6 +42,7 @@ namespace ShopBook.Controllers
 
             return View(libros.OrderBy(x => x.titulo));
         }
+
         public ActionResult listarLibrosXSubCate(int idSubCate)
         {
             ViewBag.subcategoria = db.tb_sub_categorias.Find(idSubCate).nombreSubCate;

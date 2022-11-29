@@ -35,7 +35,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Home/listarEditorial?edit="+0,
+                    "url": "/Mantenimiento/listarEditorial?edit="+0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -135,9 +135,9 @@
                         element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                         $(".swal2-confirm").click(function () {
                             $.ajax({
-                                url: "/Home/GuardarEditorial?nomEdito=" + nomEdito + "&&direccion=" + direccion + "&&telefono=" + telefono + "&&fechaRegistro=" + fechaRegistro,
+                                url: "/Mantenimiento/GuardarEditorial?nomEdito=" + nomEdito + "&&direccion=" + direccion + "&&telefono=" + telefono + "&&fechaRegistro=" + fechaRegistro,
                                 success: function (r) {
-                                    window.location = "/Home/MantenimientoEditorial?notification=" + message;
+                                    window.location = "/Mantenimiento/MantenimientoEditorial?notification=" + message;
                                 }
                             })
                         })
@@ -157,7 +157,7 @@
             }
 
         function getEditarModal(idEdito) {
-            let json = fetch("/Home/listarEditorial?edit="+1, {
+            let json = fetch("/Mantenimiento/listarEditorial?edit="+1, {
                 "headers": {
                     "accept": "*/*",
                     "content-type": "application/JSON",
@@ -243,13 +243,13 @@
                     // Es solo estilo, tiene incompatiblidad con main.css
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
 
-                    // Mediante Ajax envia la data al Controlador Home
+                    // Mediante Ajax envia la data al Controlador Mantenimiento
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EditarEditorial?idEdito=" + idEdito + "&&nomEdito=" + nomEdito +
+                            url: "/Mantenimiento/EditarEditorial?idEdito=" + idEdito + "&&nomEdito=" + nomEdito +
                             "&&direccion="+ direccion + "&&telefono=" + telefono + "&&fechaRegistro="+ fechaRegistro,
                             success: function (r) {
-                                window.location = "/Home/MantenimientoEditorial?notification=" + message;
+                                window.location = "/Mantenimiento/MantenimientoEditorial?notification=" + message;
                             }
                         })
                     })
@@ -286,9 +286,9 @@
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {
                         $.ajax({
-                            url: "/Home/EliminarEditorial?idEdito=" + idEdito,
+                            url: "/Mantenimiento/EliminarEditorial?idEdito=" + idEdito,
                             success: function (r) {
-                                window.location = "/Home/MantenimientoEditorial?notification=" + message;
+                                window.location = "/Mantenimiento/MantenimientoEditorial?notification=" + message;
                             }
                         })
                     })

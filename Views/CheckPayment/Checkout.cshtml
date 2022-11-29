@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+@Styles.Render("~/Assets/css/modifiedstyles.css")
+@model ShopBook.Entity.tb_usuario
+<header id="header" style="text-align: right;">
+    <h3>
+        <span>
+            <img style="transform: translateY(3px);" width="20px" src="~/Assets/images/icons/num1.svg" alt="">
+        </span>
+        <strong>
+            DATOS DE USUARIO
+        </strong>
+        <span>
+            <img style="transform: translateY(3px);" width="20px" src="~/Assets/images/icons/user.svg" alt="">
+        </span>
+    </h3>
+</header>
+<br />
+<!-- Elements -->
+
+<div class="row gtr-100 box">
+    <div class="col-8 col-12-medium">
+        <h2 id="elements">Datos del Cliente</h2>
+        <hr />
+        @using (Html.BeginForm("Checkout", "CheckPayment", FormMethod.Post, new { id = "idRegistrar" }))
+        {
+            <div class="row gtr-uniform">
+                <div class="col-12">
+                    <span>Dirección de email:</span>
+                    <input type="email" name="userEmail" id="demo-name" readonly="readonly" value=@Model.email />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Nombre</span>
+                    <input type="text" name="userName" id="demo-name" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Apellidos</span>
+                    <input type="text" name="userApe" id="demo-email" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Tipo de documento</span>
+                    <select name="tipoDoc" id="tipoDoc">
+                        <option value="1">DNI</option>
+                        <option value="2">RUC</option>
+                    </select>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Número de documento</span>
+                    <input type="number" name="userDocNum" id="demo-email" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Fecha de Nacimiento</span>
+                    <input class="form-date" type="date" name="fecNac" id="demo-name" value="" />
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <span>Número de teléfono</span>
+                    <input type="number" name="userPhone" id="demo-email" value="" />
+                </div>
+                <div class="col-12">
+                    <span>Dirección</span>
+                    <input type="text" name="userAddress" id="demo-email" value="" />
+                </div>
+                <div class="col-12">
+                    <br />
+                    <ul class="actions" style="justify-content: center;">
+                        <li>
+                            @*@Html.ActionLink("Continuar", "Payment", "CheckPayment")*@
+                            <input type="submit" value="Continuar" class="primary" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+    <div class="col-4">
+        <div class="box">
+            <h4 id="elements">Resumen del Pedido</h4>
+            <hr />
+            <ul>
+                @foreach (var i in System.Web.HttpContext.Current.Session["carrito"] as List<ShopBook.Entity.ShoppingCart>)
+                {
+                    <li>
+                        <div class="col-4"><span>@i.Libros.tituLibro</span>| S./ <span>@i.Libros.precUni</span></div>
+                    </li>
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script>
+    if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+    </script>
+    <script>
+        $().ready(function () {
+            $("#idRegistrar").validate({
+                rules: {
+                    userName: {
+                        required: true
+                    },
+                    userApe: {
+                        required: true
+                    },
+                    userDocNum: {
+                        required: true,
+                        maxlength: function (element) {
+                            if ($("#tipoDoc").val() == 1) {
+                                return 8;
+                            }
+                            else {
+                                return 11;
+                            }
+                        }
+                    },
+                    fecNac: {
+                        required: true
+                    },
+                    userPhone: {
+                        required: true,
+                        minlength: 7,
+                        maxlength: 9
+                    },
+                    userAddress: {
+                        required: true
+                    }
+                },
+                messages: {
+                    userName: {
+                        required: "Debes completar este campo."
+                    },
+                    userApe: {
+                        required: "Debes completar este campo."
+                    },
+                    userDocNum: {
+                        required: "Debes completar este campo."
+                    },
+                    fecNac: {
+                        required: "Debe seleccionar una fecha."
+                    },
+                    userPhone: {
+                        required: "Debes completar este campo.",
+                        minlength: "Minimo 7 digitos.",
+                        maxlength: "Maximo 9 digitos."
+                    },
+                    userAddress: {
+                        required: "Debes completar este campo."
+                    }
+                }
+            })
+        })
+    </script>
+}
+
+

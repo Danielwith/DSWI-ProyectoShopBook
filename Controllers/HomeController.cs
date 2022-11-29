@@ -1,8 +1,10 @@
-﻿using ShopBook.Entity;
+﻿using ShopBook.Class_DTO;
+using ShopBook.Entity;
 using ShopBook.Filters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +20,7 @@ namespace ShopBook.Controllers
         {
             Session["subcate"] = null;
             var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
+            
             return View(categorias);
         }
 
@@ -192,16 +195,6 @@ namespace ShopBook.Controllers
             return View();
         }
 
-        // Test Alert Form ! ! !
-        // No funciona, falta implementar alert.js
-        [HttpPost]
-        [AutorizarUsuario(idOperacion:1)]
-        public ActionResult About(string name, string descrip)
-        {
-            TempData["Notification"] = $"Notification('Esta es una prueba')";
-            return View();
-        }
-
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult Contact()
         {
@@ -290,9 +283,5 @@ namespace ShopBook.Controllers
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
-         
-
     }
-
 }

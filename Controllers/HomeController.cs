@@ -64,61 +64,6 @@ namespace ShopBook.Controllers
 
         #endregion VistaDeInicio
 
-        #region CRUDProveedorDePrueba
-        [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult Mantenimiento(string notification)
-        {
-            ViewBag.notification = notification;
-            return View();
-        }
-
-        //Funciones
-        [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult listarProveedor(int edit)
-        {
-            var proveedores= (from m in db.tb_usuario
-                              join p in db.proveedor_data_temp on m.idUser equals p.idUser
-                              where p.activo != 0
-                              select new { p.idData, m.idUser, m.nombre, p.numVentas }).ToList(); 
-            if (edit == 1)
-            {
-                proveedores = (from m in db.tb_usuario
-                                   join p in db.proveedor_data_temp on m.idUser equals p.idUser
-                                   select new { p.idData, m.idUser, m.nombre, p.numVentas }).ToList();
-            }
-            
-            return Json(new { data = proveedores}, JsonRequestBehavior.AllowGet);
-        }
-
-        [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult GuardarProveedor(int idUser, int numVentas)
-        {
-            var data = new proveedor_data_temp() { idUser=idUser,numVentas=numVentas, activo=1};
-            db.proveedor_data_temp.Add(data);
-            db.SaveChanges();
-            return Json(true, JsonRequestBehavior.AllowGet);
-        }
-        
-        [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult EditarProveedor(int idData, int numVentas)
-        {
-            var data = db.proveedor_data_temp.Where(u => u.idData == idData).FirstOrDefault();
-            data.numVentas = numVentas;
-            db.SaveChanges();
-            return Json(true, JsonRequestBehavior.AllowGet);
-        }
-
-        [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult EliminarProveedor(int idData)
-        {
-            var data = db.proveedor_data_temp.Find(idData);
-            data.activo = 0;
-            db.SaveChanges();
-            return Json(true, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion CRUDProveedorDePrueba
-
         // OPERACIONES
         [AutorizarUsuario(idOperacion: 1)]
         public ActionResult About()

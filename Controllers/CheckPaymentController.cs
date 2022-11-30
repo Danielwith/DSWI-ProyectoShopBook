@@ -15,7 +15,7 @@ namespace ShopBook.Controllers
     {
         private shopbookEntities db = new shopbookEntities();
 
-        // GET: CheckPayment
+        #region DatosDeCliente
         [HttpGet]
         public ActionResult Checkout()
         {
@@ -51,7 +51,9 @@ namespace ShopBook.Controllers
             
             return RedirectToAction("Payment");
         }
+        #endregion DatosDeCliente
 
+        #region MetodoDePago
         [HttpGet]
         public ActionResult Payment()
         {
@@ -102,12 +104,16 @@ namespace ShopBook.Controllers
                 }
             }
         }
+        #endregion MetodoDePago
 
+        #region FinalizarCompra
+        // Vista
         public ActionResult Finish()
         {
             return View();
         }
 
+        // Metodo para registrar la compra en la database
         public void FinalizarCompra()
         {
             var usuario = (tb_usuario)Session["email"];
@@ -137,5 +143,7 @@ namespace ShopBook.Controllers
                 Session["carrito"] = new List<ShoppingCart>();
             }
         }
+
+        #endregion FinalizarCompra
     }
 }

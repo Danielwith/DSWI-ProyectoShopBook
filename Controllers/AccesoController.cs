@@ -8,13 +8,8 @@ namespace ShopBook.Controllers
 {
     public class AccesoController : Controller
     {
+        #region Login_Usuario
         // GET: Login
-        // Este comentario es de Dwight
-        // Este comentario es de Carlos chinguel quinto
-        // Este comentario es de Luis
-        // Escribi Apellido 
-        //Comentario clemente Romero Sting
-
         public ActionResult Login()
         {
             return View();
@@ -64,6 +59,9 @@ namespace ShopBook.Controllers
             return RedirectToAction("Login", "Acceso");
         }
 
+        #endregion Login_Usuario
+
+        #region Registrar_Usuario
         // GET: Registrar
         public ActionResult Registrar()
         {
@@ -101,5 +99,6 @@ namespace ShopBook.Controllers
                 return RedirectToAction("OperacionNoAutorizada", "Error");
             }
         }
+        #endregion Registrar_Usuario
     }
 }

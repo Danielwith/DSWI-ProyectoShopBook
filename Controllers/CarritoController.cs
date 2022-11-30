@@ -89,27 +89,11 @@ namespace ShopBook.Controllers
             return View();
         }
 
-        //public ActionResult prueba()
-        //{
-        //    var oEmail = (tb_usuario)Session["email"];
-        //        return Json(new { data = oEmail.idUser }, JsonRequestBehavior.AllowGet);
-            
-        //}
-
         public ActionResult Delete(int id)
         {
             List<ShoppingCart> compras = (List<ShoppingCart>)Session["carrito"];
             compras.RemoveAt(getLibro(id));
             return View("Compras");
         }
-        //[Function(Name = "dbo.ufn_generarNroBoleta")]
-        //[return: Parameter(DbType ="NChar(6)")]
-        //public static string generarNroBoleta()
-        //{
-        //    IExecuteResult result = this.ExecuteMethodCell(this, )
-        //    return ((string)(result.ReturnValue));
-        //}
-
-        
     }
 }

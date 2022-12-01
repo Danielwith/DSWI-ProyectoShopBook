@@ -18,6 +18,13 @@ namespace ShopBook.Entity
         public tb_usuario()
         {
             this.proveedor_data_temp = new HashSet<proveedor_data_temp>();
+            this.proveedor_data_temp1 = new HashSet<proveedor_data_temp>();
+            this.proveedor_data_temp2 = new HashSet<proveedor_data_temp>();
+            this.proveedor_data_temp3 = new HashSet<proveedor_data_temp>();
+            this.tb_boletas = new HashSet<tb_boletas>();
+            this.tb_boletas1 = new HashSet<tb_boletas>();
+            this.tb_boletas2 = new HashSet<tb_boletas>();
+            this.tb_boletas3 = new HashSet<tb_boletas>();
         }
     
         public int idUser { get; set; }
@@ -29,6 +36,20 @@ namespace ShopBook.Entity
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proveedor_data_temp> proveedor_data_temp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proveedor_data_temp> proveedor_data_temp1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proveedor_data_temp> proveedor_data_temp2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proveedor_data_temp> proveedor_data_temp3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_boletas> tb_boletas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_boletas> tb_boletas1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_boletas> tb_boletas2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_boletas> tb_boletas3 { get; set; }
         public virtual tb_rol tb_rol { get; set; }
     }
 }

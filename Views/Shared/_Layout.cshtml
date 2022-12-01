@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ShopBook</title>
     @Styles.Render("~/Assets/css/main.css")
+    @Styles.Render("~/Assets/ism/css/my-slider.css")
+    @Styles.Render("~/Assets/menu/menu.css")
 </head>
 <body class="is-preload">
     <!-- Wrapper - CONTENEDOR PRINCIPAL DE LA PAGINA -->
@@ -13,10 +15,110 @@
         <!-- CUERPO DE LA PAGINA -->
         <div id="main">
             <div class="inner">
+
+                <div class="menu" id="menu_sticky">
+                    <ul class="menu__container" style="padding-left: 0px; margin: 0 0 0em 0">
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__cate" style="padding-left:0px">
+                            <p class="menu__text">
+                                <a href="#" class="menu__link_cate"> Categoria 1</a>
+                            </p>
+                            <ul class="menu__sub_container">
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                                <li class="menu__subcate">
+                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
                 @RenderBody()
             </div>
         </div>
-
 
         <!-- BARRA DE NAVEGACION -->
         <div id="sidebar">
@@ -160,6 +262,8 @@
     @Scripts.Render("~/Assets/js/main.js")
     @Scripts.Render("~/Assets/js/sweetalert2.all.min.js")
     @Scripts.Render("~/Assets/js/alert.js")
+    @Scripts.Render("~/Assets/ism/js/ism-2.2.min.js")
+    @Scripts.Render("~/Assets/menu/menu.js")
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>

@@ -24,44 +24,103 @@
     <!-- Agregar validaciones en login/main.js -->
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100" style="/*display: block;*/ justify-content: center; width: 560px; ">
+            <div class="wrap-login100" style="/*display: block;*/ justify-content: center; width: 600px; padding:0 2em 0 2em; ">
                 <!-- Cambiar Action Form -->
-                @using (Html.BeginForm("Registrar", "Acceso", FormMethod.Post, new { @class = "login100-form validate-form", style = "margin-top: -50px" }))
+                @using (Html.BeginForm("Registrar", "Acceso", FormMethod.Post, new
                 {
-                        <span class=" login100-form-title">
-                            Registrarse
-                        </span>
+                    @class = "login100-form validate-form",
+                    style = "margin-top: -50px;width: 80%;width: 600px; padding: 8em 0 0em 0"
+                }))
+                {
+                    <span class=" login100-form-title">
+                        Registrarse
+                    </span>
+                    <div style="display:flex;justify-content:space-between">
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="text" name="nickname" placeholder="Tu Nickname" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
 
-                    <div class="wrap-input100">
-                        <input class="input100" type="text" name="nombre" placeholder="Tu Nombre" required>
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </span>
+                        <div class="wrap-input100">
+                            <input class="input100" type="text" name="nombre" placeholder="Tu Nombre" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Se requiere un correo valido, ejemplo: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Tu Email">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </span>
+                    <div style="display:flex;justify-content:space-between">
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="text" name="apellido" placeholder="Tu Apellido" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="number" name="dni" placeholder="Tu Dni" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
-                        <input class="input100" type="password" name="pass" placeholder="Contraseña">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
-                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="number" name="telefono" placeholder="Tu Telefono" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Repite tu contraseña">
-                        <input class="input100" type="password" name="repPass" placeholder="Repita su contraseña">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                        </span>
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="text" name="direccion" placeholder="Tu Direccion" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <div class="wrap-input100 validate-input">
+                            <input class="input100" type="date" name="fecNac" placeholder="Fecha de Nacimiento" required>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Se requiere un correo valido, ejemplo: ex@abc.xyz">
+                            <input class="input100" type="text" name="email" placeholder="Tu Email">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between">
+                        <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
+                            <input class="input100" type="password" name="pass" placeholder="Contraseña">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Repite tu contraseña">
+                            <input class="input100" type="password" name="repPass" placeholder="Repita su contraseña">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="container-login100-form-btn">
@@ -70,9 +129,7 @@
                         </button>
                     </div>
 
-
-
-                    <div class="text-center p-t-136">
+                    <div class="text-center p-t-40 p-b-40">
                         @Html.ActionLink("Ya tengo una cuenta", "Login", "Acceso", new { @class = "txt2" })
                         <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                     </div>
@@ -91,14 +148,20 @@
     @Scripts.Render("~/Vendor/select2/select2.min.js")
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/tilt/tilt.jquery.min.js")
-    <script>
+    @section scripts{
+        <script>
         $('.js-tilt').tilt({
             scale: 1.1
         })
-    </script>
-    <!--===============================================================================================-->
-    @Scripts.Render("~/Assets/js/login/main.js")
-</body>
+
+        if ('@ViewBag.Notification' != '') {
+            Notification('@ViewBag.Notification');
+        }
+        </script>   
+    }
+        <!--===============================================================================================-->
+        @Scripts.Render("~/Assets/js/login/main.js")
+    </body>
 
 </html>
 

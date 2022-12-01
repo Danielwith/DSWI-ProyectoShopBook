@@ -366,6 +366,11 @@
     <Content Include="Assets\images\pic09.jpg" />
     <Content Include="Assets\images\pic10.jpg" />
     <Content Include="Assets\images\pic11.jpg" />
+    <Content Include="Assets\ism\css\my-slider.css" />
+    <Content Include="Assets\ism\image\slides\beautiful-701678_1280.jpg" />
+    <Content Include="Assets\ism\image\slides\flower-729514_1280.jpg" />
+    <Content Include="Assets\ism\image\slides\summer-192179_1280.jpg" />
+    <Content Include="Assets\ism\js\ism-2.2.min.js" />
     <Content Include="Assets\js\alert.js" />
     <Content Include="Assets\js\breakpoints.min.js" />
     <Content Include="Assets\js\browser.min.js" />
@@ -374,6 +379,8 @@
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\sweetalert2.all.min.js" />
     <Content Include="Assets\js\util.js" />
+    <Content Include="Assets\menu\menu.css" />
+    <Content Include="Assets\menu\menu.js" />
     <Content Include="Assets\svg\shopbook.svg" />
     <Content Include="Assets\webfonts\fa-brands-400.svg" />
     <Content Include="Assets\webfonts\fa-regular-400.svg" />

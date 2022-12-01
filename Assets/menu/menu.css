@@ -1,0 +1,77 @@
+﻿.menu {
+    position: sticky;
+    top: 25px;
+    width: 100%;
+    border-top: 3px solid #f56a6a;
+    height: 50px;
+    margin-top: 2em;
+    z-index: 6;
+    background: white;
+    transition: ease-in .2s;
+    -webkit-box-shadow: 14px 12px 0px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 14px 12px 0px 0px rgba(0,0,0,0.12);
+    box-shadow: 14px 12px 0px 0px rgba(0,0,0,0.12);
+}
+/*.menu::after{
+    content:'';
+    width: 100%;
+    height: 150px;
+    background: #f56a6a; 
+    display: block;
+    position: absolute;
+    top: -36px;
+    left: 0;
+    z-index: -2;
+    border-radius: 50% 50%;
+}*/
+
+
+.menu__container, .menu__sub_container{
+    list-style:none;
+}
+.menu__container {
+    display: flex;
+    overflow: hidden;
+}
+.menu__cate > .menu__text {
+    text-align: center;
+    margin: 0 0 0em 0; /*Quita el margin por defecto de la platilla*/
+}
+
+.menu__cate {
+    text-decoration: none;
+    flex-grow: 1;
+}
+.menu__link_cate {
+    /*border: 1px solid #f56a6a;*/
+}
+.menu__link_cate, .menu__link_subcate {
+    display: block;
+    padding: .5em .5em;
+    
+}
+.menu__sub_container {
+    background: #fff;
+    overflow: hidden;
+    max-height: 0px;
+    transition: ease-in .2s;
+    margin: 0 0 0em 0; /*Quita el margin por defecto de la platilla*/
+    border: 1px solid #f56a6a;
+}
+/*Evento Hover*/
+.menu__container .menu__cate:hover {
+    background: #f5f6f7;
+}
+.menu__container .menu__cate:hover .menu__sub_container {
+    padding: .5em;
+    max-height: 200px;
+}
+.menu__sub_container .menu__subcate:hover {
+    background: #f5f6f7;
+} 
+.menu__container > .menu__cate:nth-child(1){
+   border-radius: 25px 0 0 50px;
+}
+.menu__container > .menu__cate:nth-last-child(1) {
+    border-radius: 0px 25px 0 0px;
+}

@@ -19,10 +19,13 @@ namespace ShopBook.Controllers
         // PAGINA PRINCIPAL
         public ActionResult Index()
         {
-            Session["subcate"] = null;
-            var categorias = db.tb_categorias.ToList().OrderBy(x => x.nombreCate);
-            
-            return View(categorias);
+            Session["categorias"] = (from c in db.tb_categorias select new CategoriaDTO{ idcate = c.idcate, nombreCate = c.nombreCate, descripcion = c.descripcion}).ToList();
+
+            Session["subcate"] = (from sc in db.tb_sub_categorias
+                                  join c in db.tb_categorias
+                                  on sc.idCate equals c.idcate
+                                  select new SubCategoriaDTO { id = sc.idsubCate, SubCate = sc.nombreSubCate, idcate = sc.idCate }).ToList();
+            return View();
         }
 
         // DEPENDE DEL ROL

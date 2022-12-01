@@ -249,6 +249,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Class_DTO\CategoriaDTO.cs" />
     <Compile Include="Class_DTO\CategoriaLibroDTO.cs" />
     <Compile Include="Class_DTO\ClientData.cs" />
     <Compile Include="Class_DTO\EmailSenderDotNet.cs" />
@@ -399,6 +400,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Libros\img\1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\sass\base\_page.scss" />
@@ -593,6 +595,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\NewFolder1\" />
     <Folder Include="Views\Sesion\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,102 +18,33 @@
 
                 <div class="menu" id="menu_sticky">
                     <ul class="menu__container" style="padding-left: 0px; margin: 0 0 0em 0">
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__cate" style="padding-left:0px">
-                            <p class="menu__text">
-                                <a href="#" class="menu__link_cate"> Categoria 1</a>
-                            </p>
-                            <ul class="menu__sub_container">
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                                <li class="menu__subcate">
-                                    <a href="#" class="menu__link_subcate">Sub Cate</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @{
+                            if (System.Web.HttpContext.Current.Session["categorias"] != null)
+                            {
+                                var subcategorias = System.Web.HttpContext.Current.Session["subcate"] as List<ShopBook.Class_DTO.SubCategoriaDTO>;
+                                
+                                foreach (var item in System.Web.HttpContext.Current.Session["categorias"] as List<ShopBook.Class_DTO.CategoriaDTO>)
+                                {
+                                    <li class="menu__cate" style="padding-left:0px">
+                                                                <p class="menu__text">
+                                                                    @Html.ActionLink(item.nombreCate, "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate}, new { @class = "menu__link_cate" })
+                                                                    @*<a href="#" class="menu__link_cate"> @item.nombreCate</a>*@
+                                                                </p>
+                                        @{
+                                            <ul class="menu__sub_container">
+                                                @foreach (var sub in subcategorias.FindAll(x => x.idcate == item.idcate))
+                                                {
+                                                    <li class="menu__subcate">
+                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.id}, new { @class = "menu__link_subcate" })
+                                                        @*<a href="#" class="menu__link_subcate">@sub.SubCate</a>*@
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                    }
+                            }
+                        }
                     </ul>
                 </div>
                 @RenderBody()
@@ -133,7 +64,7 @@
                 </div>
 
                 <!-- Ser />ction -->
-                @{
+                @*@{
                     if (System.Web.HttpContext.Current.Session["subcate"] != null)
                     {
                         <section>
@@ -150,7 +81,7 @@
                             </div>
                         </section>
                     }
-                }
+                }*@
                 <!-- Menu -->
                 <nav id="menu">
                     <header class="major">

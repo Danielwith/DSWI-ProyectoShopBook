@@ -18,13 +18,8 @@ namespace ShopBook.Controllers
            
             Session["nomcate"] = db.tb_categorias.Find(idcate).nombreCate;
 
-            Session["subcate"] = (from sc in db.tb_sub_categorias
-                                         join c in db.tb_categorias
-                                         on sc.idCate equals c.idcate
-                                         where sc.idCate == idcate
-                                         select new SubCategoriaDTO { id = sc.idsubCate.ToString(), SubCate = sc.nombreSubCate }).ToList();
-                
-                 IEnumerable<LibroDTO>  libros = (from e in db.tb_editoriales
+            
+            IEnumerable<LibroDTO>  libros = (from e in db.tb_editoriales
                                                     join l in db.tb_libros on e.idEdito equals l.idEdito
                                                     join csl in db.tb_cate_subcate_libros on l.idLibro equals csl.idLibro 
                                                     join sc in db.tb_sub_categorias on csl.idSubCate equals sc.idsubCate

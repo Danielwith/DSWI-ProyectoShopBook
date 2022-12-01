@@ -42,7 +42,7 @@ namespace ShopBook.Controllers
                                join e in db.tb_editoriales on l.idEdito equals e.idEdito
                                join cs in db.tb_cate_subcate_libros on l.idLibro equals cs.idLibro
                                join sc in db.tb_sub_categorias on cs.idSubCate equals sc.idsubCate
-                               select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito, e.idEdito, cs.idCate, cs.idSubCate }).ToList();
+                               select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.sinopsis, e.nomEdito, e.idEdito, cs.idCate, cs.idSubCate }).ToList();
                 var parseo2 = (from p in libros2
                                select new
                                {
@@ -50,7 +50,7 @@ namespace ShopBook.Controllers
                                    tituLibro = p.tituLibro,
                                    nomAutor = p.nomAutor,
                                    precUni = p.precUni,
-                                   fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
+                                  
                                    sinopsis = p.sinopsis,
                                    nomEdito = p.nomEdito,
                                    idEdito = p.idEdito,
@@ -64,7 +64,7 @@ namespace ShopBook.Controllers
                 var libros = (from l in db.tb_libros
                               join e in db.tb_editoriales on l.idEdito equals e.idEdito
                               where l.estado == 1
-                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.fechPub, l.sinopsis, e.nomEdito, e.idEdito }).ToList();
+                              select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.sinopsis, e.nomEdito, e.idEdito }).ToList();
                 var parseo = (from p in libros
                               select new
                               {
@@ -72,7 +72,7 @@ namespace ShopBook.Controllers
                                   tituLibro = p.tituLibro,
                                   nomAutor = p.nomAutor,
                                   precUni = p.precUni,
-                                  fechPub = p.fechPub.Value.ToString("yyyy-MM-dd"),
+                               
                                   sinopsis = p.sinopsis,
                                   nomEdito = p.nomEdito,
                                   idEdito = p.idEdito
@@ -83,9 +83,9 @@ namespace ShopBook.Controllers
         }
 
         [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult GuardarLibros(string tituLibro, string nomAutor, decimal precUni, DateTime fechPub, string sinopsis, int idEdito, int idCate, int idSubCate)
+        public ActionResult GuardarLibros(string tituLibro, string nomAutor, decimal precUni,string sinopsis, int idEdito, int idCate, int idSubCate)
         {
-            var data = new tb_libros() { tituLibro = tituLibro, nomAutor = nomAutor, precUni = precUni, fechPub = fechPub, sinopsis = sinopsis, idEdito = idEdito, estado = 1 };
+            var data = new tb_libros() { tituLibro = tituLibro, nomAutor = nomAutor, precUni = precUni,  sinopsis = sinopsis, idEdito = idEdito, estado = 1 };
             db.tb_libros.Add(data);
             db.SaveChanges();
 
@@ -97,7 +97,7 @@ namespace ShopBook.Controllers
         }
 
         [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult EditarLibro(int idLibro, string tituLibro, string nomAutor, decimal precUni, int idEdito, DateTime fechPub, string sinopsis, int estado, int idCate, int idSubCate)
+        public ActionResult EditarLibro(int idLibro, string tituLibro, string nomAutor, decimal precUni, int idEdito,  string sinopsis, int estado, int idCate, int idSubCate)
         {
             var data = db.tb_libros.Where(u => u.idLibro == idLibro).FirstOrDefault();
             data.tituLibro = tituLibro;
@@ -105,7 +105,7 @@ namespace ShopBook.Controllers
             data.nomAutor = nomAutor;
             data.precUni = precUni;
             data.idEdito = idEdito;
-            data.fechPub = fechPub;
+           
             data.estado = estado;
             db.SaveChanges();
 

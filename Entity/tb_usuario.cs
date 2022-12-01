@@ -17,28 +17,24 @@ namespace ShopBook.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_usuario()
         {
-            
             this.tb_boletas = new HashSet<tb_boletas>();
-            this.tb_boletas1 = new HashSet<tb_boletas>();
-            this.tb_boletas2 = new HashSet<tb_boletas>();
-            this.tb_boletas3 = new HashSet<tb_boletas>();
         }
     
         public int idUser { get; set; }
         public string nombre { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        public System.DateTime fecha { get; set; }
         public int idRol { get; set; }
+        public string apodo { get; set; }
+        public string apellido { get; set; }
+        public string dni { get; set; }
+        public string telefono { get; set; }
+        public Nullable<System.DateTime> fecha_nac { get; set; }
+        public string direccion { get; set; }
+        public Nullable<System.DateTime> fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_boletas> tb_boletas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_boletas> tb_boletas1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_boletas> tb_boletas2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_boletas> tb_boletas3 { get; set; }
         public virtual tb_rol tb_rol { get; set; }
     }
 }

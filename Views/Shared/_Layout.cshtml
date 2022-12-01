@@ -35,7 +35,7 @@
                                                 @foreach (var sub in subcategorias.FindAll(x => x.idcate == item.idcate))
                                                 {
                                                     <li class="menu__subcate">
-                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.idcate}, new { @class = "menu__link_subcate" })
+                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.id}, new { @class = "menu__link_subcate" })
                                                         @*<a href="#" class="menu__link_subcate">@sub.SubCate</a>*@
                                                     </li>
                                                 }

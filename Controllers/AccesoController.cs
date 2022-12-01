@@ -69,7 +69,7 @@ namespace ShopBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registrar(string nombre,string email, string pass, string repPass)
+        public ActionResult Registrar(string nickname, string nombre, string apellido, string dni, string telefono, string direccion, DateTime fecNac, string email, string pass, string repPass)
         {
             if (pass != repPass)
             {
@@ -84,10 +84,11 @@ namespace ShopBook.Controllers
                                      select e).FirstOrDefault();
 
                     if (checkEmail == null) {
-                        db.usp_regUser(nombre, email, pass);
+                        db.usp_regUser(nombre, email, pass, nickname, apellido, dni, telefono, fecNac, direccion);
                     }
                     else
                     {
+                        ViewBag.Notification = "El Email ya esta en uso";
                         return RedirectToAction("Registrar", "Acceso");
                     }
                 };

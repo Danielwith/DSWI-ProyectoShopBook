@@ -51,7 +51,7 @@
 <section class="libro_section">
     <div class="libro__container">
         <article class="libro__article">
-            <span class="libro__item">  <img src="~/Assets/images/example.jpg" class="border-danger" style="width:250px"/></span>
+            <span class="libro__item">  <img src="@Url.Content(Model.img)" class="border-danger" style="width:250px"/></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="content">
                 <h3 class="text-dark libro__titulo">@Model.titulo.ToUpper()</h3>

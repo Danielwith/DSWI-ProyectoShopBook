@@ -32,10 +32,10 @@
                         </center>
                         <br />
                         <b>
-                            <center><@item.titulo.ToUpper()</center>
+                            <center style="font-size:14pt;">@item.titulo.ToUpper()</center>
                             <center>@item.autor.ToUpper()</center><br />
-                            <center>@item.precio.ToUpper()</center>
-                            @Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, new { @class="button primary"})
+                            <center style="font-size: 16pt; color: #dd9f14 ">S/. @item.precio.ToUpper()</center><br />
+                            <center>@Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, new { @class = "button primary" })</center>
                         </b>
                     </span>
                 </div>

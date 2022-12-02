@@ -164,7 +164,6 @@ namespace ShopBook.Class_DTO
 
             document.Add(newline);
             document.Add(totalCompra);
-
             document.Close();
         }
     }

@@ -95,6 +95,7 @@ namespace ShopBook.Controllers
                 {
                     FinalizarCompra();
                     Session["dataCliente"] = null;
+                    
                     return RedirectToAction("Finish");
                 }
                 else

@@ -8,19 +8,18 @@ using System.Web.Routing;
 
 namespace ShopBook.Filters
 {
-    [AttributeUsage(AttributeTargets.Method,AllowMultiple =true)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AutorizarUsuario : AuthorizeAttribute
     {
         private tb_usuario oEmail;
-        private LoginEntities db = new LoginEntities();
+        private shopbookEntities db = new shopbookEntities();
         private int idOperacion;
+        /*
         private int idModulo;
-
-
-        public AutorizarUsuario(int idOperacion = 0, int idModulo = 0)
+        */
+        public AutorizarUsuario(int idOperacion = 0)
         {
             this.idOperacion = idOperacion;
-            this.idModulo = idModulo;
         }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -30,38 +29,45 @@ namespace ShopBook.Filters
 
             try
             {
+                
                 oEmail = (tb_usuario)HttpContext.Current.Session["email"];
+
+                //Esta dato se pasa al _layout (dropdown)
+                HttpContext.Current.Session["rol"] = oEmail.idRol;
+
+
                 var lstMisOperaciones = from m in db.tb_rol_operacion
                                         where m.idRol == oEmail.idRol && m.idOperacion == idOperacion
                                         select m;
 
-                /* CONDICIONAL EN CASO DE NO PASAR NINGUN DATO, CUENTA LA LISTA DE OPERACIONES A PODER REALIZAR */
+
+                // CONDICIONAL EN CASO DE NO PASAR NINGUN DATO, CUENTA LA LISTA DE OPERACIONES A PODER REALIZAR
                 if (lstMisOperaciones.ToList().Count() < 1)
                 {
-                    var oOperacion = db.tb_operaciones.Find(idOperacion);
+                    /*
+                    var oOperacion = db.tb_operaciones.Find(idOperacion);              
                     var oModulo = db.tb_modulo.Find(idModulo);
                     nombreOperacion = getNombreDeOperacion(idOperacion);
                     nombreModulo = getNombreDelModulo(idModulo);
+                    */
                     var redirectError = new RouteValueDictionary(new
                     {
                         action = "OperacionNoAutorizada",
                         controller = "Error",
                         operacion = nombreOperacion,
-                        modulo = nombreModulo,
-                        msgErrorExcepcion = "."
+                        modulo = nombreModulo
                     });
                     filterContext.Result = new RedirectToRouteResult(redirectError);
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 var redirectError = new RouteValueDictionary(new
                 {
                     action = "OperacionNoAutorizada",
                     controller = "Error",
                     operacion = nombreOperacion,
-                    modulo = nombreModulo,
-                    msgErrorExcepcion = ex
+                    modulo = nombreModulo
                 });
                 filterContext.Result = new RedirectToRouteResult(redirectError);
             }
@@ -83,7 +89,7 @@ namespace ShopBook.Filters
                 return nombreOperacion = String.Empty;
             }
         }
-
+        /*
         public string getNombreDelModulo(int idModulo)
         {
             var mod = from m in db.tb_modulo
@@ -98,6 +104,6 @@ namespace ShopBook.Filters
             {
                 return nombreModulo = String.Empty;
             }
-        }
+        }*/
     }
 }

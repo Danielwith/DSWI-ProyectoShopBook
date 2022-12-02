@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "listarLibrosPorCategoria";
+}
+@model IEnumerable<ShopBook.Class_DTO.LibroDTO>
+<h2 class="text-center">@System.Web.HttpContext.Current.Session["nomcate"]</h2>
+
+@*<section style="display:flex;">
+    @foreach (var item in Model)
+    {
+        <article>
+            <div>
+                <img src="" class="border-danger" style="width:250px;height:250px" />
+            </div>
+            <div hidden><h3>@item.idLibro</h3></div>
+            <h4 class="text-dark">@item.titulo.ToUpper()</h4>
+            <h5>@item.autor.ToUpper()</h5>
+            <h4>@item.precio.ToUpper()</h4>
+            <button class="button">@Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, null) </button>
+        </article>
+    }
+</section>*@
+<div class="col-6 col-12-medium">
+    <div class="box">
+        <div class="row gtr-50 gtr-uniform">
+            @foreach (var item in Model)
+            {
+                <div class="col-2-large col-3-medium col-4-small">
+                    <span class="image fit">
+                        <img src="@Url.Content(item.img)" class="border-danger" style="width:150px;height:250px"/>
+                        <br />
+                        <b>
+                            <center>@item.titulo.ToUpper()</center>
+                            <center>@item.autor.ToUpper()</center><br />
+                            <center>@item.precio.ToUpper()</center>
+                            @Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, new { @class="button primary"})
+                        </b>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

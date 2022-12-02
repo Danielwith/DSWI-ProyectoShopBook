@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ShopBook</title>
     @Styles.Render("~/Assets/css/main.css")
+    @Styles.Render("~/Assets/ism/css/my-slider.css")
+    @Styles.Render("~/Assets/menu/menu.css")
 </head>
 <body class="is-preload">
     <!-- Wrapper - CONTENEDOR PRINCIPAL DE LA PAGINA -->
@@ -13,108 +15,167 @@
         <!-- CUERPO DE LA PAGINA -->
         <div id="main">
             <div class="inner">
+
+                <div class="menu" id="menu_sticky">
+                    <ul class="menu__container" style="padding-left: 0px; margin: 0 0 0em 0">
+                        @{
+                            if (System.Web.HttpContext.Current.Session["categorias"] != null)
+                            {
+                                var subcategorias = System.Web.HttpContext.Current.Session["subcate"] as List<ShopBook.Class_DTO.SubCategoriaDTO>;
+
+                                foreach (var item in System.Web.HttpContext.Current.Session["categorias"] as List<ShopBook.Class_DTO.CategoriaDTO>)
+                                {
+                                    <li class="menu__cate" style="padding-left:0px">
+                                                                <p class="menu__text">
+                                                                    @Html.ActionLink(item.nombreCate, "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate }, new { @class = "menu__link_cate" })
+                                                                    @*<a href="#" class="menu__link_cate"> @item.nombreCate</a>*@
+                                                                </p>
+                                        @{
+                                            <ul class="menu__sub_container">
+                                                @foreach (var sub in subcategorias.FindAll(x => x.idcate == item.idcate))
+                                                {
+                                                    <li class="menu__subcate">
+                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.id }, new { @class = "menu__link_subcate" })
+                                                        @*<a href="#" class="menu__link_subcate">@sub.SubCate</a>*@
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                                }
+                                            }
+                        }
+                    </ul>
+                </div>
                 @RenderBody()
             </div>
         </div>
-        
 
         <!-- BARRA DE NAVEGACION -->
         <div id="sidebar">
             <div class="inner">
 
                 <!-- Search -->
-                <section id="search" class="alt">
-                    <form method="post" action="#">
-                        <input type="text" name="query" id="query" placeholder="Search" />
-                    </form>
-                </section>
 
+                <div style="padding-bottom: 1em !important">
+                    <a href="/" style="border:none!important">
+                        <img src="~/Assets/svg/shopbook.svg" width="260" height="100">
+                    </a>
+                </div>
+
+                <!-- Ser />ction -->
+                @*@{
+                    if (System.Web.HttpContext.Current.Session["subcate"] != null)
+                    {
+                        <section>
+                            <header class="major">
+                                <h2>SUB CATEGORIAS</h2>
+                            </header>
+                            <div class="mini-posts">
+                                @foreach (var item in System.Web.HttpContext.Current.Session["subcate"] as List<ShopBook.Class_DTO.SubCategoriaDTO>)
+                                {
+                                    <li>
+                                        <a href="/Catalogo/listarLibrosXSubCate?idSubCate=@item.id" class="image"><img src="images/pic07.jpg" alt="" />@item.SubCate</a>
+                                    </li>
+                                }
+                            </div>
+                        </section>
+                    }
+                }*@
                 <!-- Menu -->
-                <nav id="menu">
+            <nav id="menu">
+                <ul style="display:flex; justify-content:center;margin-bottom:2em">
+                    <li style="width:100%">
+                        @{ if (System.Web.HttpContext.Current.Session["email"] != null)
+                            {
+                                var usuario = (ShopBook.Entity.tb_usuario)Session["email"];
+                                <center><h5>¡Bienvenido!</h5></center> 
+                                <span class="opener">@usuario.nombre @usuario.apellido</span>
+
+                                <ul class="m-b-15">
+                                    <li >@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso", null, new { @style = "margin:0 .0em 0 "} )</li>
+                                </ul>
+                            }
+                            else
+                            {
+                    <center><button class="button m-b-15">@Html.ActionLink("Iniciar Sesión", "Login", "Acceso", null, new { @style = "padding:0 .600em 0em " })</button></center>
+                            }
+                        }
+                    </li>
+                </ul>
                     <header class="major">
-                        <h2>Testing</h2>
+                        <h2>Acciones</h2>
                     </header>
                     <!-- ELEMENTOS DEL MENU -->
                     <ul>
-                        @{ /* if(ViewBag.idOperacion==? && ViewBag.idModulo==?)*/
+                        <!-- ELEMENTOS GLOBALES -->
+                        @if (System.Web.HttpContext.Current.Session["email"] == null)
+                        {
+
+                            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                            <li>@Html.ActionLink("CarritoPrueba", "Compras", "Carrito")</li>
                         }
-                        @{ if (ViewBag.idOperacion == 1 && ViewBag.idModulo == 1)
+
+                        <!-- ELEMENTOS AL LOGEAR -->
+                        <!-- AHORA SE MANEJA DESDE ID ROL -->
+                        @{
+                            if (System.Web.HttpContext.Current.Session["email"] != null)
                             {
-                                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                                <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
-                                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                                /* ADMINISTRADOR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 1)
+                                {
+
+                                    <li>
+                                        <span class="opener">Acciones de SuperUsuario</span>
+                                        <ul>
+                                            <li>@Html.ActionLink("Inicio", "Admin", "Home")</li>
+                                            <li>@Html.ActionLink("Moderar", "About", "Home")</li>
+                                            <li>@Html.ActionLink("MantenimientoEditorial", "MantenimientoEditorial", "Mantenimiento")</li>
+                                            <li>@Html.ActionLink("Consulta de Boletas", "Contact", "Home")</li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                /* PROVEEDOR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 2)
+                                {
+
+                                    <li>@Html.ActionLink("Inicio", "Proveedor", "Home")</li>
+                                    <li>@Html.ActionLink("Mantenimiento", "Mantenimiento", "Home")</li>
+                                    <li>@Html.ActionLink("Mantenimiento de Libros", "MantenimientoLibro", "Mantenimiento")</li>
+
+                                }
+
+                                /* USUARIO DEFAULT - INICIO AL LOGEAR */
+                                if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 4)
+                                {
+                                    <li>@Html.ActionLink("Inicio", "Inicio", "Home")</li>
+                                    <li>@Html.ActionLink("Ver Favoritos", "Inicio", "Home")</li>
+                                    <li>@Html.ActionLink("Mis Compras", "Compras", "Carrito")</li>
+                                }
                             }
                         }
-                        <!--
-                        <li>
-                            <span class="opener">Submenu</span>
-                            <ul>
-                                <li><a href="#">Lorem Dolor</a></li>
-                                <li><a href="#">Ipsum Adipiscing</a></li>
-                                <li><a href="#">Tempus Magna</a></li>
-                                <li><a href="#">Feugiat Veroeros</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Etiam Dolore</a></li>
-                        <li><a href="#">Adipiscing</a></li>
-                        <li>
-                            <span class="opener">Another Submenu</span>
-
-
-                            <ul>
-                                <li><a href="#">Lorem Dolor</a></li>
-                                <li><a href="#">Ipsum Adipiscing</a></li>
-                                <li><a href="#">Tempus Magna</a></li>
-                                <li><a href="#">Feugiat Veroeros</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Maximus Erat</a></li>
-                        <li><a href="#">Sapien Mauris</a></li>
-                        <li><a href="#">Amet Lacinia</a></li>
-                            -->
                     </ul>
                     <!-- FIN -->
                 </nav>
 
-                <!-- Section -->
-                <section>
-                    <header class="major">
-                        <h2>Ante interdum</h2>
-                    </header>
-                    <div class="mini-posts">
-                        <article>
-                            <a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-                        </article>
-                        <article>
-                            <a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-                        </article>
-                        <article>
-                            <a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-                        </article>
-                    </div>
-                    <ul class="actions">
-                        <li><a href="#" class="button">More</a></li>
-                    </ul>
-                </section>
 
                 <!-- INFORMACION DE CONTACTO -->
                 <section>
                     <header class="major">
-                        <h2>Get in touch</h2>
+                        <h2>Nosotros</h2>
                     </header>
                     <p>
-                        Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem
-                        ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.
+                        Somos una tienda de libros con un gran catalogo a nuestro alcance, nuestro objetivo es ofrecer a nuestros clientes
+                        una grata experiencia al momento de encontrar un libro de su preferencia y tenga la mejor experiencia posible
+                        al momento de su adquisición.
                     </p>
                     <ul class="contact">
-                        <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-                        <li class="icon solid fa-phone">(000) 000-0000</li>
+                        <li class="icon solid fa-envelope"><a href="#">shopbook_pe@gmail.com</a></li>
+                        <li class="icon solid fa-phone">(01) 6149500</li>
                         <li class="icon solid fa-home">
-                            1234 Somewhere Road #8254<br />
-                            Nashville, TN 00000-0000
+                            Parque Hernán Velarde, 27 Santa Beatriz<br />
+                            15046 Lima, Lim
                         </li>
                     </ul>
                 </section>
@@ -122,20 +183,23 @@
                 <!-- COPYRIGHT -->
                 <footer id="footer">
                     <p class="copyright">
-                        &copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.
+                        &copy; CIBERTEC. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.
                     </p>
                 </footer>
 
             </div>
-
         </div>
     </div>
-
     @Scripts.Render("~/Assets/js/jquery.min.js")
     @Scripts.Render("~/Assets/js/browser.min.js")
     @Scripts.Render("~/Assets/js/breakpoints.min.js")
     @Scripts.Render("~/Assets/js/util.js")
     @Scripts.Render("~/Assets/js/main.js")
+    @Scripts.Render("~/Assets/js/sweetalert2.all.min.js")
+    @Scripts.Render("~/Assets/js/alert.js")
+    @Scripts.Render("~/Assets/ism/js/ism-2.2.min.js")
+    @Scripts.Render("~/Assets/menu/menu.js")
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

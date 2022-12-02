@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>Dale un vistazo a nuestro Catálogo de libros, de seguro te va impresionar</h2>
+    </header>
+    <div class="posts" style="margin:0 0 0em 0em">
+        <div class="ism-slider" data-play_type="once-rewind" id="my-slider" style="width:90%">
+            <ol>
+                <li>
+                    <img src="~/Assets/ism/image/slides/flower-729514_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+                <li>
+                    <img src="~/Assets/ism/image/slides/beautiful-701678_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+                <li>
+                    <img src="~/Assets/ism/image/slides/summer-192179_1280.jpg">
+                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                </li>
+            </ol>
+        </div>
+        
+    </div>
+        @*@foreach (var item in Model)
+            {
+                <article>
+                    <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+                    <h3>@item.nombreCate</h3>
+                    <p>
+                        @item.descripcion
+                    </p>
+                    <ul class="actions">
+                        <li>
+                            @Html.ActionLink("Explorar", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate, op = 1 }, null)
+
+                        </li>
+                    </ul>
+                </article>
+            }*@
+    <hr/>
+        <div class="col-6 col-12-medium">
+            @foreach (var item in Model)
+            {
+                <p>@item.categoria</p>
+                <div class="box">
+                    <div class="row gtr-50 gtr-uniform">
+                        @foreach (var libro in item.libros)
+                        {
+                            <div class="col-2-xlarge col-4-medium col-6-small">
+                                <span class="image fit">
+                                    <img src="images/example.jpg"
+                                         alt="" />
+                                    <br />
+                                    <center>@libro.titulo</center><br />
+                                    <center>@libro.autor</center><br />
+                                    <center><a href="#" class="button primary">@libro.precio</a></center>
+                                </span>
+                            </div>
+                            if (item.libros.IndexOf(libro) == item.libros.Count - 1 || item.libros.IndexOf(libro)==5)
+                            {
+                            <div class="col-12">
+                                @Html.ActionLink("Ver más", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcategoria, op = 1 }, new { @class = "button fit"})
+                            </div>
+                                break;
+                            }
+                        }
+                    </div>
+                    </div>
+            }
+            </div>
+</section>

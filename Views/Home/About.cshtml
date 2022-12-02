@@ -1,17 +1,35 @@
 ﻿@{
     ViewBag.Title = "About";
-}
-<!-- Content -->
-<section>
-    <header class="main">
-        <h1>@ViewBag.Title</h1>
-    </header>
+    /*
+    if (TempData["Notification"] != null) {<script>Notification("ALERTA")</script>}*/
+   }
     <!-- Content -->
-    <h2 id="content">@ViewBag.Message</h2>
-    <p>Use this area to provide additional information.</p>
-</section>
+    <section>
+        <header class="main">
+            <h1>@ViewBag.Title</h1>
+        </header>
+        <!-- Content -->
+        <h2 id="content">@ViewBag.Message</h2>
+        <p>Use this area to provide additional information.</p>
+    </section>
 
-
-
-
-    
+    <h3>Form</h3>
+    @using (Html.BeginForm("About", "Home", FormMethod.Post, new { @class = "login100-form validate-form" }))
+    {
+        <div class="row gtr-uniform">
+            <div class="col-6 col-12-xsmall">
+                <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+            </div>
+            <!-- Break -->
+            <div class="col-8">
+                <textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+            </div>
+            <!-- Break -->
+            <div class="col-12">
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message" class="primary button" /></li>
+                    <li><input type="reset" value="Reset" /></li>
+                </ul>
+            </div>
+        </div>
+    }

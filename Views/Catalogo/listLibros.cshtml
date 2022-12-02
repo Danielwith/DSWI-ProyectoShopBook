@@ -1,0 +1,145 @@
+﻿@model ShopBook.Class_DTO.LibroDTO
+@{
+    ViewBag.Title = "listLibros";
+}
+<style>
+    .badge {
+        padding-left: 9px;
+        padding-right: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+    }
+
+    .label-warning[href],
+    .badge-warning[href] {
+        background-color: #c67605;
+    }
+
+    #lblCartCount {
+        font-size: 12px;
+        background: #ff0000;
+        color: #fff;
+        padding: 0 5px;
+        vertical-align: top;
+        margin-left: -10px;
+    }
+</style>
+<header id="header" style="padding-bottom:0em">
+    <h2 style="display:flex; align-items:center">Detalle del Libro</h2>
+    <ul class="icons">
+        <li>
+            <a class="icon brands fa-shopify" style="font-size: 30px" href='@Url.Action("Compras","Carrito")'>
+                <span class='badge badge-warning' id='lblCartCount'>
+                    @{
+                        if (System.Web.HttpContext.Current.Session["carrito"] == null)
+                        {
+                            <span>0</span>
+                        }
+                        else
+                        {
+                            var carritoCantidad = (System.Web.HttpContext.Current.Session["carrito"] as List<ShopBook.Entity.ShoppingCart>);
+                            <span>@carritoCantidad.Count()</span>
+                        }
+                    }
+                </span>
+            </a>
+        </li>
+    </ul>
+</header>
+
+<section>
+    <div class="features">
+        <article>
+            <span>  <img src="~/Assets/images/example.jpg" class="border-danger" style="width:150px;height:250px"/></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="content">
+                <h3 class="text-dark">@Model.titulo.ToUpper()</h3>
+                <h3>@Model.autor.ToUpper()</h3>
+                <h3>@Model.sinopsis</h3>
+                <h3>@Model.precio.ToUpper()</h3>
+                <input type="number" class="" id="idcant" name="cant" />
+                <button class="button" id="idAgregarCarrito">Agregar</button>
+            </div>
+        </article>
+    </div>
+</section>
+@{
+    if (System.Web.HttpContext.Current.Session["email"] == null)
+    {
+        @section scripts{
+            <script type="text/javascript">
+                var btnagregar = document.getElementById("idAgregarCarrito")
+                btnagregar.addEventListener("click", function confirmarModal() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debes iniciar sesion!',
+                        confirmButtonText: 'Logear',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = "/Acceso/Login";
+                        }
+                    })
+
+                    element = document.getElementsByClassName("swal2-styled")
+                    /* Alert Fix Styles */
+                    for (let i = 0; i < element.length; i++) {
+                        if (element[i].getAttribute("style") == "display: none;") {
+                        }
+                        else {
+                            element[i].setAttribute("style",
+                                "height:2.5em !important; line-height: 0em !important; color: white !important")
+                        }
+                    }
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                })
+            </script>
+        }
+    }
+    else
+    {
+        @section scripts{
+            <script type="text/javascript">
+                        if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+                var btnagregar = document.getElementById("idAgregarCarrito")
+                btnagregar.addEventListener("click", function confirmarModal() {
+                    var id = @Model.idLibro;
+                    var cant = document.getElementById('idcant').value;
+                    let message = "Agregado al carrito!";
+                    Swal.fire({
+                        title: 'Agregar al carrito?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Agregar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "/Carrito/AgregarCarrito?idLib=" + id + "&&cantidad=" + cant,
+                                success: function (r) {
+                                    window.location = "/Catalogo/listLibros?idLib=" + id + "&&notification=" + message
+                                }
+                            })
+                        }
+                    })
+
+                    element = document.getElementsByClassName("swal2-styled")
+                    /* Alert Fix Styles */
+                    for (let i = 0; i < element.length; i++) {
+                        if (element[i].getAttribute("style") == "display: none;") {
+                        }
+                        else {
+                            element[i].setAttribute("style",
+                                "height:2.5em !important; line-height: 0em !important; color: white !important")
+                        }
+                    }
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+
+                })
+            </script>
+        }
+    }
+
+}

@@ -1,0 +1,663 @@
+﻿
+@{
+    ViewBag.Title = "MantenimientoLibro";
+}
+@Styles.Render("~/Assets/css/modifiedstyles.css")
+@model IEnumerable<ShopBook.Entity.tb_libros>
+<header id="header">
+    <a href="#" class="logo"><strong>Mantenimiento de Libros</strong></a>
+</header>
+<section>
+    <ul class="actions">
+        <li><a href="#" onclick="getAgregarModal()" class="button">Registrar</a></li>
+    </ul>
+    <div class="table-wrapper">
+        <table id="tableId">
+            <thead>
+                <tr>
+                    <th>Libro</th>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                    <th>Precio</th>
+                    <th>Fech. Publicación</th>
+                    <th>Sinopsis</th>
+                    <th>Editorial</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tableId").DataTable({
+                "ajax": {
+                    "url": "/Mantenimiento/listarLibros?edit=" + 0,
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "idLibro", "autowidth": true },
+                    { "data": "tituLibro", "autowidth": true },
+                    { "data": "nomAutor", "autowidth": true },
+                    { "data": "precUni", "autowidth": true },
+                    { "data": "fechPub", "autowidth": true },
+                    { "data": "sinopsis", "autowidth": true },
+                    { "data": "nomEdito", "autowidth": true },
+                    {
+                        "data": "idLibro", "width": "50px", "render": function (data) {
+                            return '<button onclick="getEditarModal(' + data + ')">Editar</button>'
+                        }
+                    },
+
+
+                    {
+                        "data": "idLibro", "width": "50px", "render": function (data) {
+                            return '<button onclick="getEliminarModal(' + data + ')">Eliminar</button>'
+                        }
+                    }
+                ],
+                "language": espaniol
+            });
+
+            $(document).on("change", "#idcate", function () {
+                let catVal;
+                catVal = $(this).val();
+                $.get("/Mantenimiento/SubCateResponse?idCat=" + catVal, function (response) {
+                    $("#idsubcate").empty();
+                    $.each(response.data, function (index, item) {
+                        $("#idsubcate").append("<option value='"+ item.idsubCate+"'>"+item.nombreSubCate+"</option>");
+                    })
+                })
+            })
+        });
+
+        if ('@ViewBag.notification' != '') {
+            Notification('@ViewBag.notification');
+        }
+
+        //function sonLetrasSolamente(tituLibro) {
+        //    var regex = /^[á-zÁ-Z ]+$/;
+        //    return regex.test(tituLibro);
+        //}
+
+        function getAgregarModal() {
+            Swal.fire({
+                title: 'Agregar',
+                html: `
+                    <div class="row gtr-uniform" style="margin-bottom:10px">
+                      <div class="col-6 col-12-xsmall">
+                        <span>Titulo:</span>
+                        <input type="text" id="tituLibro" placeholder="Titulo" />
+                      </div>
+                      <div class="col-6 col-12-xsmall">
+                        <span>Autor:</span>
+                        <input type="text" id="nomAutor" placeholder="Autor" />
+                      </div>
+
+                      <div class="col-6">
+                        <span>Fecha de publicacion:</span>
+                        <input class="form-date" type="date" id="fechPub"/>
+                      </div>
+                      <div class="col-6">
+                        <span>Precio Unitario:</span>
+                        <input type="text" id="precUni" class="form-control" placeholder="Precio Unit." />
+                      </div>
+                    <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
+                      <span>Editorial:</span>
+                      @Html.DropDownList("idEdito", (SelectList)ViewBag.editorial )
+                    </div>
+
+                    <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
+                      <span>Categoria:</span>
+                      @Html.DropDownList("idcate", (SelectList)ViewBag.categoria)
+                    </div>
+
+                    <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
+                      <span>Subcategoria:</span>
+                      <select id="idsubcate">
+                      </select>
+                    </div>
+
+                    <div class="col-12 col-12-xsmall" style="margin-bottom:10px">
+                      <span>Sinopsis:</span>
+                      <textarea class="form-control" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
+                    </div>
+                        </div>
+                            `,
+                confirmButtonText: 'Registrar',
+                showCancelButton: true,
+                preConfirm: () => {
+                    let tituLibro = $("#tituLibro").val();
+                    let nomAutor = $("#nomAutor").val();
+                    let precUni = $("#precUni").val();
+                    let idEdito = parseInt($("#idEdito").val(), 10);
+                    let fechPub = $("#fechPub").val();
+                    let sinopsis = $("#sinopsis").val();
+
+                    const pregPrecio = /^\d*\.\d+$/;
+                    const pregNomAutor = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
+
+                    if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
+                        return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                    } else {
+
+                        if (!pregNomAutor.test(nomAutor)) {
+                            return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
+                        }
+                        if (Number.isNaN(precUni * 2)) {
+                            return Swal.showValidationMessage(`Campo precio invalido`);
+                        }
+                        if (!fechPub) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                        }
+                        if (!idEdito) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la editorial.`)
+                        }
+                        if (sinopsis == '') {
+                            return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
+                        }
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let tituLibro = $("#tituLibro").val();
+                    let nomAutor = $("#nomAutor").val();
+                    let precUni = parseFloat($("#precUni").val(), 10);
+                    let idEdito = $("#idEdito").val();
+                    let idCate = $("#idcate").val();
+                    let idSubCate = $("#idsubcate").val();
+                    let fechPub = $("#fechPub").val();
+                    let sinopsis = $("#sinopsis").val();
+                    let message = "Se agrego correctamente";
+                    Swal.fire({
+                        title: 'Agregado!',
+                        text: 'Libro: ' + tituLibro + ' | Nombre del Autor: ' + nomAutor,
+                        icon: 'success',
+                        allowOutsideClick: false
+                    })
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Mantenimiento/GuardarLibros?tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                                + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
+                                "&&sinopsis=" + sinopsis + "&&idCate=" + idCate + "&&idSubCate=" + idSubCate,
+                            success: function (r) {
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let idCate = $("#idcate").val();
+            $.get("/Mantenimiento/SubCateResponse?idCat=" + idCate, function (response) {
+                $("#idsubcate").empty();
+                $.each(response.data, function (index, item) {
+                    $("#idsubcate").append("<option value='" + item.idsubCate + "'>" + item.nombreSubCate + "</option>");
+                })
+            })
+
+            /* Alert Fix Styles */
+            let element = document.getElementsByClassName("swal2-styled")
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        function getEditarModal(idLibro) {
+            let json = fetch("/Mantenimiento/listarLibros?edit=" + 1, {
+                "headers": {
+                    "accept": "*/*",
+                    "content-type": "application/JSON",
+                },
+                "body": null,
+                "method": "GET",
+                "mode": "cors"
+            }).then(resp => resp.json()).then(js => {
+                response = js
+                promiseEditar(response, idLibro)
+            })
+        }
+
+        function promiseEditar(response, idLibro) {
+            Swal.fire({
+                title: 'Editar',
+                html: `
+                         <div class="row gtr-uniform" style="margin-bottom:10px">
+                          <div class="col-12 col-12-xsmall">
+                            <span>ID del Libro:</span>
+                            <input disabled="disabled" type="text" id="idLibro" value=${response.data[idLibro - 1].idLibro}
+                              placeholder="ID" />
+                          </div>
+                          <div class="col-6 col-12-xsmall">
+                            <span>Titulo:</span>
+                            <input type="text" id="tituLibro" placeholder="Titulo" value=${response.data[idLibro - 1].tituLibro} />
+                          </div>
+                          <div class="col-6 col-12-xsmall">
+                            <span>Autor:</span>
+                            <input type="text" id="nomAutor" placeholder="Autor" value=${response.data[idLibro - 1].nomAutor} />
+                          </div>
+                          <div class="col-6">
+                            <span>Fecha de publicacion:</span>
+                            <input class="form-date" type="date" id="fechPub" value=${response.data[idLibro - 1].fechPub}
+                              placeholder="Fecha Registro" />
+                          </div>
+                          <div class="col-6">
+                            <span>Precio Unitario:</span>
+                            <input type="text" id="precUni" placeholder="Precio Unit." value=${response.data[idLibro - 1].precUni} />
+                          </div>
+                          <div class="col-12 col-12-xsmall">
+                            <span>Editorial:</span>
+                            @Html.DropDownList("nomEdito", (SelectList)ViewBag.editorial)
+                          </div>
+                          <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
+                            <span>Categoria:</span>
+                            @Html.DropDownList("idcate", (SelectList)ViewBag.categoria)
+                          </div>
+                          <div class="col-6 col-12-xsmall mb-2" style="margin-bottom:10px">
+                            <span>Subcategoria:</span>
+                            <select id="idsubcate">
+                            </select>
+                          </div>
+                          <div class="col-12 col-12-xsmall" style="margin-bottom:10px;margin-top:10px">
+                            <span>Sinopsis:</span>
+                            <textarea class="form-control" id="sinopsis" rows="3"
+                              placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
+                          </div>
+                        </div>
+                                    `,
+                confirmButtonText: 'Actualizar',
+                showCancelButton: true,
+                preConfirm: () => {
+                    let tituLibro = $("#tituLibro").val();
+                    let nomAutor = $("#nomAutor").val();
+                    let precUni = $("#precUni").val();
+                    let idEdito = $("#idEdito").val();
+                    let fechPub = $("#fechPub").val();
+                    let sinopsis = $("#sinopsis").val();
+
+                    const pregPrecio = /^\d*\.\d+$/;
+                    const pregNomAutor = /^[a-zA-Z]+$/i;
+
+                    if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
+                        return Swal.showValidationMessage(`Todos los campos son requeridos`)
+                    } else {
+
+                        if (!pregNomAutor.test(nomAutor)) {
+                            return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
+                        }
+                        if (Number.isNaN(precUni * 2)) {
+                            return Swal.showValidationMessage(`Campo precio invalido`);
+                        }
+                        if (!fechPub) {
+                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
+                        }
+                        if (sinopsis == '') {
+                            return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
+                        }
+                    }
+
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let tituLibro = $("#tituLibro").val();
+                    let nomAutor = $("#nomAutor").val();
+                    let precUni = $("#precUni").val();
+                    let idEdito = $("#nomEdito").val();
+                    let idCate = $("#idcate").val();
+                    let idSubCate = $("#idsubcate").val();
+                    let fechPub = $("#fechPub").val();
+                    let sinopsis = $("#sinopsis").val();
+                    let message = "Actualizado correctamente";
+
+                    Swal.fire({
+                        title:'Actualizado!',
+                        text:'Libro: ' + tituLibro + ' | Nombre del Autor: ' + nomAutor,
+                        icon:'success',
+                        allowOutsideClick: false
+                    })
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+
+                    // Mediante Ajax envia la data al Controlador Mantenimiento
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Mantenimiento/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
+                                  + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
+                                "&&sinopsis=" + sinopsis + "&&estado=" + 1 + "&&idCate=" + idCate + "&&idSubCate=" + idSubCate,
+                            success: function (r) {
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+
+            $.get("/Mantenimiento/SubCateResponse?idCat=" + response.data[idLibro - 1].idCate, function (response) {
+                $("#idsubcate").empty();
+                $.each(response.data, function (index, item) {
+                    $("#idsubcate").append("<option value='" + item.idsubCate + "'>" + item.nombreSubCate + "</option>");
+                })
+            })
+
+            let editorialValue = document.getElementById("nomEdito")
+            editorialValue.selectedIndex = (response.data[idLibro - 1].idEdito) - 1
+
+            let categoriaValue = document.getElementById("idcate")
+            categoriaValue.selectedIndex = (response.data[idLibro - 1].idCate) - 1
+
+            setTimeout(lag, 450);
+            function lag() {
+                let subcateValue = document.getElementById("idsubcate")
+                subcateValue.value = response.data[idLibro - 1].idSubCate
+                console.log(response.data[idLibro - 1].idSubCate)
+            }
+
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        function getEliminarModal(idLibro) {
+            Swal.fire({
+                title: 'Eliminar',
+                text: '¿Deseas eliminar este Libro?',
+                confirmButtonText: 'Eliminar',
+                showCancelButton: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let message = "Se elimino correctamente";
+                    Swal.fire({
+                        title: 'Eliminado!',
+                        text:'',
+                        icon:'success'
+                    })
+                    // Es solo estilo, tiene incompatiblidad con main.css
+                    element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
+                    $(".swal2-confirm").click(function () {
+                        $.ajax({
+                            url: "/Mantenimiento/EliminarLibro?idLibro=" + idLibro,
+                            success: function (r) {
+                                window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
+                            }
+                        })
+                    })
+                }
+            })
+            let element = document.getElementsByClassName("swal2-styled")
+            /* Alert Fix Styles */
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].getAttribute("style") == "display: none;") {
+                }
+                else {
+                    element[i].setAttribute("style",
+                        "height:2.5em !important; line-height: 0em !important; color: white !important")
+                }
+            }
+            element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #f56a6a !important")
+        }
+
+        // Plug-in traductor a español
+        var espaniol = {
+            "processing": "Procesando...",
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "search": "Buscar:",
+            "infoThousands": ",",
+            "loadingRecords": "Cargando...",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad",
+                "collection": "Colección",
+                "colvisRestore": "Restaurar visibilidad",
+                "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                "copySuccess": {
+                    "1": "Copiada 1 fila al portapapeles",
+                    "_": "Copiadas %ds fila al portapapeles"
+                },
+                "copyTitle": "Copiar al portapapeles",
+                "csv": "CSV",
+                "excel": "Excel",
+                "pageLength": {
+                    "-1": "Mostrar todas las filas",
+                    "_": "Mostrar %d filas"
+                },
+                "pdf": "PDF",
+                "print": "Imprimir",
+                "renameState": "Cambiar nombre",
+                "updateState": "Actualizar",
+                "createState": "Crear Estado",
+                "removeAllStates": "Remover Estados",
+                "removeState": "Remover",
+                "savedStates": "Estados Guardados",
+                "stateRestore": "Estado %d"
+            },
+            "autoFill": {
+                "cancel": "Cancelar",
+                "fill": "Rellene todas las celdas con <i>%d<\/i>",
+                "fillHorizontal": "Rellenar celdas horizontalmente",
+                "fillVertical": "Rellenar celdas verticalmentemente"
+            },
+            "decimal": ",",
+            "searchBuilder": {
+                "add": "Añadir condición",
+                "button": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "clearAll": "Borrar todo",
+                "condition": "Condición",
+                "conditions": {
+                    "date": {
+                        "after": "Despues",
+                        "before": "Antes",
+                        "between": "Entre",
+                        "empty": "Vacío",
+                        "equals": "Igual a",
+                        "notBetween": "No entre",
+                        "notEmpty": "No Vacio",
+                        "not": "Diferente de"
+                    },
+                    "number": {
+                        "between": "Entre",
+                        "empty": "Vacio",
+                        "equals": "Igual a",
+                        "gt": "Mayor a",
+                        "gte": "Mayor o igual a",
+                        "lt": "Menor que",
+                        "lte": "Menor o igual que",
+                        "notBetween": "No entre",
+                        "notEmpty": "No vacío",
+                        "not": "Diferente de"
+                    },
+                    "string": {
+                        "contains": "Contiene",
+                        "empty": "Vacío",
+                        "endsWith": "Termina en",
+                        "equals": "Igual a",
+                        "notEmpty": "No Vacio",
+                        "startsWith": "Empieza con",
+                        "not": "Diferente de",
+                        "notContains": "No Contiene",
+                        "notStartsWith": "No empieza con",
+                        "notEndsWith": "No termina con"
+                    },
+                    "array": {
+                        "not": "Diferente de",
+                        "equals": "Igual",
+                        "empty": "Vacío",
+                        "contains": "Contiene",
+                        "notEmpty": "No Vacío",
+                        "without": "Sin"
+                    }
+                },
+                "data": "Data",
+                "deleteTitle": "Eliminar regla de filtrado",
+                "leftTitle": "Criterios anulados",
+                "logicAnd": "Y",
+                "logicOr": "O",
+                "rightTitle": "Criterios de sangría",
+                "title": {
+                    "0": "Constructor de búsqueda",
+                    "_": "Constructor de búsqueda (%d)"
+                },
+                "value": "Valor"
+            },
+            "searchPanes": {
+                "clearMessage": "Borrar todo",
+                "collapse": {
+                    "0": "Paneles de búsqueda",
+                    "_": "Paneles de búsqueda (%d)"
+                },
+                "count": "{total}",
+                "countFiltered": "{shown} ({total})",
+                "emptyPanes": "Sin paneles de búsqueda",
+                "loadMessage": "Cargando paneles de búsqueda",
+                "title": "Filtros Activos - %d",
+                "showMessage": "Mostrar Todo",
+                "collapseMessage": "Colapsar Todo"
+            },
+            "select": {
+                "cells": {
+                    "1": "1 celda seleccionada",
+                    "_": "%d celdas seleccionadas"
+                },
+                "columns": {
+                    "1": "1 columna seleccionada",
+                    "_": "%d columnas seleccionadas"
+                },
+                "rows": {
+                    "1": "1 fila seleccionada",
+                    "_": "%d filas seleccionadas"
+                }
+            },
+            "thousands": ".",
+            "datetime": {
+                "previous": "Anterior",
+                "next": "Proximo",
+                "hours": "Horas",
+                "minutes": "Minutos",
+                "seconds": "Segundos",
+                "unknown": "-",
+                "amPm": [
+                    "AM",
+                    "PM"
+                ],
+                "months": {
+                    "0": "Enero",
+                    "1": "Febrero",
+                    "10": "Noviembre",
+                    "11": "Diciembre",
+                    "2": "Marzo",
+                    "3": "Abril",
+                    "4": "Mayo",
+                    "5": "Junio",
+                    "6": "Julio",
+                    "7": "Agosto",
+                    "8": "Septiembre",
+                    "9": "Octubre"
+                },
+                "weekdays": [
+                    "Dom",
+                    "Lun",
+                    "Mar",
+                    "Mie",
+                    "Jue",
+                    "Vie",
+                    "Sab"
+                ]
+            },
+            "editor": {
+                "close": "Cerrar",
+                "create": {
+                    "button": "Nuevo",
+                    "title": "Crear Nuevo Registro",
+                    "submit": "Crear"
+                },
+                "edit": {
+                    "button": "Editar",
+                    "title": "Editar Registro",
+                    "submit": "Actualizar"
+                },
+                "remove": {
+                    "button": "Eliminar",
+                    "title": "Eliminar Registro",
+                    "submit": "Eliminar",
+                    "confirm": {
+                        "_": "¿Está seguro que desea eliminar %d filas?",
+                        "1": "¿Está seguro que desea eliminar 1 fila?"
+                    }
+                },
+                "error": {
+                    "system": "Ha ocurrido un error en el sistema (<a target=\"\\\" rel=\"\\ nofollow\" href=\"\\\">Más información&lt;\\\/a&gt;).<\/a>"
+                },
+                "multi": {
+                    "title": "Múltiples Valores",
+                    "info": "Los elementos seleccionados contienen diferentes valores para este registro. Para editar y establecer todos los elementos de este registro con el mismo valor, hacer click o tap aquí, de lo contrario conservarán sus valores individuales.",
+                    "restore": "Deshacer Cambios",
+                    "noMulti": "Este registro puede ser editado individualmente, pero no como parte de un grupo."
+                }
+            },
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            "stateRestore": {
+                "creationModal": {
+                    "button": "Crear",
+                    "name": "Nombre:",
+                    "order": "Clasificación",
+                    "paging": "Paginación",
+                    "search": "Busqueda",
+                    "select": "Seleccionar",
+                    "columns": {
+                        "search": "Búsqueda de Columna",
+                        "visible": "Visibilidad de Columna"
+                    },
+                    "title": "Crear Nuevo Estado",
+                    "toggleLabel": "Incluir:"
+                },
+                "emptyError": "El nombre no puede estar vacio",
+                "removeConfirm": "¿Seguro que quiere eliminar este %s?",
+                "removeError": "Error al eliminar el registro",
+                "removeJoiner": "y",
+                "removeSubmit": "Eliminar",
+                "renameButton": "Cambiar Nombre",
+                "renameLabel": "Nuevo nombre para %s",
+                "duplicateError": "Ya existe un Estado con este nombre.",
+                "emptyStates": "No hay Estados guardados",
+                "removeTitle": "Remover Estado",
+                "renameTitle": "Cambiar Nombre Estado"
+            }
+        }
+    </script>
+}
+

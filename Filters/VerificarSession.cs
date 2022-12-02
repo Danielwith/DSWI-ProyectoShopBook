@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace ShopBook.Filters
 {
@@ -17,17 +18,20 @@ namespace ShopBook.Filters
             {
                 base.OnActionExecuted(filterContext);
                 oEmail = (tb_usuario)HttpContext.Current.Session["email"];
-                if(oEmail == null)
+                if (oEmail == null)
                 {
-                    if(filterContext.Controller is AccesoController == false)
+                    //Enviar mensaje de error LOGEO, no enviar el 404
+                    /*
+                    if (filterContext.Controller is AccesoController == false)
                     {
                         filterContext.HttpContext.Response.Redirect("/Acceso/Login");
                     }
+                    */
                 }
             }
             catch(Exception)
             {
-
+                filterContext.HttpContext.Response.Redirect("/Error/OperacionNoAutorizada");
             }
             
         }

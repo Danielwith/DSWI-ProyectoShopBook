@@ -15,6 +15,7 @@
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
+  height: 200px;
 }
 @-webkit-keyframes ism-fadein {
   from { opacity: 0; }
@@ -339,6 +340,7 @@ p.ism-badge a.ism-link:hover {
     display: block;
     height: 20px;
     text-align: center;
+    margin-bottom: 2em;
 }
 
 #my-slider .ism-radios label {

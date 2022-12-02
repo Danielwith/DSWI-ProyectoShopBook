@@ -26,7 +26,6 @@ namespace ShopBook.Entity
         public string nomAutor { get; set; }
         public string sinopsis { get; set; }
         public Nullable<decimal> precUni { get; set; }
-        public Nullable<System.DateTime> fechPub { get; set; }
         public Nullable<int> idEdito { get; set; }
         public Nullable<int> estado { get; set; }
         public string img { get; set; }

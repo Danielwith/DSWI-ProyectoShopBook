@@ -42,17 +42,18 @@
                     
                         <div style="display:flex;justify-content:space-between">
                             <div class="wrap-input100 validate-input">
+
                                 <input class="input100" type="text" name="nickname" placeholder="Tu Nickname" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100"  style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
 
-                            <div class="wrap-input100">
+                            <div class="wrap-input100" style="">
                                 <input class="input100" type="text" name="nombre" placeholder="Tu Nombre" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -62,7 +63,7 @@
                             <div class="wrap-input100 validate-input">
                                 <input class="input100" type="text" name="apellido" placeholder="Tu Apellido" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -70,7 +71,7 @@
                             <div class="wrap-input100 validate-input">
                                 <input class="input100" type="number" name="dni" placeholder="Tu Dni" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -80,7 +81,7 @@
                             <div class="wrap-input100 validate-input">
                                 <input class="input100" type="number" name="telefono" placeholder="Tu Telefono" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -88,7 +89,7 @@
                             <div class="wrap-input100 validate-input">
                                 <input class="input100" type="text" name="direccion" placeholder="Tu Direccion" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -97,7 +98,7 @@
                             <div class="wrap-input100 validate-input">
                                 <input class="input100" type="date" name="fecNac" placeholder="Fecha de Nacimiento" required>
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -105,7 +106,7 @@
                             <div class="wrap-input100 validate-input" data-validate="Se requiere un correo valido, ejemplo: ex@abc.xyz">
                                 <input class="input100" type="email" name="email" placeholder="Tu Email">
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -114,7 +115,7 @@
                             <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
                                 <input class="input100" type="password" id="password" name="pass" placeholder="Contraseña">
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -122,7 +123,7 @@
                             <div class="wrap-input100 validate-input" data-validate="Repite tu contraseña">
                                 <input class="input100" type="password" name="repPass" placeholder="Repita su contraseña">
                                 <span class="focus-input100"></span>
-                                <span class="symbol-input100">
+                                <span class="symbol-input100" style="top:0;height:50px">
                                     <i class="fa fa-lock" aria-hidden="true"></i>
                                 </span>
                             </div>
@@ -175,9 +176,8 @@
         <script>
             
             jQuery.validator.addMethod("letras", function (value, element) {
-                return this.optional(element) || /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i.test(value);
+                return this.optional(element) || /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/i.test(value);
             }, "Solo se permite letras");
-
 
             $().ready(function () {
                 $("#idRegistrar").validate({
@@ -186,7 +186,6 @@
                             required:true,
                             minlength: 3,
                             maxlength:20
-
                         },
                         nombre: {
                             required: true,
@@ -234,7 +233,6 @@
                             equalTo: "#password",
                             maxlength: 10
                         }
-
                     },
                     messages: {
                         nickname: {
@@ -242,7 +240,6 @@
                             letras: "Ingresar un nickname valido.",
                             minlength: "Mínimo 3 caracteres.",
                             maxlength: "Máximo 20 caracteres "
-
                         },
                         nombre: {
                             required: "Debes completar este campo.",
@@ -260,13 +257,11 @@
                             required: "Debes completar este campo.",
                             number: "Ingresa solo numeros.",
                             maxlength: "Máximo 8 caracteres.",
-                          
                         },
                         telefono: {
                             required: "Debes completar este campo.",
                             number: "Ingresa solo numeros",
                             maxlength: "Máximo 9 caracteres "
-                         
                         },
                         direccion: {
                             required: "Debes completar este campo.",
@@ -275,7 +270,6 @@
                         },
                         fecNac: {
                             required: "Ingresar Fecha de Nacieminto",
-                            
                         },
                         email: {
                             required: "Debes completar este campo.",

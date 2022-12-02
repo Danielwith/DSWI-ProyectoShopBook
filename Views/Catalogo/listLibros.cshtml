@@ -48,18 +48,22 @@
     </ul>
 </header>
 
-<section>
-    <div class="features">
-        <article>
-            <span>  <img src="~/Assets/images/example.jpg" class="border-danger" style="width:150px;height:250px"/></span>
+<section class="libro_section">
+    <div class="libro__container">
+        <article class="libro__article">
+            <span class="libro__item">  <img src="@Url.Content(Model.img)" class="border-danger" style="width:250px"/></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="content">
-                <h3 class="text-dark">@Model.titulo.ToUpper()</h3>
-                <h3>@Model.autor.ToUpper()</h3>
-                <h3>@Model.sinopsis</h3>
-                <h3>@Model.precio.ToUpper()</h3>
-                <input type="number" class="" id="idcant" name="cant" />
-                <button class="button" id="idAgregarCarrito">Agregar</button>
+                <h3 class="text-dark libro__titulo">@Model.titulo.ToUpper()</h3>
+                <h3 class="libro__autor">@Model.autor.ToUpper()</h3>
+                <h3 class="libro__sinop">@Model.sinopsis</h3>
+                <div class="libro__caja__compra">
+                    <div class="libro__compa">
+                        <h3 class="libro__precio lib_item">S/. @Model.precio.ToUpper()</h3>
+                        <input type="number" class="libro__cant lib_item" id="idcant" name="cant" required value="1" />
+                        <button class="button lib_item" id="idAgregarCarrito">Agregar</button>
+                    </div>
+                </div>
             </div>
         </article>
     </div>

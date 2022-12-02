@@ -141,6 +141,9 @@
 
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/jquery/jquery-3.2.1.min.js")
+    @Scripts.Render("~/Assets/js/sweetalert2.all.min.js")
+    @Scripts.Render("~/Assets/js/alert.js")
+    @Scripts.Render("~/Assets/js/breakpoints.min.js")
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/bootstrap/js/popper.js")
     @Scripts.Render("~/Vendor/bootstrap/js/bootstrap.min.js")
@@ -148,20 +151,19 @@
     @Scripts.Render("~/Vendor/select2/select2.min.js")
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/tilt/tilt.jquery.min.js")
-    @section scripts{
-        <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
 
-        if ('@ViewBag.Notification' != '') {
-            Notification('@ViewBag.Notification');
-        }
-        </script>   
+    <script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+
+    if ('@ViewBag.notification' != '') {
+        Notification('@ViewBag.notification');
     }
-        <!--===============================================================================================-->
-        @Scripts.Render("~/Assets/js/login/main.js")
-    </body>
+    </script>
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Assets/js/login/main.js")
+</body>
 
 </html>
 

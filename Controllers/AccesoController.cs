@@ -56,7 +56,7 @@ namespace ShopBook.Controllers
         {
             Session["email"] = null;
             Session["carrito"] = null;
-            return RedirectToAction("Login", "Acceso");
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion Login_Usuario
@@ -89,7 +89,7 @@ namespace ShopBook.Controllers
                     else
                     {
                         ViewBag.Notification = "El Email ya esta en uso";
-                        return RedirectToAction("Registrar", "Acceso");
+                        return View();
                     }
                 };
 

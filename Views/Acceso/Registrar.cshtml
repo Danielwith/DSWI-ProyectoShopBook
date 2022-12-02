@@ -26,108 +26,115 @@
         <div class="container-login100">
             <div class="wrap-login100" style="/*display: block;*/ justify-content: center; width: 600px; padding:0 2em 0 2em; ">
                 <!-- Cambiar Action Form -->
-                @using (Html.BeginForm("Registrar", "Acceso", FormMethod.Post, new
-                {
-                    @class = "login100-form validate-form",
+
+                @using (Html.BeginForm("Registrar", "Acceso", FormMethod.Post, new 
+                  {
+                    id ="idRegistrar",
+                   @class = "login100-form validate-form",
+
                     style = "margin-top: -50px;width: 80%;width: 600px; padding: 8em 0 0em 0"
-                }))
+                                         }))
                 {
                     <span class=" login100-form-title">
                         Registrarse
                     </span>
-                    <div style="display:flex;justify-content:space-between">
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="text" name="nickname" placeholder="Tu Nickname" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
+
+                    
+                        <div style="display:flex;justify-content:space-between">
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="text" name="nickname" placeholder="Tu Nickname" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input100">
+                                <input class="input100" type="text" name="nombre" placeholder="Tu Nombre" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
 
-                        <div class="wrap-input100">
-                            <input class="input100" type="text" name="nombre" placeholder="Tu Nombre" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
+                        <div style="display:flex;justify-content:space-between">
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="text" name="apellido" placeholder="Tu Apellido" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
 
-                    <div style="display:flex;justify-content:space-between">
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="text" name="apellido" placeholder="Tu Apellido" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                        </div>
-
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="number" name="dni" placeholder="Tu Dni" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div style="display:flex;justify-content:space-between">
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="number" name="telefono" placeholder="Tu Telefono" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="number" name="dni" placeholder="Tu Dni" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
 
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="text" name="direccion" placeholder="Tu Direccion" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
+                        <div style="display:flex;justify-content:space-between">
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="number" name="telefono" placeholder="Tu Telefono" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="text" name="direccion" placeholder="Tu Direccion" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div style="display:flex;justify-content:space-between">
-                        <div class="wrap-input100 validate-input">
-                            <input class="input100" type="date" name="fecNac" placeholder="Fecha de Nacimiento" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
+                        <div style="display:flex;justify-content:space-between">
+                            <div class="wrap-input100 validate-input">
+                                <input class="input100" type="date" name="fecNac" placeholder="Fecha de Nacimiento" required>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Se requiere un correo valido, ejemplo: ex@abc.xyz">
+                                <input class="input100" type="email" name="email" placeholder="Tu Email">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between">
+                            <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
+                                <input class="input100" type="password" id="password" name="pass" placeholder="Contraseña">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Repite tu contraseña">
+                                <input class="input100" type="password" name="repPass" placeholder="Repita su contraseña">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
 
-                        <div class="wrap-input100 validate-input" data-validate="Se requiere un correo valido, ejemplo: ex@abc.xyz">
-                            <input class="input100" type="text" name="email" placeholder="Tu Email">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </span>
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn">
+                                Registrarse
+                            </button>
                         </div>
-                    </div>
-                    <div style="display:flex;justify-content:space-between">
-                        <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
-                            <input class="input100" type="password" name="pass" placeholder="Contraseña">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                        </div>
+                    
 
-                        <div class="wrap-input100 validate-input" data-validate="Repite tu contraseña">
-                            <input class="input100" type="password" name="repPass" placeholder="Repita su contraseña">
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-lock" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
-                            Registrarse
-                        </button>
-                    </div>
 
                     <div class="text-center p-t-40 p-b-40">
                         @Html.ActionLink("Ya tengo una cuenta", "Login", "Acceso", new { @class = "txt2" })
@@ -141,6 +148,9 @@
 
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/jquery/jquery-3.2.1.min.js")
+    @Scripts.Render("~/Assets/js/sweetalert2.all.min.js")
+    @Scripts.Render("~/Assets/js/alert.js")
+    @Scripts.Render("~/Assets/js/breakpoints.min.js")
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/bootstrap/js/popper.js")
     @Scripts.Render("~/Vendor/bootstrap/js/bootstrap.min.js")
@@ -148,7 +158,10 @@
     @Scripts.Render("~/Vendor/select2/select2.min.js")
     <!--===============================================================================================-->
     @Scripts.Render("~/Vendor/tilt/tilt.jquery.min.js")
-    @section scripts{
+
+ 
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
         <script>
         $('.js-tilt').tilt({
             scale: 1.1
@@ -157,11 +170,151 @@
         if ('@ViewBag.Notification' != '') {
             Notification('@ViewBag.Notification');
         }
-        </script>   
+        </script>
+
+        <script>
+            
+            jQuery.validator.addMethod("letras", function (value, element) {
+                return this.optional(element) || /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i.test(value);
+            }, "Solo se permite letras");
+
+
+            $().ready(function () {
+                $("#idRegistrar").validate({
+                    rules: {
+                        nickname: {
+                            required:true,
+                            minlength: 3,
+                            maxlength:20
+
+                        },
+                        nombre: {
+                            required: true,
+                            letras: true,
+                            minlength: 3,
+                            maxlength: 30
+                        },
+                        apellido: {
+                            required: true,
+                            letras: true,
+                            minlength: 3,
+                            maxlength: 50    
+                        },
+                        dni: {
+                            required: true,
+                            number: true,
+                            maxlength: 8,
+                        },
+                        telefono: {
+                            required: true,
+                            number: true,
+                            maxlength:9
+                        },
+                        direccion: {
+                            required: true,
+                            minlength: 10,
+                            maxlength: 200
+                        },
+                        fecNac: {
+                            required: true,
+                        },
+                        email: {
+                            required: true,
+                            email: true,
+                            maxlength: 35
+                        },
+                        pass: {
+                            required: true,
+                            minlength: 5,
+                            maxlength: 10
+                        },
+                        repPass: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#password",
+                            maxlength: 10
+                        }
+
+                    },
+                    messages: {
+                        nickname: {
+                            required: "Debes completar este campo.",
+                            letras: "Ingresar un nickname valido.",
+                            minlength: "Mínimo 3 caracteres.",
+                            maxlength: "Máximo 20 caracteres "
+
+                        },
+                        nombre: {
+                            required: "Debes completar este campo.",
+                            letras: "Ingresar un nombre valido.",
+                            minlength: "Mínimo 3 caracteres.",
+                            maxlength: "Máximo 30 caracteres "
+                        },
+                        apellido: {
+                            required: "Debes completar este campo.",
+                            letras: "Ingresar un apellido valido.",
+                            minlength: "Mínimo 3 caracteres.",
+                            maxlength: "Máximo 50 caracteres "
+                        },
+                        dni: {
+                            required: "Debes completar este campo.",
+                            number: "Ingresa solo numeros.",
+                            maxlength: "Máximo 8 caracteres.",
+                          
+                        },
+                        telefono: {
+                            required: "Debes completar este campo.",
+                            number: "Ingresa solo numeros",
+                            maxlength: "Máximo 9 caracteres "
+                         
+                        },
+                        direccion: {
+                            required: "Debes completar este campo.",
+                            minlength: "Mínimo 10 caracteres.",
+                            maxlength: "Máximo 200 caracteres "
+                        },
+                        fecNac: {
+                            required: "Ingresar Fecha de Nacieminto",
+                            
+                        },
+                        email: {
+                            required: "Debes completar este campo.",
+                            email: "Correo inválido",
+                            maxlength: "Máximo 35 caracteres "
+                        },
+                        pass: {
+                            required: "Debes completar este campo.",
+                            minlength: "Mínimo 5 caracteres.",
+                            maxlength: "Máximo 10 caracteres "
+                        },
+                        repPass: {
+                            required: "Ingresa una contraseña",
+                            minlength: "Mínimo 5 caracteres",
+                            equalTo: "Ingresar la misma contraseña",
+                            maxlength: "Máximo 10 caracteres "
+                        }
+                    }
+                })
+            })
+        </script>
+    <style>
+        form .error {
+            color: #ff0000;
+        }
+    </style>
+    <script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+
+    if ('@ViewBag.notification' != '') {
+        Notification('@ViewBag.notification');
     }
-        <!--===============================================================================================-->
-        @Scripts.Render("~/Assets/js/login/main.js")
-    </body>
+    </script>
+
+    <!--===============================================================================================-->
+    @Scripts.Render("~/Assets/js/login/main.js")
+</body>
 
 </html>
 

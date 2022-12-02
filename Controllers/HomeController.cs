@@ -54,7 +54,7 @@ namespace ShopBook.Controllers
                           join sc in db.tb_sub_categorias on csl.idSubCate equals sc.idsubCate
                           join c in db.tb_categorias on csl.idCate equals c.idcate
                           where l.estado != 0
-                          select new LibroDTO { titulo = l.tituLibro, autor = l.nomAutor, precio = l.precUni.ToString(), idCategoria = csl.idCate })
+                          select new LibroDTO { titulo = l.tituLibro, autor = l.nomAutor, precio = l.precUni.ToString(), idCategoria = csl.idCate, img = l.img })
                           .AsEnumerable<LibroDTO>();
 
             var neecat = (from c in db.tb_categorias

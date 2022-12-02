@@ -11,16 +11,13 @@
         <div class="ism-slider" data-play_type="once-rewind" id="my-slider" style="width:90%">
             <ol>
                 <li>
-                    <img src="~/Assets/ism/image/slides/flower-729514_1280.jpg">
-                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                    <img src="~/Libros/slider/sld1.jpg">
                 </li>
                 <li>
-                    <img src="~/Assets/ism/image/slides/beautiful-701678_1280.jpg">
-                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                    <img src="~/Libros/slider/sld2.jpg">
                 </li>
                 <li>
-                    <img src="~/Assets/ism/image/slides/summer-192179_1280.jpg">
-                    <div class="ism-caption ism-caption-0">My slide caption text</div>
+                    <img src="~/Libros/slider/sld3.jpg">
                 </li>
             </ol>
         </div>
@@ -52,25 +49,24 @@
                         @foreach (var libro in item.libros)
                         {
                             <div class="col-2-xlarge col-4-medium col-6-small">
-                                <span class="image fit">
-                                    <img src="images/example.jpg"
-                                         alt="" />
-                                    <br />
-                                    <center>@libro.titulo</center><br />
-                                    <center>@libro.autor</center><br />
-                                    <center><a href="#" class="button primary">@libro.precio</a></center>
-                                </span>
+                                <!--<span class="image fit">-->
+                                <img src="@Url.Content(libro.img)" alt="" style="width:154px;height:235px" />
+                                <br />
+                                <center>@libro.titulo</center><br />
+                                <center>@libro.autor</center><br />
+                                <center><a href="#" class="button primary" style="font-size:12pt">S/. @libro.precio</a></center>
+                                <!--</span>-->
                             </div>
-                            if (item.libros.IndexOf(libro) == item.libros.Count - 1 || item.libros.IndexOf(libro)==5)
-                            {
-                            <div class="col-12">
-                                @Html.ActionLink("Ver más", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcategoria, op = 1 }, new { @class = "button fit"})
-                            </div>
-                                break;
+                                if (item.libros.IndexOf(libro) == item.libros.Count - 1 || item.libros.IndexOf(libro)==5)
+                                {
+                                <div class="col-12">
+                                    @Html.ActionLink("Ver más", "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcategoria, op = 1 }, new { @class = "button fit"})
+                                </div>
+                                    break;
+                                }
                             }
-                        }
-                    </div>
-                    </div>
-            }
-            </div>
-</section>
+                        </div>
+                        </div>
+                }
+                </div>
+    </section>

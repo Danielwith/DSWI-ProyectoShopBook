@@ -267,7 +267,7 @@
     <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Entity\database_firewall_rules.cs">
-    <DependentUpon>shopbookEntities.tt</DependentUpon>
+      <DependentUpon>shopbookEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\ls_subcate_cate.cs">
       <DependentUpon>shopbook.tt</DependentUpon>
@@ -327,7 +327,7 @@
       <DependentUpon>shopbookEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_usuario.cs">
-    <DependentUpon>shopbookEntities.tt</DependentUpon>
+      <DependentUpon>shopbookEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Filters\VerificarSession.cs" />
@@ -440,6 +440,9 @@
     <Content Include="Libros\img\41.jpg" />
     <Content Include="Libros\img\43.jpg" />
     <Content Include="Libros\img\45.jpg" />
+    <Content Include="Libros\slider\sld1.jpg" />
+    <Content Include="Libros\slider\sld2.jpg" />
+    <Content Include="Libros\slider\sld3.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\sass\base\_page.scss" />

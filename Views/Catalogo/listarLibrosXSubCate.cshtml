@@ -11,7 +11,7 @@
     }
 }
 
-<section style="display:flex;">
+@*<section style="display:flex;">
     @foreach (var item in Model)
     {
         <article>
@@ -24,4 +24,27 @@
             <button class="button">@Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, null) </button>
         </article>
     }
-</section>
+</section>*@
+<div class="col-6 col-12-medium">
+    <div class="box">
+        <div class="grid_container">
+            @foreach (var item in Model)
+            {
+                <div>
+                    <span class="grid_item_lib">
+                        <center>
+                            <img src="@Url.Content(item.img)" class="border-danger" style="width:150px;height:200px" />
+                        </center>
+                        <br />
+                        <b>
+                            <center><@item.titulo.ToUpper()</center>
+                            <center>@item.autor.ToUpper()</center><br />
+                            <center>@item.precio.ToUpper()</center>
+                            @Html.ActionLink("Detalle", "listLibros", "Catalogo", new { idLib = item.idLibro }, new { @class = "button primary" })
+                        </b>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -25,6 +25,7 @@ namespace ShopBook.Controllers
                                   join c in db.tb_categorias
                                   on sc.idCate equals c.idcate
                                   select new SubCategoriaDTO { id = sc.idsubCate, SubCate = sc.nombreSubCate, idcate = sc.idCate }).ToList();
+            
             return View();
         }
 

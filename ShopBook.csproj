@@ -265,64 +265,67 @@
     <Compile Include="Class_DTO\ShoppingCart.cs" />
     <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Entity\database_firewall_rules.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Model1.Context.cs">
+    <Compile Include="Entity\ls_subcate_cate.cs">
+      <DependentUpon>shopbook.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\shopbook.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>shopbook.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Model1.cs">
+    <Compile Include="Entity\shopbook.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Model1.Designer.cs">
+    <Compile Include="Entity\shopbook.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>shopbook.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_boletas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_categorias.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_cate_subcate_libros.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_creditcard.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_detalle_boletas.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_editoriales.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_libros.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_modulo.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_operaciones.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_rol_operacion.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_sub_categorias.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tb_usuario.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Filters\VerificarSession.cs" />
@@ -386,21 +389,36 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Entity\Model1.Context.tt">
+    <Content Include="Entity\shopbook.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>shopbook.edmx</DependentUpon>
+      <LastGenOutput>shopbook.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\Model1.tt">
+    <Content Include="Entity\shopbook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>shopbook.edmx</DependentUpon>
+      <LastGenOutput>shopbook.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Libros\img\1.jpg" />
+    <Content Include="Libros\img\11.jpg" />
+    <Content Include="Libros\img\15.jpg" />
+    <Content Include="Libros\img\17.jpg" />
+    <Content Include="Libros\img\18.jpg" />
+    <Content Include="Libros\img\19.jpg" />
+    <Content Include="Libros\img\20.jpg" />
+    <Content Include="Libros\img\21.jpg" />
+    <Content Include="Libros\img\22.jpg" />
+    <Content Include="Libros\img\23.jpg" />
+    <Content Include="Libros\img\26.jpg" />
+    <Content Include="Libros\img\28.jpg" />
+    <Content Include="Libros\img\3.jpg" />
+    <Content Include="Libros\img\32.png" />
+    <Content Include="Libros\img\41.jpg" />
+    <Content Include="Libros\img\43.jpg" />
+    <Content Include="Libros\img\45.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Assets\sass\base\_page.scss" />
@@ -518,12 +536,12 @@
     <Content Include="Assets\webfonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Assets\webfonts\poppins\Poppins-ThinItalic.ttf" />
     <Content Include=".editorconfig" />
-    <EntityDeploy Include="Entity\Model1.edmx">
+    <EntityDeploy Include="Entity\shopbook.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>shopbook.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Entity\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="Entity\shopbook.edmx.diagram">
+      <DependentUpon>shopbook.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

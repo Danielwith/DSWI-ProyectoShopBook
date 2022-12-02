@@ -146,7 +146,6 @@
                                 {
 
                                     <li>@Html.ActionLink("Inicio", "Proveedor", "Home")</li>
-                                    <li>@Html.ActionLink("Mantenimiento", "Mantenimiento", "Home")</li>
                                     <li>@Html.ActionLink("Mantenimiento de Libros", "MantenimientoLibro", "Mantenimiento")</li>
 
                                 }
@@ -155,7 +154,6 @@
                                 if (int.Parse(System.Web.HttpContext.Current.Session["rol"].ToString()) == 4)
                                 {
                                     <li>@Html.ActionLink("Inicio", "Inicio", "Home")</li>
-                                    <li>@Html.ActionLink("Ver Favoritos", "Inicio", "Home")</li>
                                     <li>@Html.ActionLink("Mis Compras", "Compras", "Carrito")</li>
                                 }
                             }

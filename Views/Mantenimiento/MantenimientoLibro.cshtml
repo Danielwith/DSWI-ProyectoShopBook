@@ -19,8 +19,6 @@
                     <th>Titulo</th>
                     <th>Autor</th>
                     <th>Precio</th>
-                    <th>Fech. Publicación</th>
-                    <th>Sinopsis</th>
                     <th>Editorial</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
@@ -35,7 +33,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Mantenimiento/listarLibros?edit=" + 0,
+                    "url": "/Mantenimiento/listarLibros?edit=" + 0+"&&idLibro="+0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -43,10 +41,15 @@
                     { "data": "idLibro", "autowidth": true },
                     { "data": "tituLibro", "autowidth": true },
                     { "data": "nomAutor", "autowidth": true },
-                    { "data": "precUni", "autowidth": true },
-                    { "data": "fechPub", "autowidth": true },
-                    { "data": "sinopsis", "autowidth": true },
-                    { "data": "nomEdito", "autowidth": true },
+                    {
+                        "data": "precUni", "width": "110px", "render": function (data) {
+                            return "S./ "+data
+                        }
+                    },
+                    {   
+                        "data": "nomEdito", "autowidth": true
+                    },
+
                     {
                         "data": "idLibro", "width": "50px", "render": function (data) {
                             return '<button onclick="getEditarModal(' + data + ')">Editar</button>'
@@ -89,7 +92,7 @@
                 title: 'Agregar',
                 html: `
                     <div class="row gtr-uniform" style="margin-bottom:10px">
-                      <div class="col-6 col-12-xsmall">
+                      <div class="col-12">
                         <span>Titulo:</span>
                         <input type="text" id="tituLibro" placeholder="Titulo" />
                       </div>
@@ -97,12 +100,7 @@
                         <span>Autor:</span>
                         <input type="text" id="nomAutor" placeholder="Autor" />
                       </div>
-
-                      <div class="col-6">
-                        <span>Fecha de publicacion:</span>
-                        <input class="form-date" type="date" id="fechPub"/>
-                      </div>
-                      <div class="col-6">
+                      <div class="col-6 col-12-xsmall">
                         <span>Precio Unitario:</span>
                         <input type="text" id="precUni" class="form-control" placeholder="Precio Unit." />
                       </div>
@@ -135,24 +133,17 @@
                     let nomAutor = $("#nomAutor").val();
                     let precUni = $("#precUni").val();
                     let idEdito = parseInt($("#idEdito").val(), 10);
-                    let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
-
-                    const pregPrecio = /^\d*\.\d+$/;
-                    const pregNomAutor = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
 
                     if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
                         return Swal.showValidationMessage(`Todos los campos son requeridos`)
                     } else {
 
-                        if (!pregNomAutor.test(nomAutor)) {
+                        if (Number.isNaN(nomAutor * 2) == false) {
                             return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
                         }
                         if (Number.isNaN(precUni * 2)) {
                             return Swal.showValidationMessage(`Campo precio invalido`);
-                        }
-                        if (!fechPub) {
-                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
                         }
                         if (!idEdito) {
                             return Swal.showValidationMessage(`Porfavor seleccione la editorial.`)
@@ -215,7 +206,7 @@
         }
 
         function getEditarModal(idLibro) {
-            let json = fetch("/Mantenimiento/listarLibros?edit=" + 1, {
+            let json = fetch("/Mantenimiento/listarLibros?edit=" + 1 +"&&idLibro="+idLibro, {
                 "headers": {
                     "accept": "*/*",
                     "content-type": "application/JSON",
@@ -230,31 +221,27 @@
         }
 
         function promiseEditar(response, idLibro) {
+            console.log(response)
             Swal.fire({
                 title: 'Editar',
                 html: `
                          <div class="row gtr-uniform" style="margin-bottom:10px">
                           <div class="col-12 col-12-xsmall">
                             <span>ID del Libro:</span>
-                            <input disabled="disabled" type="text" id="idLibro" value=${response.data[idLibro - 1].idLibro}
+                            <input disabled="disabled" type="text" id="idLibro" value=${response.data[0].idLibro}
                               placeholder="ID" />
                           </div>
-                          <div class="col-6 col-12-xsmall">
+                          <div class="col-12">
                             <span>Titulo:</span>
-                            <input type="text" id="tituLibro" placeholder="Titulo" value=${response.data[idLibro - 1].tituLibro} />
+                            <input type="text" id="tituLibro" placeholder="Titulo"  />
                           </div>
                           <div class="col-6 col-12-xsmall">
                             <span>Autor:</span>
-                            <input type="text" id="nomAutor" placeholder="Autor" value=${response.data[idLibro - 1].nomAutor} />
+                            <input type="text" id="nomAutor" placeholder="Autor" />
                           </div>
-                          <div class="col-6">
-                            <span>Fecha de publicacion:</span>
-                            <input class="form-date" type="date" id="fechPub" value=${response.data[idLibro - 1].fechPub}
-                              placeholder="Fecha Registro" />
-                          </div>
-                          <div class="col-6">
+                          <div class="col-6 col-12-xsmall">
                             <span>Precio Unitario:</span>
-                            <input type="text" id="precUni" placeholder="Precio Unit." value=${response.data[idLibro - 1].precUni} />
+                            <input type="text" id="precUni" placeholder="Precio Unit." value=${response.data[0].precUni} />
                           </div>
                           <div class="col-12 col-12-xsmall">
                             <span>Editorial:</span>
@@ -272,7 +259,7 @@
                           <div class="col-12 col-12-xsmall" style="margin-bottom:10px;margin-top:10px">
                             <span>Sinopsis:</span>
                             <textarea class="form-control" id="sinopsis" rows="3"
-                              placeholder="Sinopsis">${response.data[idLibro - 1].sinopsis}</textarea>
+                              placeholder="Sinopsis">${response.data[0].sinopsis}</textarea>
                           </div>
                         </div>
                                     `,
@@ -283,24 +270,19 @@
                     let nomAutor = $("#nomAutor").val();
                     let precUni = $("#precUni").val();
                     let idEdito = $("#idEdito").val();
-                    let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
 
-                    const pregPrecio = /^\d*\.\d+$/;
                     const pregNomAutor = /^[a-zA-Z]+$/i;
 
                     if (tituLibro == '' || nomAutor == '' || precUni == '' || sinopsis == '') {
                         return Swal.showValidationMessage(`Todos los campos son requeridos`)
                     } else {
 
-                        if (!pregNomAutor.test(nomAutor)) {
+                        if (Number.isNaN(nomAutor * 2) == false) {
                             return Swal.showValidationMessage(`Campo nombre autor invalido,solo letras`)
                         }
                         if (Number.isNaN(precUni * 2)) {
                             return Swal.showValidationMessage(`Campo precio invalido`);
-                        }
-                        if (!fechPub) {
-                            return Swal.showValidationMessage(`Porfavor seleccione la fecha`)
                         }
                         if (sinopsis == '') {
                             return Swal.showValidationMessage(`Porfavor escriba la sinopsis`)
@@ -316,7 +298,6 @@
                     let idEdito = $("#nomEdito").val();
                     let idCate = $("#idcate").val();
                     let idSubCate = $("#idsubcate").val();
-                    let fechPub = $("#fechPub").val();
                     let sinopsis = $("#sinopsis").val();
                     let message = "Actualizado correctamente";
 
@@ -333,7 +314,7 @@
                     $(".swal2-confirm").click(function () {
                         $.ajax({
                             url: "/Mantenimiento/EditarLibro?idLibro=" + idLibro + "&&tituLibro=" + tituLibro + "&&nomAutor=" + nomAutor
-                                  + "&&precUni=" + precUni + "&&idEdito=" + idEdito + "&&fechPub=" + fechPub +
+                                  + "&&precUni=" + precUni + "&&idEdito=" + idEdito +
                                 "&&sinopsis=" + sinopsis + "&&estado=" + 1 + "&&idCate=" + idCate + "&&idSubCate=" + idSubCate,
                             success: function (r) {
                                 window.location = "/Mantenimiento/MantenimientoLibro?notification=" + message;
@@ -343,24 +324,20 @@
                 }
             })
 
-            $.get("/Mantenimiento/SubCateResponse?idCat=" + response.data[idLibro - 1].idCate, function (response) {
+            $.get("/Mantenimiento/SubCateResponse?idCat=" + response.data[0].idCate, function (response) {
                 $("#idsubcate").empty();
                 $.each(response.data, function (index, item) {
                     $("#idsubcate").append("<option value='" + item.idsubCate + "'>" + item.nombreSubCate + "</option>");
                 })
             })
-
-            let editorialValue = document.getElementById("nomEdito")
-            editorialValue.selectedIndex = (response.data[idLibro - 1].idEdito) - 1
-
-            let categoriaValue = document.getElementById("idcate")
-            categoriaValue.selectedIndex = (response.data[idLibro - 1].idCate) - 1
+            $("#tituLibro").val(response.data[0].tituLibro);
+            $("#nomAutor").val(response.data[0].nomAutor);
+            $("#nomEdito").val(response.data[0].idEdito);
+            $("#idcate").val(response.data[0].idCate);
 
             setTimeout(lag, 450);
             function lag() {
-                let subcateValue = document.getElementById("idsubcate")
-                subcateValue.value = response.data[idLibro - 1].idSubCate
-                console.log(response.data[idLibro - 1].idSubCate)
+                $("#idsubcate").val(response.data[0].idSubCate)
             }
 
             let element = document.getElementsByClassName("swal2-styled")

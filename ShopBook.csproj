@@ -254,6 +254,7 @@
     <Compile Include="Class_DTO\ClientData.cs" />
     <Compile Include="Class_DTO\EmailSenderDotNet.cs" />
     <Compile Include="Class_DTO\PdfGenerator.cs" />
+    <Compile Include="Class_DTO\ReporteGenerator.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\CheckPaymentController.cs" />
@@ -264,11 +265,12 @@
     <Compile Include="Class_DTO\SubCategoriaDTO.cs" />
     <Compile Include="Class_DTO\ShoppingCart.cs" />
     <Compile Include="Controllers\MantenimientoController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Entity\database_firewall_rules.cs">
       <DependentUpon>shopbookEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\ls_subcate_cate.cs">
-      <DependentUpon>shopbookEntities.tt</DependentUpon>
+      <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\shopbookEntities.Context.cs">
       <AutoGen>True</AutoGen>
@@ -333,6 +335,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BoletaUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\catalogo.css" />
@@ -628,6 +631,7 @@
     <Content Include="Views\CheckPayment\Payment.cshtml" />
     <Content Include="Views\CheckPayment\Finish.cshtml" />
     <Content Include="Views\Mantenimiento\MantenimientoLibro.cshtml" />
+    <Content Include="Views\Reporte\Reportes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

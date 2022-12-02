@@ -8,24 +8,30 @@
     <a href="#" class="logo"><strong>Carrito de Compras</strong></a>
 </header>
 <section>
-    <div class="table-wrapper" style="text-align: center;">
-        <table id="tableId">
-            <thead>
-                <tr>
-                    <th>Titulo</th>
-                    <th>Autor</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+    <button class="button">
+        @Html.ActionLink("<--- Seguir Comprando", "Inicio", "Home", null, null) </button>
+        <br />
+        <br />
+        <div class="table-wrapper" style="text-align: center;">
+            <table id="tableId">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Autor</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
 </section>
 <hr />
+
 <div class="box">
+
     <h3>Total a Pagar:</h3>
     <input type="text" id="total" style="width:12em" value="Cargando..." readonly />
     <hr />
@@ -77,7 +83,7 @@
             }
             catch {
             }
-            
+
             d.value = sumtotal;
         }
 

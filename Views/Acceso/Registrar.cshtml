@@ -175,9 +175,8 @@
         <script>
             
             jQuery.validator.addMethod("letras", function (value, element) {
-                return this.optional(element) || /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i.test(value);
+                return this.optional(element) || /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/i.test(value);
             }, "Solo se permite letras");
-
 
             $().ready(function () {
                 $("#idRegistrar").validate({
@@ -186,7 +185,6 @@
                             required:true,
                             minlength: 3,
                             maxlength:20
-
                         },
                         nombre: {
                             required: true,
@@ -234,7 +232,6 @@
                             equalTo: "#password",
                             maxlength: 10
                         }
-
                     },
                     messages: {
                         nickname: {
@@ -242,7 +239,6 @@
                             letras: "Ingresar un nickname valido.",
                             minlength: "Mínimo 3 caracteres.",
                             maxlength: "Máximo 20 caracteres "
-
                         },
                         nombre: {
                             required: "Debes completar este campo.",
@@ -260,13 +256,11 @@
                             required: "Debes completar este campo.",
                             number: "Ingresa solo numeros.",
                             maxlength: "Máximo 8 caracteres.",
-                          
                         },
                         telefono: {
                             required: "Debes completar este campo.",
                             number: "Ingresa solo numeros",
                             maxlength: "Máximo 9 caracteres "
-                         
                         },
                         direccion: {
                             required: "Debes completar este campo.",
@@ -275,7 +269,6 @@
                         },
                         fecNac: {
                             required: "Ingresar Fecha de Nacieminto",
-                            
                         },
                         email: {
                             required: "Debes completar este campo.",

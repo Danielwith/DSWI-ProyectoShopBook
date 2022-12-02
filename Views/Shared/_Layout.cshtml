@@ -22,12 +22,12 @@
                             if (System.Web.HttpContext.Current.Session["categorias"] != null)
                             {
                                 var subcategorias = System.Web.HttpContext.Current.Session["subcate"] as List<ShopBook.Class_DTO.SubCategoriaDTO>;
-                                
+
                                 foreach (var item in System.Web.HttpContext.Current.Session["categorias"] as List<ShopBook.Class_DTO.CategoriaDTO>)
                                 {
                                     <li class="menu__cate" style="padding-left:0px">
                                                                 <p class="menu__text">
-                                                                    @Html.ActionLink(item.nombreCate, "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate}, new { @class = "menu__link_cate" })
+                                                                    @Html.ActionLink(item.nombreCate, "listarLibrosPorCategoria", "Catalogo", new { idcate = item.idcate }, new { @class = "menu__link_cate" })
                                                                     @*<a href="#" class="menu__link_cate"> @item.nombreCate</a>*@
                                                                 </p>
                                         @{
@@ -35,15 +35,15 @@
                                                 @foreach (var sub in subcategorias.FindAll(x => x.idcate == item.idcate))
                                                 {
                                                     <li class="menu__subcate">
-                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.id}, new { @class = "menu__link_subcate" })
+                                                        @Html.ActionLink(sub.SubCate, "listarLibrosXSubCate", "Catalogo", new { idSubCate = sub.id }, new { @class = "menu__link_subcate" })
                                                         @*<a href="#" class="menu__link_subcate">@sub.SubCate</a>*@
                                                     </li>
                                                 }
                                             </ul>
                                         }
                                     </li>
-                                    }
-                            }
+                                                }
+                                            }
                         }
                     </ul>
                 </div>
@@ -83,7 +83,26 @@
                     }
                 }*@
                 <!-- Menu -->
-                <nav id="menu">
+            <nav id="menu">
+                <ul style="display:flex; justify-content:center;margin-bottom:2em">
+                    <li style="width:100%">
+                        @{ if (System.Web.HttpContext.Current.Session["email"] != null)
+                            {
+                                var usuario = (ShopBook.Entity.tb_usuario)Session["email"];
+                                <center><h5>¡Bienvenido!</h5></center> 
+                                <span class="opener">@usuario.nombre @usuario.apellido</span>
+
+                                <ul class="m-b-15">
+                                    <li >@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso", null, new { @style = "margin:0 .0em 0 "} )</li>
+                                </ul>
+                            }
+                            else
+                            {
+                    <center><button class="button m-b-15">@Html.ActionLink("Iniciar Sesión", "Login", "Acceso", null, new { @style = "padding:0 .600em 0em " })</button></center>
+                            }
+                        }
+                    </li>
+                </ul>
                     <header class="major">
                         <h2>Acciones</h2>
                     </header>
@@ -136,21 +155,6 @@
                                 }
                             }
                         }
-
-                        <li>
-                            <span class="opener">Cuenta</span>
-                            <ul>
-                                @{ if (System.Web.HttpContext.Current.Session["email"] != null)
-                                    {
-                                        <li>@Html.ActionLink("Cerrar Sesión", "Desconectar", "Acceso")</li>
-                                    }
-                                    else
-                                    {
-                                        <li>@Html.ActionLink("Iniciar Sesión", "Login", "Acceso")</li>
-                                    }
-                                }
-                            </ul>
-                        </li>
                     </ul>
                     <!-- FIN -->
                 </nav>

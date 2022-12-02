@@ -1,0 +1,69 @@
+﻿.grid_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 450px);
+}
+.grid_item_lib{
+    display:flex;
+    flex-flow: column nowrap;
+    align-content: center;
+
+}
+/*Detalle de un libro*/
+.libro__container{
+    width:100%;
+    max-width:1000px;
+    padding:2em;
+}
+.libro__article{
+    display: flex;
+}
+.libro__item {
+    width: 350px;
+}
+.libro_section{
+    display:flex;
+    justify-content:center;
+}
+.libro__titulo {
+    font-size: 25pt;
+    color: #f56a6a;
+}
+.libro__autor {
+    font-size: 15pt;
+    color: #d14343;
+}
+.libro__sinop{
+    text-align:justify;
+}
+.libro__precio {
+    display: block;
+    padding: .5em;
+    font-size: 15pt;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 50px 50px;
+    border: solid 2px black;
+    width: 450px;
+    background: #ffa500;
+}
+.libro__caja__compra{
+    width:380px;
+}
+.content > .libro__caja__compra >.libro__compa {
+    width: 100%;
+    padding: .5em;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.lib_item {
+    margin-left: 1em;
+}
+.libro__cant{
+    padding: 1em;
+    height: 50px;
+}
+.libro__item{
+    width: 650px;
+}

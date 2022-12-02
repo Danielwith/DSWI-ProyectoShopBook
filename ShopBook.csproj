@@ -335,6 +335,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\catalogo.css" />
     <Content Include="Assets\css\fontawesome-all.min.css" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\main.css" />

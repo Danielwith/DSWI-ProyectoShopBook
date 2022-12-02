@@ -93,7 +93,7 @@ namespace ShopBook.Controllers
 
                 if (postResult == true)
                 {
-                    /*FinalizarCompra();*/
+                    FinalizarCompra();
                     Session["dataCliente"] = null;
                     return RedirectToAction("Finish");
                 }

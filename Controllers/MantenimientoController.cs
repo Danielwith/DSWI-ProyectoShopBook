@@ -17,7 +17,7 @@ namespace ShopBook.Controllers
         [AutorizarUsuario(idOperacion: 2)]
         public ActionResult MantenimientoLibro(string notification)
         {
-            ViewBag.editorial = new SelectList(db.tb_editoriales, "idEdito", "nomEdito");
+            ViewBag.editorial = new SelectList(db.tb_editoriales.Where(x => x.estado=="Activo"), "idEdito", "nomEdito");
             ViewBag.categoria = new SelectList(db.tb_categorias, "idcate", "nombreCate");
             ViewBag.notification = notification;
             return View();
@@ -34,7 +34,7 @@ namespace ShopBook.Controllers
 
         //Funciones del mantenimiento Libros
         [AutorizarUsuario(idOperacion: 2)]
-        public ActionResult listarLibros(int edit)
+        public ActionResult listarLibros(int edit, int idLibro)
         {
             if (edit == 1)
             {
@@ -42,6 +42,7 @@ namespace ShopBook.Controllers
                                join e in db.tb_editoriales on l.idEdito equals e.idEdito
                                join cs in db.tb_cate_subcate_libros on l.idLibro equals cs.idLibro
                                join sc in db.tb_sub_categorias on cs.idSubCate equals sc.idsubCate
+                               where l.idLibro == idLibro
                                select new { l.idLibro, l.tituLibro, l.nomAutor, l.precUni, l.sinopsis, e.nomEdito, e.idEdito, cs.idCate, cs.idSubCate }).ToList();
                 var parseo2 = (from p in libros2
                                select new
@@ -50,7 +51,6 @@ namespace ShopBook.Controllers
                                    tituLibro = p.tituLibro,
                                    nomAutor = p.nomAutor,
                                    precUni = p.precUni,
-                                  
                                    sinopsis = p.sinopsis,
                                    nomEdito = p.nomEdito,
                                    idEdito = p.idEdito,
@@ -72,7 +72,6 @@ namespace ShopBook.Controllers
                                   tituLibro = p.tituLibro,
                                   nomAutor = p.nomAutor,
                                   precUni = p.precUni,
-                               
                                   sinopsis = p.sinopsis,
                                   nomEdito = p.nomEdito,
                                   idEdito = p.idEdito
@@ -105,6 +104,7 @@ namespace ShopBook.Controllers
             data.nomAutor = nomAutor;
             data.precUni = precUni;
             data.idEdito = idEdito;
+            data.img = data.img;
            
             data.estado = estado;
             db.SaveChanges();
@@ -147,32 +147,47 @@ namespace ShopBook.Controllers
 
         //Funciones
         [AutorizarUsuario(idOperacion: 1)]
-        public ActionResult listarEditorial(int edit)
+        public ActionResult listarEditorial(int edit, int idEditorial)
         {
-            var Editorial = (from m in db.tb_editoriales
-
-                             where m.estado == "Activo"
-                             select new { m.idEdito, m.nomEdito, m.direccion, m.telefono, m.fechaRegistro }).ToList();
-
-            var parseo = (from p in Editorial
-                          select new
-                          {
-                              idEdito = p.idEdito,
-                              nomEdito = p.nomEdito,
-                              direccion = p.direccion,
-                              telefono = p.telefono,
-
-                              fechaRegistro = p.fechaRegistro.Value.ToString("yyyy-MM-dd"),
-
-                          }).ToList();
-
             if (edit == 1)
             {
-                Editorial = (from m in db.tb_editoriales
+                var Editorial = (from m in db.tb_editoriales
+                             where m.idEdito == idEditorial
                              select new { m.idEdito, m.nomEdito, m.direccion, m.telefono, m.fechaRegistro }).ToList();
-            }
 
-            return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
+                var parseo = (from p in Editorial
+                              select new
+                              {
+                                  idEdito = p.idEdito,
+                                  nomEdito = p.nomEdito,
+                                  direccion = p.direccion,
+                                  telefono = p.telefono,
+                                  fechaRegistro = p.fechaRegistro.Value.ToString("yyyy-MM-dd"),
+
+                              }).ToList();
+                return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var Editorial = (from m in db.tb_editoriales
+
+                                 where m.estado == "Activo"
+                                 select new { m.idEdito, m.nomEdito, m.direccion, m.telefono, m.fechaRegistro }).ToList();
+
+                var parseo = (from p in Editorial
+                              select new
+                              {
+                                  idEdito = p.idEdito,
+                                  nomEdito = p.nomEdito,
+                                  direccion = p.direccion,
+                                  telefono = p.telefono,
+
+                                  fechaRegistro = p.fechaRegistro.Value.ToString("yyyy-MM-dd"),
+
+                              }).ToList();
+                return Json(new { data = parseo }, JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         [AutorizarUsuario(idOperacion: 1)]

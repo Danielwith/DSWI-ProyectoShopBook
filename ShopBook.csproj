@@ -267,6 +267,7 @@
     <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Entity\database_firewall_rules.cs">
+<<<<<<< refs/remotes/origin/feature/reporte
       <DependentUpon>shopbook.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\ls_subcate_cate.cs">
@@ -328,6 +329,75 @@
     </Compile>
     <Compile Include="Entity\tb_usuario.cs">
       <DependentUpon>shopbook.tt</DependentUpon>
+=======
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ls_subcate_cate.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_boletas.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_categorias.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_cate_subcate_libros.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_creditcard.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_detalle_boletas.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_editoriales.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_libros.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_modulo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_operaciones.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_rol.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_rol_operacion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_sub_categorias.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tb_usuario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+>>>>>>> local
     </Compile>
     <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Filters\VerificarSession.cs" />
@@ -392,6 +462,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+<<<<<<< refs/remotes/origin/feature/reporte
     <Content Include="Entity\shopbook.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>shopbook.edmx</DependentUpon>
@@ -401,6 +472,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>shopbook.edmx</DependentUpon>
       <LastGenOutput>shopbook.cs</LastGenOutput>
+=======
+    <Content Include="Entity\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entity\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+>>>>>>> local
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -556,12 +638,21 @@
     <Content Include="Assets\webfonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Assets\webfonts\poppins\Poppins-ThinItalic.ttf" />
     <Content Include=".editorconfig" />
+<<<<<<< refs/remotes/origin/feature/reporte
     <EntityDeploy Include="Entity\ShopBook.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShopBook.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Entity\ShopBook.edmx.diagram">
       <DependentUpon>ShopBook.edmx</DependentUpon>
+=======
+    <EntityDeploy Include="Entity\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entity\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+>>>>>>> local
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

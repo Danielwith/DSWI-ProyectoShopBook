@@ -23,8 +23,8 @@
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Fecha Registro</th>
-                    <th>EDITAR</th>
-                    <th>Eliminar</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
         </table>
@@ -35,7 +35,7 @@
         $(document).ready(function () {
             $("#tableId").DataTable({
                 "ajax": {
-                    "url": "/Mantenimiento/listarEditorial?edit="+0,
+                    "url": "/Mantenimiento/listarEditorial?edit="+0+"&&idEditorial="+0,
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -70,17 +70,20 @@
                     html: `
                             <div class="row gtr-uniform">
                                 <div class="col-6 col-12-xsmall">
+                                    <span>Editorial:</span>
                                     <input type="text" id="nomEdito" oninput="this.value = this.value.replace(/[^á-zÁ-Z0-9]/,'')" placeholder="Nom Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="direccion" placeholder="Direccion     " />
-                                </div>
-                                   <div class="col-6 col-12-xsmall">
+                                    <span>Teléfono:</span>
                                     <input type="text" id="telefono" placeholder="Telefono" />
                                 </div>
-
+                                <div class="col-12">
+                                    <span>Dirección:</span>
+                                    <input type="text" id="direccion" placeholder="Direccion" />
+                                </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input class="form-date" type="datetime-local" id="fechaRegistro" placeholder="Fecha de publicacion" />
+                                    <span>Fecha de Registro:</span>
+                                    <input class="form-date" type="date" id="fechaRegistro" />
                                 </div>
                             </div>`,
                     confirmButtonText: 'Registrar',
@@ -94,9 +97,7 @@
 
                         const pregTele = /^[\(]?[\+]?(\d{2}|\d{3})[\)]?[\s]?((\d{6}|\d{8})|(\d{3}[\*\.\-\s]){3}|(\d{2}[\*\.\-\s]){4}|(\d{4}[\*\.\-\s]){2})|\d{8}|\d{10}|\d{12}$/;
 
-                        const pregdirecc = /^[a-zA-Z0-9 ]+$/;
-
-                        const pregNomEdito = /^[a-zA-Z ]+$/i;
+                        const pregNomEdito = /^[A-Za-z\s]*$/;
 
                         if (nomEdito == '' || direccion == '' || telefono == '') {
                             return Swal.showValidationMessage(`Todos los campos son requeridos`)
@@ -105,8 +106,8 @@
                             if (!pregNomEdito.test(nomEdito)) {
                                 return Swal.showValidationMessage(`Campo nombre editorial invalido,solo letras`)
                             }
-                            if (!pregdirecc.test(direccion)) {
-                                return Swal.showValidationMessage(`Campo direccion invalido, ingrese correctamente`)
+                            if (direccion == '') {
+                                return Swal.showValidationMessage(`Porfavor complete la dirección`);
                             }
                             if (!pregTele.test(telefono)) {
                                 return Swal.showValidationMessage(`Campo telefono invalido`);
@@ -125,12 +126,13 @@
                         let fechaRegistro = $("#fechaRegistro").val();
 
                         let message = "Se agrego correctamente";
-                        Swal.fire(
-                            'Agregado!',
-                            'Nombre de Editorial: ' + nomEdito + ' | Dirección de Editorial: ' + direccion, 'Telefono de Editorial: ' + telefono,
-                            'Fecha de Registro: ' + fechaRegistro,
-                            'success'
-                        )
+                        Swal.fire({
+                            title: 'Agregado!',
+                            text: 'Nombre de Editorial: ' + nomEdito + ' | Dirección de Editorial: ' + direccion + 'Telefono de Editorial: ' + telefono +
+                                'Fecha de Registro: ' + fechaRegistro,
+                            icon: 'success',
+                            allowOutsideClick: false
+                        })
                         // Es solo estilo, tiene incompatiblidad con main.css
                         element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                         $(".swal2-confirm").click(function () {
@@ -157,7 +159,7 @@
             }
 
         function getEditarModal(idEdito) {
-            let json = fetch("/Mantenimiento/listarEditorial?edit="+1, {
+            let json = fetch("/Mantenimiento/listarEditorial?edit="+1+"&&idEditorial="+idEdito, {
                 "headers": {
                     "accept": "*/*",
                     "content-type": "application/JSON",
@@ -167,7 +169,6 @@
                 "mode": "cors"
             }).then(resp => resp.json()).then(js => {
                 response = js
-                console.log(response)
                 promiseEditar(response, idEdito)
             })
         }
@@ -178,21 +179,24 @@
                 html: `
                             <div class="row gtr-uniform">
                                  <div class="col-6 col-12-xsmall">
-                                    <input disabled="disabled" type="text" id="idEdito" value=${response.data[idEdito - 1].idEdito} placeholder="Id Editorial" />
-                                </div>
-
-                                <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="nomEdito" value=${response.data[idEdito - 1].nomEdito} placeholder="Nom Editorial" />
+                                    <span>ID Editorial:</span>
+                                    <input disabled="disabled" type="text" id="idEdito" value=${response.data[0].idEdito} placeholder="Id Editorial" />
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="direccion" value=${response.data[idEdito - 1].direccion} placeholder="Direccion" />
+                                    <span>Editorial:</span>
+                                    <input type="text" id="nomEdito" placeholder="Nom Editorial" />
                                 </div>
-                                   <div class="col-6 col-12-xsmall">
-                                    <input type="text" id="telefono" value=${response.data[idEdito - 1].telefono} placeholder="Telefono" />
+                                <div class="col-12">
+                                    <span>Dirección:</span>
+                                    <input type="text" id="direccion" placeholder="Direccion" />
                                 </div>
-
                                <div class="col-6 col-12-xsmall">
-                                    <input class="form-date" type="date" id="fechaRegistro" value=${response.data[idEdito - 1].fechaRegistro} placeholder="Fecha Registro" />
+                                    <span>Fecha de Registro:</span>
+                                    <input class="form-date" type="date" id="fechaRegistro" value=${response.data[0].fechaRegistro} placeholder="Fecha Registro" />
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <span>Teléfono:</span>
+                                    <input type="text" id="telefono" value=${response.data[0].telefono} placeholder="Telefono" />
                                 </div>
                             </div>`,
                 confirmButtonText: 'Actualizar',
@@ -206,19 +210,16 @@
 
                     const pregTele = /^[\(]?[\+]?(\d{2}|\d{3})[\)]?[\s]?((\d{6}|\d{8})|(\d{3}[\*\.\-\s]){3}|(\d{2}[\*\.\-\s]){4}|(\d{4}[\*\.\-\s]){2})|\d{8}|\d{10}|\d{12}$/;
 
-                    const pregdirecc = /^[a-zA-Z0-9 ]+$/;
-
-                    const pregNomEdito = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/i;
+                    const pregNomEdito = /^[A-Za-z\s]*$/;
 
                     if (nomEdito == '' || direccion == '' || telefono == '') {
                         return Swal.showValidationMessage(`Todos los campos son requeridos`)
                     } else {
-
                         if (!pregNomEdito.test(nomEdito)) {
                             return Swal.showValidationMessage(`Campo nombre editorial invalido, solo letras`)
                         }
-                        if (!pregdirecc.test(direccion)) {
-                            return Swal.showValidationMessage(`Campo direccion invalido, ingrese correctamente`)
+                        if (direccion == '') {
+                            return Swal.showValidationMessage(`Porfavor agrege la dirección`)
                         }
                         if (!pregTele.test(telefono)) {
                             return Swal.showValidationMessage(`Campo telefono invalido`);
@@ -235,11 +236,12 @@
                     let telefono = $("#telefono").val();
                     let fechaRegistro = $("#fechaRegistro").val();
                     let message = "Actualizado correctamente";
-                    Swal.fire(
-                        'Actualizado!',
-                        'Editorial: ' + nomEdito ,
-                        'success'
-                    )
+                    Swal.fire({
+                        title:'Actualizado!',
+                        text:'Editorial: ' + nomEdito,
+                        icon: 'success',
+                        allowOutsideClick: false
+                    })
                     // Es solo estilo, tiene incompatiblidad con main.css
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
 
@@ -255,6 +257,9 @@
                     })
                 }
             })
+            $("#nomEdito").val(response.data[0].nomEdito);
+            $("#direccion").val(response.data[0].direccion);
+
             let element = document.getElementsByClassName("swal2-styled")
             /* Alert Fix Styles */
             for (let i = 0; i < element.length; i++) {
@@ -277,11 +282,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     let message = "Se elimino correctamente";
-                    Swal.fire(
-                        'Eliminado!',
-                        '',
-                        'success'
-                    )
+                    Swal.fire({
+                        title: 'Eliminado!',
+                        text:'',
+                        icon: 'success',
+                        allowOutsideClick: false
+                    })
                     // Es solo estilo, tiene incompatiblidad con main.css
                     element[0].setAttribute("style", "height:2.5em !important; line-height: 0em !important; color: white !important; background-color: #008000 !important")
                     $(".swal2-confirm").click(function () {

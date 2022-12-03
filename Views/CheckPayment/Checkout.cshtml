@@ -33,11 +33,11 @@
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Nombre</span>
-                    <input type="text" name="userName" id="demo-name" value="" />
+                    <input type="text" name="userName" id="userName" readonly="readonly" />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Apellidos</span>
-                    <input type="text" name="userApe" id="demo-email" value="" />
+                    <input type="text" name="userApe" id="userApe" readonly="readonly" />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Tipo de documento</span>
@@ -48,25 +48,24 @@
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Número de documento</span>
-                    <input type="number" name="userDocNum" id="demo-email" value="" />
+                    <input type="number" name="userDocNum" id="demo-email" value=@Model.dni />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Fecha de Nacimiento</span>
-                    <input class="form-date" type="date" name="fecNac" id="demo-name" value="" />
+                    <input class="form-date" type="date" name="fecNac" id="fecNac" readonly="readonly" />
                 </div>
                 <div class="col-6 col-12-xsmall">
                     <span>Número de teléfono</span>
-                    <input type="number" name="userPhone" id="demo-email" value="" />
+                    <input type="number" name="userPhone" id="demo-email" value=@Model.telefono />
                 </div>
                 <div class="col-12">
                     <span>Dirección</span>
-                    <input type="text" name="userAddress" id="demo-email" value="" />
+                    <input type="text" name="userAddress" id="userAddress" />
                 </div>
                 <div class="col-12">
                     <br />
                     <ul class="actions" style="justify-content: center;">
                         <li>
-                            @*@Html.ActionLink("Continuar", "Payment", "CheckPayment")*@
                             <input type="submit" value="Continuar" class="primary" />
                         </li>
                     </ul>
@@ -158,6 +157,11 @@
                     }
                 }
             })
+
+            $("#userName").val('@Model.nombre')
+            $("#userApe").val('@Model.apellido')
+            $("#userAddress").val('@Model.direccion')
+            $("#fecNac").val('@Model.fecha_nac.Value.ToString("yyyy-MM-dd")')
         })
     </script>
 }

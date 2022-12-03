@@ -27,7 +27,7 @@ namespace ShopBook.Controllers
                 var end = Convert.ToDateTime(dateend);
                 data = (from b in db.tb_boletas
                         join u in db.tb_usuario on b.idUser equals u.idUser
-                        where  u.nombre.Contains(name) && (b.fechGene >= ini && b.fechGene <= end)
+                        where u.nombre.Contains(name) && (b.fechGene >= ini && b.fechGene <= end)
                         select new BoletaUsuario
                         {
                             nroBoleta = b.nroBoleta,
@@ -85,11 +85,34 @@ namespace ShopBook.Controllers
         {
             string ruta = Server.MapPath("~/");
             string ReportURL = Path.Combine(ruta + "Assets\\Reporte.pdf");
-            var data = (from b in db.tb_boletas
-                        join det in db.tb_detalle_boletas on b.nroBoleta equals det.nroBoleta
-                        select new { b.nroBoleta, b.fechGene, b.idUser}).ToList();
+            UsuarioBoletaDTO data = (from b in db.tb_boletas
+                                     join u in db.tb_usuario on b.idUser equals u.idUser
+                                     where b.nroBoleta == nroBoleta
+                                     select new UsuarioBoletaDTO
+                                     {
+                                         nroBoleta = b.nroBoleta,
+                                         email = u.email,
+                                         nombre = u.nombre,
+                                         apellido = u.apellido,
+                                         dni = u.dni,
+                                         telefono = u.telefono,
+                                         direccion = u.direccion
+                                     }).FirstOrDefault();
+
+            List<DtBoletaLibroDTO> compra = (from dt in db.tb_detalle_boletas
+                                             join l in db.tb_libros on dt.idLibro equals l.idLibro
+                                             where dt.nroBoleta == nroBoleta
+                                             select new DtBoletaLibroDTO
+                                             {
+                                                 idLibro = dt.idLibro,
+                                                 cantidad = dt.cantidad,
+                                                 importe = dt.importe,
+                                                 precUni = l.precUni,
+                                                 tituLibro = l.tituLibro
+                                             }).ToList();
+
             var reporte = new ReporteGenerator();
-            reporte.generate(ReportURL);
+            reporte.generate(ReportURL, data, compra);
             byte[] FileBytes = System.IO.File.ReadAllBytes(ReportURL);
             return File(FileBytes, "application/pdf");
         }

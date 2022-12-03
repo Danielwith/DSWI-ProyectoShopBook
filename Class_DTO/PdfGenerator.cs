@@ -17,7 +17,7 @@ namespace ShopBook.Class_DTO
     public class PdfGenerator
     {
         private shopbookEntities db = new shopbookEntities();
-        private decimal? total=0;
+        private decimal? total = 0;
         public void generate(List<ShoppingCart> compras, string path, ClientData cliente)
         {
             // Must have write permissions to the path folder
@@ -51,12 +51,12 @@ namespace ShopBook.Class_DTO
             LineSeparator ls = new LineSeparator(new SolidLine());
             document.Add(ls);
 
-            Paragraph nRecibo = new Paragraph("N° de Recibo: "+db.usp_maxBoleta().FirstOrDefault())
+            Paragraph nRecibo = new Paragraph("N° de Recibo: " + db.usp_maxBoleta().FirstOrDefault())
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
             document.Add(nRecibo);
 
-            Paragraph fecha = new Paragraph("Fecha: "+DateTime.Now.ToString())
+            Paragraph fecha = new Paragraph("Fecha: " + DateTime.Now.ToString())
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
             document.Add(fecha);
@@ -75,12 +75,12 @@ namespace ShopBook.Class_DTO
                .SetFontSize(10);
             document.Add(email);
 
-            Paragraph nomape = new Paragraph("Nombres y Apellidos: " + cliente.name +" "+cliente.apellido)
+            Paragraph nomape = new Paragraph("Nombres y Apellidos: " + cliente.name + " " + cliente.apellido)
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
             document.Add(nomape);
 
-            Paragraph docNum = new Paragraph("DNI / RUC: "+cliente.docNum)
+            Paragraph docNum = new Paragraph("DNI / RUC: " + cliente.docNum)
                .SetTextAlignment(TextAlignment.LEFT)
                .SetFontSize(10);
             document.Add(docNum);
@@ -164,8 +164,9 @@ namespace ShopBook.Class_DTO
 
             document.Add(newline);
             document.Add(totalCompra);
-
             document.Close();
+            pdf.Close();
+            writer.Close();
         }
     }
 }

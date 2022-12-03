@@ -14,13 +14,14 @@ namespace ShopBook.Controllers
     public class CheckPaymentController : Controller
     {
         private shopbookEntities db = new shopbookEntities();
+        public static string pathpdf = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         #region DatosDeCliente
         [HttpGet]
         public ActionResult Checkout()
         {
             var usuario = (tb_usuario)Session["email"];
-            
+
             return View(usuario);
         }
 
@@ -44,11 +45,11 @@ namespace ShopBook.Controllers
             Session["dataCliente"] = client;
 
             string ruta = Server.MapPath("~/");
-            string PathPDF = Path.Combine(ruta + "Assets\\Comprobante.pdf");
+            string PathPDF = Path.Combine(ruta + "Assets\\Comprobante" + pathpdf + ".pdf");
 
             var comprobante = new PdfGenerator();
-            comprobante.generate(compras,PathPDF,client);
-            
+            comprobante.generate(compras, PathPDF, client);
+
             return RedirectToAction("Payment");
         }
         #endregion DatosDeCliente
@@ -57,7 +58,7 @@ namespace ShopBook.Controllers
         [HttpGet]
         public ActionResult Payment()
         {
-            
+
             return View();
         }
 
@@ -69,10 +70,10 @@ namespace ShopBook.Controllers
                                  select c.tip_CC).FirstOrDefault();
 
             var validate = (from c in db.tb_creditcard
-                            where c.num_CC == numTarjeta && 
-                                  c.mm_CC == mes && 
-                                  c.aa_CC == anio && 
-                                  c.cvc_CC == cvc && 
+                            where c.num_CC == numTarjeta &&
+                                  c.mm_CC == mes &&
+                                  c.aa_CC == anio &&
+                                  c.cvc_CC == cvc &&
                                   c.nom_CC == titular
                             select c).FirstOrDefault();
 
@@ -84,7 +85,7 @@ namespace ShopBook.Controllers
             else
             {
                 string ruta = Server.MapPath("~/");
-                string PathPDF = Path.Combine(ruta + "Assets\\Comprobante.pdf");
+                string PathPDF = Path.Combine(ruta + "Assets\\Comprobante" + pathpdf + ".pdf");
 
                 var em = new EmailSenderDotNet();
                 var user = (ClientData)Session["dataCliente"];
@@ -95,6 +96,7 @@ namespace ShopBook.Controllers
                 {
                     FinalizarCompra();
                     Session["dataCliente"] = null;
+
                     return RedirectToAction("Finish");
                 }
                 else

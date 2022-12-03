@@ -76,7 +76,7 @@
                         @Html.DisplayFor(modelItem => item.email)
                     </td>
                     <td>
-                        @Html.ActionLink("Generar Reporte", "GeneratePDF", new { id = item.nroBoleta })
+                        @Html.ActionLink("Generar Reporte", "GeneratePDF", new { nroBoleta = item.nroBoleta })
                     </td>
                 </tr>
             }

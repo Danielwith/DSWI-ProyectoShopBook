@@ -54,7 +54,10 @@
                                 <br />
                                 <center>@libro.titulo</center><br />
                                 <center>@libro.autor</center><br />
-                                <center><a href="#" class="button primary" style="font-size:12pt">S/. @libro.precio</a></center>
+                                                             <center>
+                                                                 <a class="button primary" style="font-size:12pt" href="/Catalogo/listLibros?idLib=@libro.idLibro">@libro.precio</a>
+                                                                 @*<a href="#" class="button primary" >S/. @libro.precio</a>*@
+                                                             </center>
                                 <!--</span>-->
                             </div>
                                 if (item.libros.IndexOf(libro) == item.libros.Count - 1 || item.libros.IndexOf(libro)==5)
